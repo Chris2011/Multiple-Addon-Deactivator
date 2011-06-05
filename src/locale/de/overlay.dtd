@@ -1,0 +1,5 @@
+<!ENTITY {appname} "{appname}">
+
+<!-- Toolbarbutton Nachrichten //-->
+<!ENTITY madToolbarButton.label "Multiple Addon Deactivator">
+<!ENTITY madToolbarButton.tooltip "(De)Aktiviert ein, mehrere oder alle Addons zur selben Zeit.">
