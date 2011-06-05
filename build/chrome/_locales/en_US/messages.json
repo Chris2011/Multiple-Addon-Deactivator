@@ -1,0 +1,68 @@
+{
+"MAD":{
+"message":"MAD"
+},
+"actionButton_label":{
+"message":"Execute action for checked Addons"
+},
+"activated_label":{
+"message":"Activated"
+},
+"activatedButton_label":{
+"message":"Deactivate all"
+},
+"allActivatedMessage":{
+"message":"All extensions has been activated, please restart your Firefox!"
+},
+"allDeactivatedMessage":{
+"message":"All extensions has been deactivated, please restart your Firefox!"
+},
+"deactivated_label":{
+"message":"Deactivated"
+},
+"deactivatedButton_label":{
+"message":"Activate all"
+},
+"disabledAddon_label":{
+"message":" - deactivated addon"
+},
+"executeActionMessage":{
+"message":"Action has been exectued, please restart your Firefox!"
+},
+"extensions_MAD_ChrisLE_de_description":{
+"message":"Multiple Addon Deactivator (M.A.D) is an add-on that can (de)activate one, many or each add-on at the same time."
+},
+"incompatibleAddon_label":{
+"message":" - incompatible with this version of Firefox"
+},
+"legend_label":{
+"message":"legend:"
+},
+"madToolbarButton_label":{
+"message":"Multiple Addon Deactivator"
+},
+"madToolbarButton_tooltip":{
+"message":"(De)Activates one, many or all addons at the same time."
+},
+"name_label":{
+"message":"Name"
+},
+"preferences_title":{
+"message":"M.A.D. options"
+},
+"restartButton_label":{
+"message":"Restart Firefox"
+},
+"restartFirefoxMessage":{
+"message":"Do you really want to restart Firefox?"
+},
+"title_label":{
+"message":"Multiple Addon Deactivator"
+},
+"total_label":{
+"message":"Total"
+},
+"version_label":{
+"message":"Version"
+}
+}

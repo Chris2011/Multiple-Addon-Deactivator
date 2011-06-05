@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://MAD/skin/window.css" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://MAD/locale/window.dtd">
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&title.label;" onunload="uninit()">
+ <stringbundleset id="stringbundleset">
+  <stringbundle id="string-bundle" src="chrome://MAD/locale/description.properties"/>
+ </stringbundleset>
+ <script src="scripts/sort.js" />
+ <script src="scripts/window.js" />
+
+ <commandset>
+  <command id="deactivateAllCommand" oncommand="setActionForAddons(addonActionEnum.deactivateAll)" />
+  <command id="activateAllCommand" oncommand="setActionForAddons(addonActionEnum.activateAll)" />
+  <command id="executeActionCommand" oncommand="setActionForAddons(addonActionEnum.actionForMarkedEntry)" />
+  <command id="restartCommand" oncommand="restartFirefox()" />
+ </commandset>
+
+ <grid>
+  <columns>
+   <column />
+   <column flex="1" />
+  </columns>
+  <rows>
+   <row>
+    <description class="borderRight" value="&activated.label;" />
+    <description id="activatedAddons" />
+   </row>
+   <row>
+    <description class="borderRight" value="&deactivated.label;" />
+    <description id="deactivatedAddons" />
+   </row>
+   <row>
+    <description class="borderRight" value="&total.label;" />
+    <description id="totalAddons" />
+   </row>
+  </rows>
+ </grid>
+ <grid>
+  <columns>
+   <column flex="1" />
+  </columns>
+  <rows>
+   <row>
+    <tree id="addonTree" flex="1" rows="10" enableColumnDrag="true">
+     <treecols>
+      <treecol id="checkboxes" type="checkbox" value="true" flex="1" editable="true">
+       <image id="checkAll" src="../skin/images/unselected.png" />
+      </treecol>
+
+      <splitter class="tree-splitter" disabled="true" />
+      <treecol id="addonName" label="&name.label;" flex="2" sortDirection="ascending" />
+       
+      <splitter class="tree-splitter" />
+      <treecol id="addonVersion" label="&version.label;" flex="3" />
+     </treecols>
+     <treechildren id="bla" onclick="onRowClick()" />
+    </tree>
+   </row>
+  </rows>
+ </grid>
+ <grid>
+  <columns>
+   <column />
+   <column flex="1" />
+  </columns>
+  <rows>
+   <row>
+    <button label="&activatedButton.label;" command="deactivateAllCommand" />
+    <button label="&deactivatedButton.label;" command="activateAllCommand" />
+   </row>
+   <row>
+    <button label="&actionButton.label;" command="executeActionCommand" />
+    <button label="&restartButton.label;" command="restartCommand" />
+   </row>
+  </rows>
+ </grid>
+</window>

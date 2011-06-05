@@ -1,0 +1,19 @@
+#mad-toolbar-button
+{
+  list-style-image: url("chrome://MAD/skin/images/icon24.png");
+  -moz-image-region: rect(0px 24px 24px 0px);
+}
+#mad-toolbar-button:hover
+{
+  -moz-image-region: rect(24px 24px 24px 24px);
+}
+toolbar[iconsize="small"] #mad-toolbar-button
+{
+ list-style-image: url("chrome://MAD/skin/images/icon16.png");
+  -moz-image-region: rect( 16px 16px 16px 16px);
+}
+[iconsize="small"] #mad-toolbar-button:hover
+{
+ cursor: pointer;
+  -moz-image-region: rect(16px 16px 16px 16px);
+}

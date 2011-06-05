@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+<?xml-stylesheet href="chrome://MAD/skin/options.css" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://MAD/locale/options.dtd">
+
+<prefwindow id="mad-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&preferences.title;">
+ <prefpane id="pane1">
+  <preferences>
+   <preference id="withoutMad" name="mad.MAD@ChrisLE.de.boolpref" type="bool"/>
+  </preferences>
+  <hbox align="center">
+   <groupbox>
+    <checkbox id="checkboolpref" preference="withoutMad" label="&checkbox.label;" />
+   </groupbox>
+  </hbox>
+  <hbox>
+   <groupbox>
+    <caption label="&legend.label;" />
+    <grid>
+     <columns>
+      <column />
+      <column flex="1" />
+     </columns>
+     <rows>
+      <row>
+       <label id="disabledLabel" />
+       <description flex="1">&disabledAddon.label;</description>
+      </row>
+      <row>
+       <label id="incompatibleLabel" />
+       <description>&incompatibleAddon.label;</description>    
+      </row>
+     </rows>
+    </grid>
+   </groupbox>
+  </hbox>
+ </prefpane>
+</prefwindow>
