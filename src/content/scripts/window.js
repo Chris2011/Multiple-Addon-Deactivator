@@ -10,7 +10,7 @@
       allAddons: 0,
       activatedAddons: 0,
       deactivatedAddons: 0
-   }
+   };
 
    this.addonTree = null;
    this.addonActionEnum =
@@ -18,7 +18,7 @@
       deactivateAll: 0,
       activateAll: 1,
       actionForMarkedEntry: 2
-   }
+   };
 
    function getExtensions(callback)
    {
@@ -76,7 +76,7 @@
             fillTreeView(extensions);
          });
       }
-   }
+   };
 
    function fillTreeView(extensionModel)
    {
@@ -191,7 +191,7 @@
          {
             treeView.setCellValue(i, column, boolValue);
          }
-      }
+      };
 
       function setNewStyle(props, status)
       {
@@ -208,20 +208,20 @@
             style = atomService.getAtom("isIncompatibleStyle");
          }
          props.AppendElement(style);
-      }
+      };
 
       document.getElementById("addonTree").view = treeView;
-   }
+   };
 
    this.uninit = function()
    {
       document.getElementById("addonTree").view = null;
-   },
+   };
 
    this.toBool = function(boolParam)
    {
       return "true" == boolParam;
-   },
+   };
 
    this.onRowClick = function()
    {
@@ -232,7 +232,7 @@
       addonTree.view.setCellValue(
       addonTree.view.selection.currentIndex,
       addonTree.view.selection.tree.columns[0], cellVal);
-   },
+   };
 
    this.setActionForAddons = function(addonAction)
    {
@@ -251,7 +251,7 @@
          stdAddonAction(null);
          alert(propertyStrings.getString("executeActionMessage"));
       }
-   },
+   };
 
    this.play = function()
    {
@@ -262,7 +262,7 @@
       var url = ioService.newURI(enterSoundURL, null, null);
 
       sound.play(url);
-   }
+   };
 
    this.restartFirefox = function()
    {
@@ -302,7 +302,7 @@
            .getService(nsIAppStartup)
            .quit(nsIAppStartup.eRestart | nsIAppStartup.eAttemptQuit);
       }
-   }
+   };
 
    function stdAddonAction(activateAddon)
    {
@@ -347,7 +347,7 @@
 
          actionCounter(i);
       }
-   }
+   };
 
    setTimeout(function()
    {
