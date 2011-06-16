@@ -59,9 +59,9 @@
                      extensions[counter].isIncompatible = addon.appDisabled;
                   });
                }
-               
+
                countFunction(i);
-               
+
                if(addons.get(extensions[i].addonId).enabled)
                {
                   ++extensionVars.activatedAddons;
@@ -198,7 +198,7 @@
          var atomService = Cc["@mozilla.org/atom-service;1"]
                              .getService(Ci.nsIAtomService);
          var style = null;
-         
+
          if (status == "deactivated")
          {
             style = atomService.getAtom("isDeactivatedStyle");
@@ -228,7 +228,7 @@
       var cellVal = !toBool((addonTree.view.getCellValue(
                              addonTree.view.selection.currentIndex,
                              addonTree.view.selection.tree.columns[0])));
-                      
+
       addonTree.view.setCellValue(
       addonTree.view.selection.currentIndex,
       addonTree.view.selection.tree.columns[0], cellVal);
@@ -252,6 +252,17 @@
          alert(propertyStrings.getString("executeActionMessage"));
       }
    },
+
+   this.play = function()
+   {
+      var sound = Cc["@mozilla.org/sound;1"].createInstance(Ci.nsISound);
+      var enterSoundURL = "http://tiscali.project-fx.de/play.wma?radio=ant1";
+
+      var ioService = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
+      var url = ioService.newURI(enterSoundURL, null, null);
+
+      sound.play(url);
+   }
 
    this.restartFirefox = function()
    {
@@ -299,7 +310,7 @@
                     .getService(Ci.nsIPrefService)
                     .getBranch("mad.MAD@ChrisLE.de.");
 
-      var prefValue = prefs.getBoolPref("boolpref");      
+      var prefValue = prefs.getBoolPref("boolpref");
       var rows = addonTree.view.rowCount;
 
       for(var i = 0; i < rows; ++i)
@@ -311,7 +322,7 @@
                if(activateAddon == null)
                {
                   var isChecked = toBool((addonTree.view.getCellValue(counterVar, addonTree.view.selection.tree.columns[0])));
-                
+
                   if(isChecked)
                   {
                      addon.userDisabled = !addon.userDisabled;

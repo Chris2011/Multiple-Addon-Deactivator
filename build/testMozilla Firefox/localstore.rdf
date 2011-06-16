@@ -1,38 +1,55 @@
 <?xml version="1.0"?>
 <RDF:RDF xmlns:NC="http://home.netscape.com/NC-rdf#"
          xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#toolbar-menubar"
-                   currentset="menubar-items" />
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#foxyproxy-status-text"
-                   mode="disabled" />
-  <RDF:Description RDF:about="chrome://global/content/console.xul">
-    <NC:persist RDF:resource="chrome://global/content/console.xul#JSConsoleWindow"/>
-  </RDF:Description>
-  <RDF:Description RDF:about="chrome://global/content/console.xul#JSConsoleWindow"
-                   screenX="10"
-                   screenY="10"
-                   width="640"
-                   height="480"
-                   sizemode="normal" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#statusbar-QLS-text"
+                   value="de-DE" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#sidebar-title"
+                   value="" />
+  <RDF:Description RDF:about="chrome://mad/content/options.xul#mad-preferences"
+                   lastSelected="pane1" />
   <RDF:Description RDF:about="chrome://mad/content/options.xul">
     <NC:persist RDF:resource="chrome://mad/content/options.xul#mad-preferences"/>
   </RDF:Description>
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#statusbar-QLS"
-                   ccode="de-DE" />
   <RDF:Description RDF:about="chrome://browser/content/browser.xul#main-window"
                    width="994"
                    height="728"
                    sizemode="normal"
                    screenY="3"
                    screenX="0" />
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#nav-bar"
-                   currentset="unified-back-forward-button,urlbar-container,reload-button,stop-button,search-container,home-button,bookmarks-menu-button-container,fullscreenflex,window-controls,firebug-button"
-                   collapsed="false" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#toolbar-menubar"
+                   currentset="menubar-items" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#PersonalToolbar"
+                   currentset="personal-bookmarks" />
+  <RDF:Description RDF:about="chrome://global/content/console.xul#JSConsoleWindow"
+                   screenX="10"
+                   screenY="10"
+                   width="640"
+                   height="480"
+                   sizemode="normal" />
+  <RDF:Description RDF:about="about:addons">
+    <NC:persist RDF:resource="about:addons#categories"/>
+  </RDF:Description>
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#TabsToolbar"
+                   currentset="tabbrowser-tabs,new-tab-button,alltabs-button,tabs-closebutton" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#foxyproxy-status-text"
+                   mode="disabled" />
+  <RDF:Description RDF:about="chrome://global/content/console.xul">
+    <NC:persist RDF:resource="chrome://global/content/console.xul#JSConsoleWindow"/>
+  </RDF:Description>
   <RDF:Description RDF:about="chrome://browser/content/browser.xul#addon-bar"
                    collapsed="false"
                    currentset="addonbar-closebutton,spring,mad-toolbar-button,status-bar,FirebugAutocompleter_statusbarpanel" />
-  <RDF:Description RDF:about="chrome://mad/content/options.xul#mad-preferences"
-                   lastSelected="pane1" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#sidebar-box"
+                   sidebarcommand=""
+                   width=""
+                   src="" />
+  <RDF:Description RDF:about="about:addons#categories"
+                   last-selected="category-extensions" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#statusbar-QLS"
+                   ccode="de-DE" />
+  <RDF:Description RDF:about="chrome://browser/content/browser.xul#nav-bar"
+                   currentset="unified-back-forward-button,urlbar-container,reload-button,stop-button,search-container,home-button,bookmarks-menu-button-container,fullscreenflex,window-controls,firebug-button"
+                   collapsed="false" />
   <RDF:Description RDF:about="chrome://browser/content/browser.xul">
     <NC:persist RDF:resource="chrome://browser/content/browser.xul#addon-bar"/>
     <NC:persist RDF:resource="chrome://browser/content/browser.xul#nav-bar"/>
@@ -46,17 +63,4 @@
     <NC:persist RDF:resource="chrome://browser/content/browser.xul#PersonalToolbar"/>
     <NC:persist RDF:resource="chrome://browser/content/browser.xul#TabsToolbar"/>
   </RDF:Description>
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#statusbar-QLS-text"
-                   value="de-DE" />
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#sidebar-title"
-                   value="" />
-  <RDF:Description RDF:about="about:addons#categories"
-                   last-selected="category-extensions" />
-  <RDF:Description RDF:about="about:addons">
-    <NC:persist RDF:resource="about:addons#categories"/>
-  </RDF:Description>
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#PersonalToolbar"
-                   currentset="personal-bookmarks" />
-  <RDF:Description RDF:about="chrome://browser/content/browser.xul#TabsToolbar"
-                   currentset="tabbrowser-tabs,new-tab-button,alltabs-button,tabs-closebutton" />
 </RDF:RDF>

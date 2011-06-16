@@ -14,6 +14,7 @@
   <command id="activateAllCommand" oncommand="setActionForAddons(addonActionEnum.activateAll)" />
   <command id="executeActionCommand" oncommand="setActionForAddons(addonActionEnum.actionForMarkedEntry)" />
   <command id="restartCommand" oncommand="restartFirefox()" />
+  <command id="playCommand" oncommand="play()" />
  </commandset>
 
  <grid>
@@ -50,7 +51,7 @@
 
       <splitter class="tree-splitter" disabled="true" />
       <treecol id="addonName" label="&name.label;" flex="2" sortDirection="ascending" />
-       
+
       <splitter class="tree-splitter" />
       <treecol id="addonVersion" label="&version.label;" flex="3" />
      </treecols>
@@ -72,6 +73,9 @@
    <row>
     <button label="&actionButton.label;" command="executeActionCommand" />
     <button label="&restartButton.label;" command="restartCommand" />
+   </row>
+   <row>
+    <button label="Play" command="playCommand" />
    </row>
   </rows>
  </grid>
