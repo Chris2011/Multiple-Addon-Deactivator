@@ -10,7 +10,7 @@
       allAddons: 0,
       activatedAddons: 0,
       deactivatedAddons: 0
-   }
+   };
 
    this.addonTree = null;
    this.addonActionEnum =
@@ -18,7 +18,7 @@
       deactivateAll: 0,
       activateAll: 1,
       actionForMarkedEntry: 2
-   }
+   };
 
    function getExtensions(callback)
    {
@@ -76,7 +76,7 @@
             fillTreeView(extensions);
          });
       }
-   }
+   };
 
    function fillTreeView(extensionModel)
    {
@@ -191,7 +191,7 @@
          {
             treeView.setCellValue(i, column, boolValue);
          }
-      }
+      };
 
       function setNewStyle(props, status)
       {
@@ -208,20 +208,20 @@
             style = atomService.getAtom("isIncompatibleStyle");
          }
          props.AppendElement(style);
-      }
+      };
 
       document.getElementById("addonTree").view = treeView;
-   }
+   };
 
    this.uninit = function()
    {
       document.getElementById("addonTree").view = null;
-   },
+   };
 
    this.toBool = function(boolParam)
    {
       return "true" == boolParam;
-   },
+   };
 
    this.onRowClick = function()
    {
@@ -232,7 +232,7 @@
       addonTree.view.setCellValue(
       addonTree.view.selection.currentIndex,
       addonTree.view.selection.tree.columns[0], cellVal);
-   },
+   };
 
    this.setActionForAddons = function(addonAction)
    {
@@ -251,18 +251,18 @@
          stdAddonAction(null);
          alert(propertyStrings.getString("executeActionMessage"));
       }
-   },
+   };
 
    this.play = function()
    {
       var sound = Cc["@mozilla.org/sound;1"].createInstance(Ci.nsISound);
-      var enterSoundURL = "http://tiscali.project-fx.de/play.wma?radio=ant1";
+      var enterSoundURL = "http://149.5.240.22/WR-DE-WR57";
 
       var ioService = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
       var url = ioService.newURI(enterSoundURL, null, null);
 
       sound.play(url);
-   }
+   };
 
    this.restartFirefox = function()
    {
@@ -302,7 +302,7 @@
            .getService(nsIAppStartup)
            .quit(nsIAppStartup.eRestart | nsIAppStartup.eAttemptQuit);
       }
-   }
+   };
 
    function stdAddonAction(activateAddon)
    {
@@ -347,7 +347,7 @@
 
          actionCounter(i);
       }
-   }
+   };
 
    setTimeout(function()
    {
