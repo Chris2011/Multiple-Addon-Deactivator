@@ -5,9 +5,9 @@
 <overlay id="MAD-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
  <script src="scripts/overlay.js" />
 
-
- <menupopup id="menu_ToolsPopup">
-    <menuitem id="mad-hello" label="Test"
+<!-- Firefox -->
+ <menupopup id="MenuToolsPopup">
+    <menuitem id="mad-hello" label="Multiple Addon Deactivator"
               oncommand="MAD.onMenuItemCommand(event);"/>
  </menupopup>
 
@@ -17,4 +17,5 @@
    label="&madToolbarButton.label;" tooltiptext="&madToolbarButton.tooltip;"
    oncommand="MAD.onToolbarButtonCommand()" />
   </toolbarpalette>
+ </statusbar>
 </overlay>

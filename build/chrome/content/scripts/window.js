@@ -308,9 +308,9 @@
    {
       var prefs = Cc["@mozilla.org/preferences-service;1"]
                     .getService(Ci.nsIPrefService)
-                    .getBranch("mad.MAD@ChrisLE.de.");
+                    .getBranch("multiple-addon-deactivator.MAD@ChrisLE.de.");
 
-      var prefValue = prefs.getBoolPref("boolpref");
+      var prefValue = prefs.getBoolPref("excludeMAD");
       var rows = addonTree.view.rowCount;
 
       for(var i = 0; i < rows; ++i)

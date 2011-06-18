@@ -6,11 +6,11 @@
 <prefwindow id="mad-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&preferences.title;">
  <prefpane id="pane1">
   <preferences>
-   <preference id="withoutMad" name="mad.MAD@ChrisLE.de.boolpref" type="bool"/>
+   <preference id="withoutMAD" name="multiple-addon-deactivator.MAD@ChrisLE.de.excludeMAD" type="bool"/>
   </preferences>
   <hbox align="center">
    <groupbox>
-    <checkbox id="checkboolpref" preference="withoutMad" label="&checkbox.label;" />
+    <checkbox id="checkMAD" preference="withoutMAD" label="&checkbox.label;" />
    </groupbox>
   </hbox>
   <hbox>
@@ -28,7 +28,7 @@
       </row>
       <row>
        <label id="incompatibleLabel" />
-       <description>&incompatibleAddon.label;</description>    
+       <description>&incompatibleAddon.label;</description>
       </row>
      </rows>
     </grid>

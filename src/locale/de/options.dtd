@@ -1,7 +1,7 @@
 <!ENTITY preferences.title "M.A.D. Optionen">
-<!ENTITY checkbox.label "Wenn Sie diese Option aktivieren,
+<!ENTITY checkbox.label "Wenn diese Option aktivieren ist,
                          dann wird beim Klick auf Alle deaktivieren,
                          M.A.D. ausgeschlossen.">
 <!ENTITY legend.label "Legende:">
-<!ENTITY disabledAddon.label " - deaktiviertes Addon">
-<!ENTITY incompatibleAddon.label " - inkompatibel mit dieser Version von Firefox">
+<!ENTITY disabledAddon.label " - deaktiviertes Add-on">
+<!ENTITY incompatibleAddon.label " - inkompatibles Add-on">

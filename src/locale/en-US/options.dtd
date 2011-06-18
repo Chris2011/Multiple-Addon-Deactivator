@@ -1,7 +1,7 @@
 <!ENTITY preferences.title "M.A.D. options">
-<!ENTITY checkbox.label "If you checked this option
+<!ENTITY checkbox.label 'If you checked this option
                          M.A.D. will be excluded
-                         when you click on Deactivate all">
+                         when you click on "Deactivate all"'>
 <!ENTITY legend.label "legend:">
-<!ENTITY disabledAddon.label " - deactivated addon">
-<!ENTITY incompatibleAddon.label " - incompatible with this version of Firefox">
+<!ENTITY disabledAddon.label " - deactivated add-on">
+<!ENTITY incompatibleAddon.label " - incompatible add-on">

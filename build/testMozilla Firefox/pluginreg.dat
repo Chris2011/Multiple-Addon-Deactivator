@@ -14,10 +14,10 @@ WPI Detector 1.3|$
 1
 0|application/wpi-plugin|||$
 npctrl.dll|$
-c:\Program Files (x86)\Microsoft Silverlight\4.0.60129.0\npctrl.dll|$
-4.0.60129.0|$
-1296256738000|1|1|$
-4.0.60129.0|$
+c:\Program Files (x86)\Microsoft Silverlight\4.0.60531.0\npctrl.dll|$
+4.0.60531.0|$
+1306791132000|1|1|$
+4.0.60531.0|$
 Silverlight Plug-In|$
 2
 0|application/x-silverlight|npctrl|scr|$
@@ -99,5 +99,5 @@ Microsoft® Windows Media Player Firefox Plugin|$
 9|video/x-ms-wvx||wvx,*|$
 
 [INVALID]
-c:\Program Files (x86)\Microsoft Silverlight\4.0.60129.0\npctrlui.dll|$
-1296263210000|$
+c:\Program Files (x86)\Microsoft Silverlight\4.0.60531.0\npctrlui.dll|$
+1306798718000|$

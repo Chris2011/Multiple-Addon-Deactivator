@@ -6,7 +6,6 @@
  <stringbundleset id="stringbundleset">
   <stringbundle id="string-bundle" src="chrome://{appname}/locale/description.properties"/>
  </stringbundleset>
- <script src="scripts/sort.js" />
  <script src="scripts/window.js" />
 
  <commandset>
@@ -14,7 +13,6 @@
   <command id="activateAllCommand" oncommand="setActionForAddons(addonActionEnum.activateAll)" />
   <command id="executeActionCommand" oncommand="setActionForAddons(addonActionEnum.actionForMarkedEntry)" />
   <command id="restartCommand" oncommand="restartFirefox()" />
-  <command id="playCommand" oncommand="play()" />
  </commandset>
 
  <grid>
@@ -73,9 +71,6 @@
    <row>
     <button label="&actionButton.label;" command="executeActionCommand" />
     <button label="&restartButton.label;" command="restartCommand" />
-   </row>
-   <row>
-    <button label="Play" command="playCommand" />
    </row>
   </rows>
  </grid>

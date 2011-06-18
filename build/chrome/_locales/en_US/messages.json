@@ -24,7 +24,7 @@
 "message":"Activate all"
 },
 "disabledAddon_label":{
-"message":" - deactivated addon"
+"message":" - deactivated add-on"
 },
 "executeActionMessage":{
 "message":"Action has been exectued, please restart your Firefox!"
@@ -33,7 +33,7 @@
 "message":"Multiple Addon Deactivator (M.A.D) is an add-on that can (de)activate one, many or each add-on at the same time."
 },
 "incompatibleAddon_label":{
-"message":" - incompatible with this version of Firefox"
+"message":" - incompatible add-on"
 },
 "legend_label":{
 "message":"legend:"
