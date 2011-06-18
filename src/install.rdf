@@ -14,8 +14,8 @@
   <em:homepageURL>https://addons.mozilla.org/de/firefox/user/5625933/</em:homepageURL>
   <em:unpack>true</em:unpack>
   <em:type>2</em:type>
-        
-  <!-- Firefox implemented -->
+
+  <!-- Firefox implementation -->
   <em:targetApplication>
    <RDF:Description>
     <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>

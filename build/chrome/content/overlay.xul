@@ -6,8 +6,8 @@
  <script src="scripts/overlay.js" />
 
 <!-- Firefox -->
- <menupopup id="MenuToolsPopup">
-    <menuitem id="mad-hello" label="Multiple Addon Deactivator"
+ <menupopup id="menu_ToolsPopup">
+  <menuitem id="mad-tools-entry" label="Multiple Addon Deactivator"
               oncommand="MAD.onMenuItemCommand(event);"/>
  </menupopup>
 
@@ -16,6 +16,5 @@
   <toolbarbutton id="mad-toolbar-button" class="toolbarbutton-1 chromeclass-toolbar-additional"
    label="&madToolbarButton.label;" tooltiptext="&madToolbarButton.tooltip;"
    oncommand="MAD.onToolbarButtonCommand()" />
-  </toolbarpalette>
- </statusbar>
+ </toolbarpalette>
 </overlay>

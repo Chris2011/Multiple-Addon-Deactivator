@@ -27,7 +27,7 @@
 "message":" - deactivated add-on"
 },
 "executeActionMessage":{
-"message":"Action has been exectued, please restart your Firefox!"
+"message":"De-/Activation has been exectued, please restart your Firefox!"
 },
 "extensions_MAD_ChrisLE_de_description":{
 "message":"Multiple Addon Deactivator (M.A.D) is an add-on that can (de)activate one, many or each add-on at the same time."
