@@ -3,7 +3,7 @@
 "message":"MAD"
 },
 "actionButton_label":{
-"message":"Execute action for checked Addons"
+"message":"De-/Activate checked add-ons"
 },
 "activated_label":{
 "message":"Activated"

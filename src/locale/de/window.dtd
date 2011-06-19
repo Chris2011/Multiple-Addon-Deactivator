@@ -9,5 +9,5 @@
 <!ENTITY version.label "Version">
 <!ENTITY activatedButton.label "Alle deaktivieren">
 <!ENTITY deactivatedButton.label "Alle aktivieren">
-<!ENTITY actionButton.label "Aktion für markierte ausführen">
+<!ENTITY actionButton.label "Markierte Add-ons de-/aktivieren">
 <!ENTITY restartButton.label "Firefox neustarten">

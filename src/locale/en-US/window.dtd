@@ -9,5 +9,5 @@
 <!ENTITY version.label "Version">
 <!ENTITY activatedButton.label "Deactivate all">
 <!ENTITY deactivatedButton.label "Activate all">
-<!ENTITY actionButton.label "Execute action for checked Addons">
+<!ENTITY actionButton.label "De-/Activate checked add-ons">
 <!ENTITY restartButton.label "Restart Firefox">
