@@ -29,7 +29,7 @@
 "executeActionMessage":{
 "message":"De-/Aktivierung wurde ausgeführt, bitte starten Sie Firefox neu!"
 },
-"extensions_MAD_ChrisLE_de_description":{
+"extensions_ChrisLE_mozilla_org_description":{
 "message":"Multiple Addon Deactivator (M.A.D) is an add-on that can (de)activate one, many or each add-on at the same time."
 },
 "incompatibleAddon_label":{

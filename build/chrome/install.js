@@ -31,7 +31,7 @@ function myPerformInstall(secondTry) {
     instToProfile = (buildID>2003030600 && confirm(INST_TO_PROFILE));
   }
   
-  var chromef = instToProfile ? getFolder("Profile", "extensions/MAD@ChrisLE.de/chrome") : getFolder("chrome");
+  var chromef = instToProfile ? getFolder("Profile", "extensions/ChrisLE@mozilla.org/chrome") : getFolder("chrome");
   err = addFile(APP_PACKAGE, APP_VERSION, "chrome/" + APP_JAR_FILE, chromef, null,true);
   if(APP_PREFS_FILE && (err == SUCCESS) ) {
     const prefDirs=[

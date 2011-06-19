@@ -7,7 +7,7 @@
   <em:iconURL>chrome://MAD/skin/images/icon32.png</em:iconURL>
   <em:name>Multiple Addon Deactivator</em:name>
   <em:version>1.1</em:version>
-  <em:id>MAD@ChrisLE.de</em:id>
+  <em:id>ChrisLE@mozilla.org</em:id>
   <em:description>Multiple Addon Deactivator (M.A.D) is an add-on that can (de)activate one, many or each add-on at the same time</em:description>
   <em:creator>ChrisLE</em:creator>
   <em:optionsURL>chrome://MAD/content/options.xul</em:optionsURL>

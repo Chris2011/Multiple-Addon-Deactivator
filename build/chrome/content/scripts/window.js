@@ -308,7 +308,7 @@
    {
       var prefs = Cc["@mozilla.org/preferences-service;1"]
                     .getService(Ci.nsIPrefService)
-                    .getBranch("multiple-addon-deactivator.MAD@ChrisLE.de.");
+                    .getBranch("multiple-addon-deactivator.ChrisLE@mozilla.org.");
 
       var prefValue = prefs.getBoolPref("excludeMAD");
       var rows = addonTree.view.rowCount;
@@ -332,7 +332,7 @@
                {
                   if((!addon.userDisabled && activateAddon))
                   {
-                     if(!prefValue || (prefValue && addon.id != "MAD@ChrisLE.de"))
+                     if(!prefValue || (prefValue && addon.id != "ChrisLE@mozilla.org"))
                      {
                         addon.userDisabled = activateAddon;
                      }
