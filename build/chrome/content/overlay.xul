@@ -15,6 +15,6 @@
  <toolbarpalette id="BrowserToolbarPalette">
   <toolbarbutton id="mad-toolbar-button" class="toolbarbutton-1 chromeclass-toolbar-additional"
    label="&madToolbarButton.label;" tooltiptext="&madToolbarButton.tooltip;"
-   oncommand="MAD.onToolbarButtonCommand()" />
+   onclick="MAD.onToolbarButtonCommand(event)" />
  </toolbarpalette>
 </overlay>

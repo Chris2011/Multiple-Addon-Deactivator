@@ -6,6 +6,17 @@ row > label
    background-color: #ff8e9b;
 }
 
+.groupboxStyle
+{
+   width: 25em;
+   height: 5em;
+}
+
+.optionGrid
+{
+   padding-top: 0.7em;
+}
+
 #disabledLabel
 {
    background-color: #ddd;

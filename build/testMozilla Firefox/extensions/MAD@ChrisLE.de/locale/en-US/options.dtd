@@ -1,7 +1,0 @@
-<!ENTITY preferences.title "M.A.D. options">
-<!ENTITY checkbox.label 'If you checked this option
-                         M.A.D. will be excluded
-                         when you click on "Deactivate all"'>
-<!ENTITY legend.label "legend:">
-<!ENTITY disabledAddon.label " - deactivated add-on">
-<!ENTITY incompatibleAddon.label " - incompatible add-on">

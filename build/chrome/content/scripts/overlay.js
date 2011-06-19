@@ -6,7 +6,7 @@ var MAD = {
       this.gfiltersimportexportBundle = Components.classes["@mozilla.org/intl/stringbundle;1"].getService(Components.interfaces.nsIStringBundleService);
       this.mystrings = this.gfiltersimportexportBundle.createBundle("chrome://MAD/locale/overlay.properties");
 
-      var myButtonId = "my-mad-extension-button"; // ID of button to add
+      var myButtonId = "mad-toolbar-button"; // ID of button to add
       var afterId = "urlbar-container";    // ID of element to insert after
       var navBar  = document.getElementById("nav-bar");
       var curSet  = navBar.currentSet.split(",");
@@ -31,9 +31,17 @@ var MAD = {
       }
    },
 
-   onToolbarButtonCommand: function()
+   onToolbarButtonCommand: function(event)
    {
-      window.open("chrome://MAD/content/window.xul", "", "chrome,titlebar,toolbar,centerscreen,modal");
+      if(event.button == 0)
+      {
+         window.open("chrome://MAD/content/window.xul", "", "chrome,titlebar,toolbar,centerscreen,modal");
+      }
+      else if(event.button == 2)
+      {
+         // TODO: for rightclick, open a contextmenue to show an option-entry
+         // to open the M.A.D. options.
+      }
    },
 
    onMenuItemCommand: function(event)
