@@ -24,7 +24,7 @@ var {appname} = {
          {
             BrowserToolboxCustomizeDone(true);
          }
-         catch (e)
+         catch(e)
          {
             Application.console.log(e);
          }
