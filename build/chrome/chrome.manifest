@@ -1,0 +1,10 @@
+content MAD 					 content/
+skin	MAD	classic/1.0                  skin/
+
+locale	MAD	en-US		      locale/en-US/
+locale	MAD	de		      locale/de/
+
+style	chrome://global/content/customizeToolbar.xul	 chrome://MAD/skin/overlay.css
+
+#Firefox
+overlay	chrome://browser/content/browser.xul chrome://MAD/content/overlay.xul

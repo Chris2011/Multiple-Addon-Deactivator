@@ -1,0 +1,13 @@
+<!-- Fensterdaten //-->
+<!ENTITY title.label "Multiple Addon Deactivator">
+
+<!-- Anwendungsdaten //-->
+<!ENTITY activated.label "Aktviert">
+<!ENTITY deactivated.label "Deaktiviert">
+<!ENTITY total.label "Gesamt">
+<!ENTITY name.label "Name">
+<!ENTITY version.label "Version">
+<!ENTITY activatedButton.label "Alle deaktivieren">
+<!ENTITY deactivatedButton.label "Alle aktivieren">
+<!ENTITY actionButton.label "Markierte Add-ons de-/aktivieren">
+<!ENTITY restartButton.label "Firefox neustarten">

@@ -1,0 +1,108 @@
+window
+{
+   background: lightgray;
+   min-width: 12em;
+   max-width: 50em;
+}
+
+grid
+{
+   border: 1px solid #000;
+   border-bottom: 0;
+}
+
+.borderRight
+{
+   border-right: 0.0625em solid #000;
+}
+
+grid > rows > row
+{
+   border-bottom: 0.0625em solid #000;
+}
+
+grid > rows > row description:first-child
+{
+   text-align: right;
+   padding: 0 0.3em;
+}
+
+grid > rows > row description:last-child
+{
+   padding-left: 0.3em;
+}
+
+grid > rows > row > #addonTree
+{
+   margin: 0;
+}
+
+listitem
+{
+   color: #000;
+}
+
+#addonName
+{
+   width: 12em;
+}
+
+#checkboxes
+{
+   min-width: 2em;
+   max-width: 2em;
+}
+
+treechildren::-moz-tree-cell-text
+{
+   color: #000;
+}
+
+treechildren::-moz-tree-image
+{
+   width: 1em;
+   height: 1em;
+}
+
+treechildren::-moz-tree-checkbox, treechildren::-moz-tree-checkbox(disabled)
+{
+   list-style-image: url("images/unselected.png");
+   margin-left: -1em;
+}
+
+treechildren::-moz-tree-checkbox(checked)
+{
+   list-style-image: url("images/selected.png");
+}
+
+treechildren::-moz-tree-row(even)
+{
+  background-color: #eee;
+}
+
+treechildren::-moz-tree-row(hover)
+{
+  background-color: #bbb;
+}
+
+treechildren::-moz-tree-row(isDeactivatedStyle)
+{
+   background-color: #ddd;
+}
+
+treechildren::-moz-tree-row(isIncompatibleStyle)
+{
+   background-color: #ff8e9b;
+}
+
+treechildren::-moz-tree-cell-text(isDeactivatedStyle)
+{
+   color: #a2a2a2;
+   font-weight: bold;
+}
+
+treechildren::-moz-tree-cell-text(isIncompatibleStyle)
+{
+   color: #fff;
+   font-weight: bold;
+}

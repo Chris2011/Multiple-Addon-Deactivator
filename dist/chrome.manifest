@@ -1,0 +1,10 @@
+content MAD                                          jar:chrome/MAD.jar!/content/
+skin        MAD        classic/1.0                  jar:chrome/MAD.jar!/skin/
+
+locale        MAD        en-US                      jar:chrome/MAD.jar!/locale/en-US/
+locale        MAD        de                      jar:chrome/MAD.jar!/locale/de/
+
+style        chrome://global/content/customizeToolbar.xul         chrome://MAD/skin/overlay.css
+
+#Firefox
+overlay        chrome://browser/content/browser.xul chrome://MAD/content/overlay.xul
