@@ -3,10 +3,9 @@
    var Cc = Components.classes;
    var Ci = Components.interfaces;
    var propertyStrings = document.getElementById("string-bundle");
-   var extensions = new Array();
+   var extensions = [];
    var allExtensions = null;
-   var extensionVars =
-   {
+   var extensionVars = {
       allAddons: 0,
       activatedAddons: 0,
       deactivatedAddons: 0
