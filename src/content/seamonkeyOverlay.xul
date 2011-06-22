@@ -5,16 +5,16 @@
 <overlay id="{appname}-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
  <script src="scripts/overlay.js" />
 
-<!-- Firefox -->
- <menupopup id="menu_ToolsPopup">
-  <menuitem id="mad-tools-entry" label="Multiple Addon Deactivator"
-              oncommand="{appname}.onMenuItemCommand(event);"/>
+ <!-- Seamonkey -->
+ <menupopup id="taskPopup">
+  <menuitem id="mad-tools-entry" label="{appdisplayname}"
+            oncommand="{appname}.onMenuItemCommand(event);" />
  </menupopup>
 
- <!-- Firefox -->
+ <!-- Seamonkey -->
  <toolbarpalette id="BrowserToolbarPalette">
-  <toolbarbutton id="mad-toolbar-button" class="toolbarbutton-1 chromeclass-toolbar-additional"
-   label="&madToolbarButton.label;" tooltiptext="&madToolbarButton.tooltip;"
-   onclick="{appname}.onToolbarButtonCommand(event)" />
+  <toolbarbutton id="mad-toolbar-button"
+                 tooltiptext="&madToolbarButton.tooltip;"
+                 onclick="{appname}.onToolbarButtonCommand(event)" />
  </toolbarpalette>
 </overlay>

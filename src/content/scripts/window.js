@@ -21,15 +21,15 @@
 
    function getExtensions(callback)
    {
-      var info = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULAppInfo);
-      var appVer = info.version.slice(0, info.version.indexOf('.'));
-
-      if (appVer < 4)
-      {
-         // TODO: implement logic for Gecko Version < 2
-      }
-      else
-      {
+//      var info = Cc["@mozilla.org/xre/app-info;1"].getService(Ci.nsIXULAppInfo);
+//      var appVer = info.version.slice(0, info.version.indexOf('.'));
+//
+//      if (appVer < 4)
+//      {
+//         // TODO: implement logic for Gecko Version < 2
+//      }
+//      else
+//      {
          // Gecko Engine Version and later
          Components.utils.import("resource://gre/modules/AddonManager.jsm");
          Application.getExtensions(function(addons)
@@ -74,7 +74,7 @@
             callback();
             fillTreeView(extensions);
          });
-      }
+      //}
    };
 
    function fillTreeView(extensionModel)

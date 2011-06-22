@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
-<?xml-stylesheet href="chrome://{appname}/skin/overlay.css" type="text/css"?>
-<!DOCTYPE overlay SYSTEM "chrome://{appname}/locale/overlay.dtd">
+<?xml-stylesheet href="chrome://MAD/skin/overlay.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://MAD/locale/overlay.dtd">
 
-<overlay id="{appname}-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+<overlay id="MAD-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
  <script src="scripts/overlay.js" />
 
  <!-- Firefox -->
  <menupopup id="menu_ToolsPopup">
-  <menuitem id="mad-tools-entry" label="{appdisplayname}"
-              oncommand="{appname}.onMenuItemCommand(event);" />
+  <menuitem id="mad-tools-entry" label="Multiple Addon Deactivator"
+              oncommand="MAD.onMenuItemCommand(event);" />
  </menupopup>
 
  <!-- Firefox -->
@@ -17,6 +17,6 @@
                  class="toolbarbutton-1 chromeclass-toolbar-additional"
                  label="&madToolbarButton.label;"
                  tooltiptext="&madToolbarButton.tooltip;"
-                 onclick="{appname}.onToolbarButtonCommand(event)" />
+                 onclick="MAD.onToolbarButtonCommand(event)" />
  </toolbarpalette>
 </overlay>

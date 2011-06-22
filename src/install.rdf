@@ -23,5 +23,23 @@
     <em:maxVersion>7.0a1</em:maxVersion>
    </RDF:Description>
   </em:targetApplication>
+
+  <!-- Seamonkey will be implemented -->
+  <em:targetApplication>
+   <RDF:Description>
+    <em:id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
+    <em:minVersion>2.1</em:minVersion>
+    <em:maxVersion>2.*</em:maxVersion>
+   </RDF:Description>
+  </em:targetApplication>
  </RDF:Description>
+
+ <!-- Fennec -->
+ <em:targetApplication>
+  <Description>
+   <em:id>{a23983c0-fd0e-11dc-95ff-0800200c9a66}</em:id>
+   <em:minVersion>1.0a1</em:minVersion>
+   <em:maxVersion>1.0.*</em:maxVersion>
+  </Description>
+ </em:targetApplication>
 </RDF:RDF>
