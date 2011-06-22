@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  FoxyProxy
+  Copyright (C) 2006-2010 Eric H. Jung and LeahScape, Inc.
+  http://getfoxyproxy.org/
+  eric.jung@yahoo.com
+
+  This source code is released under the GPL license,
+  available in the LICENSE file at the root of this installation
+  and also online at http://www.gnu.org/licenses/gpl.txt
+-->
+<?xml-stylesheet href="foxyproxy.css" type="text/css"?>
+<?xul-overlay href="chrome://foxyproxy/content/firefoxOverlay-svg.xul"?>
+<!DOCTYPE overlay SYSTEM "chrome://foxyproxy/locale/foxyproxy.dtd">
+
+<overlay id="foxyproxy-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script src="overlay.js"/>
+  <script src="selection.js"/>
+
+  <stringbundleset id="foxyproxy-strings">
+    <stringbundle src="chrome://foxyproxy/locale/foxyproxy.properties"/>   
+  </stringbundleset>
+  
+  <!-- firefox tools menu -->
+  <menupopup id="menu_ToolsPopup">
+    <menu id="foxyproxyMenu" insertafter="javascriptConsole,devToolsSeparator" label="&foxyproxy.standard.label;" accesskey="&foxyproxy.accesskey;" key="key_foxyproxyfocus" class="menu-iconic menu-iconic-foxyproxy">
+      <menupopup id="foxyproxy-toolsmenu-popup"
+          onpopupshowing="foxyproxy.onPopupShowing(this, event);"
+          onpopuphiding="foxyproxy.onPopupHiding();"/>
+    </menu>
+  </menupopup>
+
+  <!-- seamonkey tools menu --> 
+  <menupopup id="taskPopup">
+     <menu id="foxyproxyMenu" insertafter="javascriptConsole,devToolsSeparator" accesskey="&foxyproxy.accesskey;">
+      <menupopup id="foxyproxy-toolsmenu-popup"
+          onpopupshowing="foxyproxy.onPopupShowing(this, event);"
+          onpopuphiding="foxyproxy.onPopupHiding();"/>
+        <hbox id="foxyproxy-toolsmenu-icon"/>
+    </menu>
+  </menupopup>
+  
+  <keyset id="mainKeyset">
+		<!-- accel is ctrl on windows, cmd on mac -->  
+    <key id="key_foxyproxyfocus" keycode="VK_F2" modifiers="accel" oncommand="foxyproxy.onOptionsDialog();"/>
+<!-- begin-foxyproxy-standard -->         
+		<key id="key_foxyproxyquickadd" keycode="VK_F2" modifiers="alt" oncommand="foxyproxy.onQuickAddDialog(event);"/>
+<!-- end-foxyproxy-standard -->
+
+    <key id="key_foxyproxychangeproxy" keycode="VK_F3" modifiers="alt" oncommand="foxyproxy.selection.onChangeHost();"/>    
+  </keyset>
+  
+  <menupopup id="contentAreaContextMenu">
+     <menu id="foxyproxy-contextmenu-icon" accesskey="&foxyproxy.accesskey;">
+      <menupopup id="foxyproxy-contextmenu-popup"
+          onpopupshowing="foxyproxy.onPopupShowing(this, event);"
+          onpopuphiding="foxyproxy.onPopupHiding();"/>
+    </menu>    
+  </menupopup>
+  
+  <statusbar id="status-bar">
+    <hbox>
+      <popupset style="overflow: auto;">
+        <tooltip id="foxyproxy-popup" style="max-height: none; max-width: none;" onclick="this.hidePopup();"/>
+      </popupset>
+    </hbox>
+    <menupopup id="foxyproxy-statusbar-popup"
+      onpopupshowing="foxyproxy.onPopupShowing(this, event);"
+      onpopuphiding="foxyproxy.onPopupHiding();"/>
+    <statusbarpanel 
+      id="foxyproxy-status-text"
+      onclick="foxyproxy.onSBTBClick(event, foxyproxy.fp.statusbar);"
+      mode="patterns" persist="mode hidden" hidden="true" mousethrough="never"/> <!--  mousethrough is for SB. See http://www.songbirdnest.com/node/2547 -->
+    <statusbarpanel 
+      id="foxyproxy-statusbar-icon"
+      onclick="foxyproxy.onSBTBClick(event, foxyproxy.fp.statusbar);"
+      hidden="true" mousethrough="never"/> <!--  mousethrough is for SB. See http://www.songbirdnest.com/node/2547 --> 
+  </statusbar>
+
+  <!--  toolbar -->
+  <toolbarpalette id="BrowserToolbarPalette">
+	  <toolbarbutton id="foxyproxy-toolbar-icon" type="menu" orient="horizontal" mode="patterns" persist="mode" label="&foxyproxy.standard.label;"
+	    context="foxyproxy-toolbarbutton-popup"
+	    onclick="foxyproxy.onSBTBClick(event, foxyproxy.fp.toolbar);event.stopPropagation();event.preventDefault();return false;">
+	      <menupopup id="foxyproxy-toolbarbutton-popup"
+	      onpopuphiding="foxyproxy.onPopupHiding();"
+	      onpopupshowing="event.stopPropagation();event.preventDefault();return false;"/>  <!--  todo: do i really need all 3 of these? -->
+	  </toolbarbutton>    
+  </toolbarpalette>
+</overlay>

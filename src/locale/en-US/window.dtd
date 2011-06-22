@@ -1,3 +1,6 @@
+<!ENTITY % brandDTD SYSTEM "chrome://branding/locale/brand.dtd">
+%brandDTD;
+
 <!-- Window Data //-->
 <!ENTITY title.label "{appdisplayname}">
 
@@ -10,4 +13,4 @@
 <!ENTITY activatedButton.label "Deactivate all">
 <!ENTITY deactivatedButton.label "Activate all">
 <!ENTITY actionButton.label "De-/Activate checked add-ons">
-<!ENTITY restartButton.label "Restart Firefox">
+<!ENTITY restartButton.label "Restart &brandShortName;">
