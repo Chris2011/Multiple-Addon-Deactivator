@@ -1,0 +1,16 @@
+<!ENTITY % brandDTD SYSTEM "chrome://branding/locale/brand.dtd">
+%brandDTD;
+
+<!-- Window Data //-->
+<!ENTITY title.label "Multiple Addon Deactivator">
+
+<!-- Application Data //-->
+<!ENTITY activated.label "Activated">
+<!ENTITY deactivated.label "Deactivated">
+<!ENTITY total.label "Total">
+<!ENTITY name.label "Name">
+<!ENTITY version.label "Version">
+<!ENTITY activatedButton.label "Deactivate all">
+<!ENTITY deactivatedButton.label "Activate all">
+<!ENTITY actionButton.label "De-/Activate checked add-ons">
+<!ENTITY restartButton.label "Restart &brandShortName;">

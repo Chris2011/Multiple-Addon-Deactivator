@@ -112,7 +112,7 @@
          {
             return (column.id == "addonName") ? ((extensionModel[row].addonIcon)
                                               ? extensionModel[row].addonIcon
-                                              : "chrome://{appname}/skin/images/defaultIcon.png") : '';
+                                              : "chrome://MAD/skin/images/defaultIcon.png") : '';
          },
          getRowProperties: function(row, props)
          {
