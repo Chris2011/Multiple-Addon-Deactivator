@@ -252,17 +252,6 @@
       }
    };
 
-   this.play = function()
-   {
-      var sound = Cc["@mozilla.org/sound;1"].createInstance(Ci.nsISound);
-      var enterSoundURL = "http://149.5.240.22/WR-DE-WR57";
-
-      var ioService = Cc["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
-      var url = ioService.newURI(enterSoundURL, null, null);
-
-      sound.play(url);
-   };
-
    this.restartFirefox = function()
    {
       if(window.confirm(propertyStrings.getString("restartFirefoxMessage")))
