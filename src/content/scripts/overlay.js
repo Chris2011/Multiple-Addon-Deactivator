@@ -3,8 +3,10 @@ var {appname} = {
    {
       // initialization code
       this.initialized = true;
-      this.gfiltersimportexportBundle = Components.classes["@mozilla.org/intl/stringbundle;1"].getService(Components.interfaces.nsIStringBundleService);
-      this.mystrings = this.gfiltersimportexportBundle.createBundle("chrome://{appname}/locale/overlay.properties");
+      this.gfiltersimportexportBundle = Components.classes["@mozilla.org/intl/stringbundle;1"]
+                                                  .getService(Components.interfaces.nsIStringBundleService);
+      this.mystrings = this.gfiltersimportexportBundle
+                           .createBundle("chrome://{appname}/locale/overlay.properties");
 
       var myButtonId = "mad-toolbar-button"; // ID of button to add
       var afterId = "urlbar-container";    // ID of element to insert after
@@ -13,7 +15,7 @@ var {appname} = {
 
       if(curSet.indexOf(myButtonId) == -1)
       {
-         var pos = curSet.indexOf(afterId) + 1 || curSet.length;
+         var pos = curSet.indexOf(afterId) - 1 || curSet.length;
          var set = curSet.slice(0, pos).concat(myButtonId).concat(curSet.slice(pos));
 
          navBar.setAttribute("currentset", set.join(","));
@@ -35,7 +37,7 @@ var {appname} = {
    {
       if(event.button == 0)
       {
-         window.open("chrome://{appname}/content/window.xul", "", "chrome,titlebar,toolbar,centerscreen,modal");
+         window.open("chrome://{appname}/content/window.xul", "", "chrome,titlebar,toolbar,centerscreen,resizable=no,modal");
       }
       else if(event.button == 2)
       {
@@ -46,7 +48,7 @@ var {appname} = {
 
    onMenuItemCommand: function(event)
    {
-      window.open("chrome://{appname}/content/window.xul", "", "chrome,titlebar,toolbar,centerscreen,modal");
+      window.open("chrome://{appname}/content/window.xul", "", "chrome,titlebar,toolbar,centerscreen,resizable=no,modal");
    }
 };
 

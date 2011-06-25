@@ -2,16 +2,21 @@
 <?xml-stylesheet href="chrome://{appname}/skin/window.css" type="text/css"?>
 <!DOCTYPE window SYSTEM "chrome://{appname}/locale/window.dtd">
 
-<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&title.label;" onunload="uninit()">
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        title="&title.label;" onunload="uninit()">
  <stringbundleset id="stringbundleset">
-  <stringbundle id="string-bundle" src="chrome://{appname}/locale/description.properties"/>
+  <stringbundle id="string-bundle"
+                src="chrome://{appname}/locale/description.properties"/>
  </stringbundleset>
  <script src="scripts/window.js" />
 
  <commandset>
-  <command id="deactivateAllCommand" oncommand="setActionForAddons(addonActionEnum.deactivateAll)" />
-  <command id="activateAllCommand" oncommand="setActionForAddons(addonActionEnum.activateAll)" />
-  <command id="executeActionCommand" oncommand="setActionForAddons(addonActionEnum.actionForMarkedEntry)" />
+  <command id="deactivateAllCommand"
+           oncommand="setActionForAddons(addonActionEnum.deactivateAll)" />
+  <command id="activateAllCommand"
+           oncommand="setActionForAddons(addonActionEnum.activateAll)" />
+  <command id="executeActionCommand"
+           oncommand="setActionForAddons(addonActionEnum.actionForMarkedEntry)" />
   <command id="restartCommand" oncommand="restartFirefox()" />
  </commandset>
 
@@ -43,12 +48,14 @@
    <row>
     <tree id="addonTree" flex="1" rows="10" enableColumnDrag="true">
      <treecols>
-      <treecol id="checkboxes" type="checkbox" value="true" flex="1" editable="true">
+      <treecol id="checkboxes" type="checkbox" value="true"
+               flex="1" editable="true">
        <image id="checkAll" src="../skin/images/unselected.png" />
       </treecol>
 
       <splitter class="tree-splitter" disabled="true" />
-      <treecol id="addonName" label="&name.label;" flex="2" sortDirection="ascending" />
+      <treecol id="addonName" label="&name.label;"
+               flex="2" sortDirection="ascending" />
 
       <splitter class="tree-splitter" />
       <treecol id="addonVersion" label="&version.label;" flex="3" />
