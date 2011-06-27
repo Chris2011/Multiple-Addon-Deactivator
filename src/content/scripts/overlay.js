@@ -15,7 +15,8 @@ var {appname} = {
    {
       if(event.button == 0)
       {
-         window.open("chrome://{appname}/content/window.xul", "", "chrome,titlebar,toolbar,centerscreen,resizable=no,modal");
+         window.open("chrome://{appname}/content/window.xul", "", "chrome,"+
+                     "titlebar, toolbar, centerscreen, resizable=yes, modal");
       }
       else if(event.button == 2)
       {
@@ -26,7 +27,8 @@ var {appname} = {
 
    onMenuItemCommand: function(event)
    {
-      window.open("chrome://{appname}/content/window.xul", "", "chrome,titlebar,toolbar,centerscreen,resizable=no,modal");
+      window.open("chrome://{appname}/content/window.xul", "", "chrome,"+
+                  "titlebar, toolbar, centerscreen, resizable=yes, modal");
    }
 };
 
