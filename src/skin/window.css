@@ -1,9 +1,9 @@
 window
 {
    background: lightgray;
-   min-width: 32em;
-   max-width: 32em;
-   width: 32em;
+   min-width: 38em;
+   max-width: 38em;
+   width: 38em;
 }
 
 grid
@@ -40,7 +40,7 @@ grid > rows > row > #addonTree
 
 button
 {
-   min-width: 15em;
+   min-width: 18em;
 }
 
 listitem
