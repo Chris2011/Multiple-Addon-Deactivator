@@ -3,7 +3,7 @@
 <!DOCTYPE window SYSTEM "chrome://{appname}/locale/window.dtd">
 
 <window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-        title="&title.label;" onunload="uninit()">
+        title="&title.label;" onunload="uninit()" onload="sort()">
  <stringbundleset id="stringbundleset">
   <stringbundle id="string-bundle"
                 src="chrome://{appname}/locale/description.properties"/>
@@ -46,16 +46,17 @@
   </columns>
   <rows>
    <row flex="1">
-    <tree id="addonTree" flex="1" rows="10" enableColumnDrag="true">
+    <tree id="addonTree" flex="1" rows="15" enableColumnDrag="true"
+          sortDirection="ascending" sortResource="addonName">
      <treecols>
-      <treecol id="checkboxes" type="checkbox" value="true"
-               flex="1" editable="true">
+      <treecol id="checkboxes" type="checkbox"
+               value="true" flex="1" editable="true">
        <image id="checkAll" src="../skin/images/unselected.png" />
       </treecol>
 
       <splitter class="tree-splitter" disabled="true" />
-      <treecol id="addonName" label="&name.label;"
-               flex="2" sortDirection="ascending" />
+      <treecol id="addonName" label="&name.label;" flex="2"
+               onclick="sort(this)" class="sortDirectionIndicator" />
 
       <splitter class="tree-splitter" />
       <treecol id="addonVersion" label="&version.label;" flex="3" />

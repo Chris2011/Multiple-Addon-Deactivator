@@ -5,15 +5,13 @@
 <overlay id="{appname}-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
  <script src="scripts/overlay.js" />
 
- <menupopup id="menu_ToolsPopup">
+ <menupopup id="taskPopup">
   <menuitem id="mad-tools-entry" label="{appdisplayname}"
             oncommand="{appname}.onMenuItemCommand(event);" />
  </menupopup>
 
- <toolbarpalette id="BrowserToolbarPalette">
+ <toolbarpalette id="AddressBookToolbarPalette">
   <toolbarbutton id="mad-toolbar-button"
-                 class="toolbarbutton-1 chromeclass-toolbar-additional"
-                 label="&madToolbarButton.label;"
                  tooltiptext="&madToolbarButton.tooltip;"
                  onclick="{appname}.onToolbarButtonCommand(event)" />
  </toolbarpalette>

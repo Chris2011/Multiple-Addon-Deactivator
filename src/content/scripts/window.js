@@ -200,6 +200,58 @@
       document.getElementById("addonTree").view = treeView;
    };
 
+   function prepareForComparison(o)
+   {
+      return (typeof o == "string") ? o.toLowerCase() : o;
+   };
+
+   this.sort = function(column)
+   {
+      var columnName;
+      var order = addonTree.getAttribute("sortDirection") == "ascending" ? 1 : -1;
+
+      //if the column is passed and it's already sorted by that column, reverse sort
+      if(column)
+      {
+         columnName = column.id;
+         if(addonTree.getAttribute("sortResource") == columnName)
+         {
+           order *= -1;
+         }
+      }
+      else
+      {
+         columnName = addonTree.getAttribute("sortResource");
+      }
+
+      function columnSort(a, b)
+      {
+         if(prepareForComparison(a[columnName]) > prepareForComparison(b[columnName]))
+         {
+            return 1 * order;
+         }
+         if(prepareForComparison(a[columnName]) < prepareForComparison(b[columnName]))
+         {
+            return -1 * order;
+         }
+
+         return 0;
+      };
+
+      extensions.sort(columnSort);
+      //setting these will make the sort option persist
+      addonTree.setAttribute("sortDirection", order == 1 ? "ascending" : "descending");
+      addonTree.setAttribute("sortResource", columnName);
+
+      //set the appropriate attributes to show to indicator
+      var cols = addonTree.getElementsByTagName("treecol");
+      for(var i = 0; i < cols.length; i++)
+      {
+         cols[i].removeAttribute("sortDirection");
+      }
+      document.getElementById(columnName).setAttribute("sortDirection", order == 1 ? "ascending" : "descending");
+   };
+
    this.uninit = function()
    {
       document.getElementById("addonTree").view = null;
@@ -337,7 +389,6 @@
          deactivatedAddons.value = extensionVars.deactivatedAddons;
          totalAddons.value = extensionVars.allAddons;
       });
-
       addonTree = document.getElementById("addonTree");
    }, 1);
 })();

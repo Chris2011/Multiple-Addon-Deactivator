@@ -11,3 +11,12 @@ overlay	chrome://browser/content/browser.xul chrome://{appname}/content/firefoxO
 
 #SeaMonkey
 overlay chrome://navigator/content/navigator.xul chrome://{appname}/content/seamonkeyOverlay.xul
+
+#Thunderbird mail
+overlay	chrome://messenger/content/messenger.xul	 chrome://{appname}/content/thunderbirdMailOverlay.xul
+
+# Thunderbird compose
+overlay	chrome://messenger/content/messengercompose/messengercompose.xul chrome://{appname}/content/thunderbirdComposeOverlay.xul
+
+# Thunderbird address book
+overlay	chrome://messenger/content/addressbook/addressbook.xul chrome://{appname}/content/thunderbirdAddressBookOverlay.xul
