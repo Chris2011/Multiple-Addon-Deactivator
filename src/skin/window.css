@@ -1,8 +1,9 @@
 window
 {
    background: lightgray;
-   min-width: 12em;
-   max-width: 50em;
+   min-width: 32em;
+   max-width: 32em;
+   width: 32em;
 }
 
 grid
@@ -35,6 +36,11 @@ grid > rows > row description:last-child
 grid > rows > row > #addonTree
 {
    margin: 0;
+}
+
+button
+{
+   min-width: 15em;
 }
 
 listitem

@@ -40,12 +40,12 @@
    </row>
   </rows>
  </grid>
- <grid>
+ <grid flex="1">
   <columns>
    <column flex="1" />
   </columns>
   <rows>
-   <row>
+   <row flex="1">
     <tree id="addonTree" flex="1" rows="10" enableColumnDrag="true">
      <treecols>
       <treecol id="checkboxes" type="checkbox" value="true"
@@ -60,14 +60,14 @@
       <splitter class="tree-splitter" />
       <treecol id="addonVersion" label="&version.label;" flex="3" />
      </treecols>
-     <treechildren id="bla" onclick="onRowClick()" />
+     <treechildren onclick="onRowClick()" />
     </tree>
    </row>
   </rows>
  </grid>
  <grid>
   <columns>
-   <column />
+   <column flex="1" />
    <column flex="1" />
   </columns>
   <rows>

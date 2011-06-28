@@ -6,7 +6,7 @@
 <prefwindow id="mad-preferences" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&preferences.title;">
  <prefpane id="pane1">
   <preferences>
-   <preference id="withoutMAD" name="multiple-addon-deactivator.{appid}.excludeMAD" type="bool"/>
+   <preference id="withoutMAD" name="extensions.multiple-addon-deactivator.{appid}.excludeMAD" type="bool"/>
   </preferences>
   <hbox>
    <groupbox class="groupboxStyle">
