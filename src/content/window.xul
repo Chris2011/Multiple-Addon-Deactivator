@@ -3,7 +3,8 @@
 <!DOCTYPE window SYSTEM "chrome://{appname}/locale/window.dtd">
 
 <window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-        title="&title.label;" onunload="uninit()" onload="sort()">
+        title="&title.label;" persist="width height screenX screenY sizemode"
+        onunload="uninit()">
  <stringbundleset id="stringbundleset">
   <stringbundle id="string-bundle"
                 src="chrome://{appname}/locale/description.properties"/>
@@ -47,7 +48,7 @@
   <rows>
    <row flex="1">
     <tree id="addonTree" flex="1" rows="15" enableColumnDrag="true"
-          sortDirection="ascending" sortResource="addonName">
+          sortResource="addonName">
      <treecols>
       <treecol id="checkboxes" type="checkbox"
                value="true" flex="1" editable="true">
