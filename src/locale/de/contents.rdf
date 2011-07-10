@@ -8,7 +8,7 @@
 
  <RDF:Description about="urn:mozilla:locale:de-DE"
         chrome:displayName="German(DE)"
-        chrome:author="foxbeans"
+        chrome:author="ChrisLE"
         chrome:name="de-DE"
         chrome:previewURL="http://www.mozilla.org/locales/de-DE.gif">
 

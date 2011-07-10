@@ -1,0 +1,7 @@
+<!ENTITY preferences.title "Inställningar för M.A.D.">
+<!ENTITY checkbox.label "Om du markerar detta alternativ
+                         kommer M.A.D. att undantas när
+                         du klickar på &quot;Inaktivera alla&quot;">
+<!ENTITY legend.label "förklaring:">
+<!ENTITY disabledAddon.label " - inaktiverat tillägg">
+<!ENTITY incompatibleAddon.label " - inkompatibelt med aktuell Firefox-version">

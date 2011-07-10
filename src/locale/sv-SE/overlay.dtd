@@ -1,0 +1,5 @@
+<!ENTITY MAD "M.A.D.">
+
+<!-- Toolbarbutton Messages //-->
+<!ENTITY madToolbarButton.label "Multiple Addon Deactivator">
+<!ENTITY madToolbarButton.tooltip "Aktiverar/inaktiverar ett, flera eller alla tillägg på samma gång.">

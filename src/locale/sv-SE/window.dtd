@@ -1,0 +1,13 @@
+<!-- Window Data //-->
+<!ENTITY title.label "Multiple Addon Deactivator">
+
+<!-- Application Data //-->
+<!ENTITY activated.label "Aktiverat">
+<!ENTITY deactivated.label "Inaktiverat">
+<!ENTITY total.label "Totalt">
+<!ENTITY name.label "Namn">
+<!ENTITY version.label "Version">
+<!ENTITY activatedButton.label "Inaktivera alla">
+<!ENTITY deactivatedButton.label "Aktivera alla">
+<!ENTITY actionButton.label "Utför åtgärden för markerade tillägg">
+<!ENTITY restartButton.label "Starta om Firefox">

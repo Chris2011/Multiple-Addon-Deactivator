@@ -3,8 +3,8 @@
 <!DOCTYPE window SYSTEM "chrome://{appname}/locale/window.dtd">
 
 <window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-        title="&title.label;" persist="width height screenX screenY sizemode"
-        onunload="uninit()">
+        title="&title.label;" id="madWindow"
+        persist="width height screenX screenY sizemode" onunload="uninit()">
  <stringbundleset id="stringbundleset">
   <stringbundle id="string-bundle"
                 src="chrome://{appname}/locale/description.properties"/>
