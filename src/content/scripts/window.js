@@ -19,7 +19,7 @@
    function getExtensions(callback)
    {
       var allExtensions = null;
-      
+
       Components.utils.import("resource://gre/modules/AddonManager.jsm");
       Application.getExtensions(function(addons)
       {
@@ -369,8 +369,13 @@
             activatedAddons.value = extensionVars.activatedAddons;
             deactivatedAddons.value = extensionVars.deactivatedAddons;
             totalAddons.value = extensionVars.allAddons;
+
+            callback();
          });
       }, 1);
-      setTimeout(function(){callback();}, 1000);
-   }(sort));
+      //setTimeout(function(){sort();}, 1000);
+   }(function()
+   {
+    sort();
+   }));
 })();
