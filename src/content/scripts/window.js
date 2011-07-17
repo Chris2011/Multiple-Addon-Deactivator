@@ -4,14 +4,12 @@
    var Ci = Components.interfaces;
    var propertyStrings = document.getElementById("string-bundle");
    var extensions = [];
-   var allExtensions = null;
    var extensionVars = {
       allAddons: 0,
       activatedAddons: 0,
       deactivatedAddons: 0
    };
 
-   this.addonTree = null;
    this.addonActionEnum = {
       deactivateAll: 0,
       activateAll: 1,
@@ -20,6 +18,8 @@
 
    function getExtensions(callback)
    {
+      var allExtensions = null;
+      
       Components.utils.import("resource://gre/modules/AddonManager.jsm");
       Application.getExtensions(function(addons)
       {
@@ -69,10 +69,6 @@
    {
       var treeView =
       {
-         originalData: null,
-         data: extensionModel,
-         treeBox: null,
-         sorted: false,
          rowCount: extensionModel.length,
          getCellText: function(row, column)
          {
@@ -81,38 +77,21 @@
          },
          getCellValue: function(row, column)
          {
-            return (column.id == "checkboxes") ? extensionModel[row].isSelected : null;
+            return (column.id == "checkboxes") ? extensionModel[row].isSelected
+                                               : null;
          },
-         setTree: function(tree)
-         {
-            if(tree)
-            {
-               // initialize view
-               this.treeBox = tree;
-            }
-            else
-            {
-               // finalize view
-               this.treeBox = null;
-               this.data = null;
-            }
-         },
-         isContainer: function(row){return false;},
-         isEditable: function(row, column){return true},
-         isSeparator: function(row)
-         {
-            return this.data[row] == null;
-         },
-         isSorted: function()
-         {
-            return this.sorted;
-         },
-         getLevel: function(row){return 0;},
+         setTree: function(){},
+         isContainer: function(){},
+         isEditable: function(){},
+         isSeparator: function(){},
+         isSorted: function(){},
+         getLevel: function(){},
          getImageSrc: function(row, column)
          {
             return (column.id == "addonName") ? ((extensionModel[row].addonIcon)
-                                              ? extensionModel[row].addonIcon
-                                              : "chrome://{appname}/skin/images/defaultIcon.png") : '';
+                                                ? extensionModel[row].addonIcon
+                                                : "chrome://{appname}/skin/images/defaultIcon.png")
+                                              : '';
          },
          getRowProperties: function(row, props)
          {
@@ -136,8 +115,8 @@
                setNewStyle(props, "incompatible");
             }
          },
-         getColumnProperties: function(colid, col, props){},
-         cycleCell: function(row, column){},
+         getColumnProperties: function(){},
+         cycleCell: function(){},
          cycleHeader: function(column)
          {
             if(column.id == "checkboxes")
@@ -155,10 +134,6 @@
                   checkAll(headerImage, false, imagePath+"unselected.png",
                            column, this.rowCount);
                }
-            }
-            else if(column.id == "addonName")
-            {
-               // TODO: implement sort function
             }
          },
          setCellValue: function(row, column, cellValue)
@@ -207,6 +182,7 @@
 
    this.sort = function(column)
    {
+      var addonTree = document.getElementById("addonTree");
       var columnName;
       var order = addonTree.getAttribute("sortDirection") == "ascending" ? 1 : -1;
 
@@ -264,6 +240,7 @@
 
    this.onRowClick = function()
    {
+      var addonTree = document.getElementById("addonTree");
       var cellVal = !toBool((addonTree.view.getCellValue(
                              addonTree.view.selection.currentIndex,
                              addonTree.view.selection.tree.columns[0])));
@@ -275,17 +252,17 @@
 
    this.setActionForAddons = function(addonAction)
    {
-      if(addonAction == addonActionEnum["deactivateAll"])
+      if(addonAction == addonActionEnum.deactivateAll)
       {
          stdAddonAction(true);
          alert(propertyStrings.getString("allDeactivatedMessage"));
       }
-      else if(addonAction == addonActionEnum["activateAll"])
+      else if(addonAction == addonActionEnum.activateAll)
       {
          stdAddonAction(false);
          alert(propertyStrings.getString("allActivatedMessage"));
       }
-      else if(addonAction == addonActionEnum["actionForMarkedEntry"])
+      else if(addonAction == addonActionEnum.actionForMarkedEntry)
       {
          stdAddonAction(null);
          alert(propertyStrings.getString("executeActionMessage"));
@@ -334,6 +311,7 @@
 
    function stdAddonAction(activateAddon)
    {
+      var addonTree = document.getElementById("addonTree");
       var prefs = Cc["@mozilla.org/preferences-service;1"]
                     .getService(Ci.nsIPrefService)
                     .getBranch("extensions.multiple-addon-deactivator.ChrisLE@mozilla.org.");
@@ -349,7 +327,8 @@
             {
                if(activateAddon == null)
                {
-                  var isChecked = toBool((addonTree.view.getCellValue(counterVar, addonTree.view.selection.tree.columns[0])));
+                  var isChecked = toBool((addonTree.view.getCellValue(counterVar,
+                                          addonTree.view.selection.tree.columns[0])));
 
                   if(isChecked)
                   {
@@ -377,18 +356,21 @@
       }
    };
 
-   setTimeout(function()
+   var loadFunction = (function(callback)
    {
-      var activatedAddons = document.getElementById("activatedAddons");
-      var deactivatedAddons = document.getElementById("deactivatedAddons");
-      var totalAddons = document.getElementById("totalAddons");
-
-      getExtensions(function()
+      setTimeout(function()
       {
-         activatedAddons.value = extensionVars.activatedAddons;
-         deactivatedAddons.value = extensionVars.deactivatedAddons;
-         totalAddons.value = extensionVars.allAddons;
-      });
-      addonTree = document.getElementById("addonTree");
-   }, 1);
+         var activatedAddons = document.getElementById("activatedAddons");
+         var deactivatedAddons = document.getElementById("deactivatedAddons");
+         var totalAddons = document.getElementById("totalAddons");
+
+         getExtensions(function()
+         {
+            activatedAddons.value = extensionVars.activatedAddons;
+            deactivatedAddons.value = extensionVars.deactivatedAddons;
+            totalAddons.value = extensionVars.allAddons;
+         });
+      }, 1);
+      setTimeout(function(){callback();}, 1000);
+   }(sort));
 })();
