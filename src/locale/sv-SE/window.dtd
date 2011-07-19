@@ -10,4 +10,4 @@
 <!ENTITY activatedButton.label "Inaktivera alla">
 <!ENTITY deactivatedButton.label "Aktivera alla">
 <!ENTITY actionButton.label "Utför åtgärden för markerade tillägg">
-<!ENTITY restartButton.label "Starta om Firefox">
+<!ENTITY restartButton.label "Starta om program">
