@@ -373,7 +373,7 @@
             callback();
          });
       }, 1);
-      //setTimeout(function(){sort();}, 1000);
+      setTimeout(function(){sort();}, 1000);
    }(function()
    {
     sort();
