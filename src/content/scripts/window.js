@@ -355,27 +355,19 @@
          actionCounter(i);
       }
    };
-
-   var loadFunction = (function(callback)
+   setTimeout(function()
    {
-      setTimeout(function()
+      var activatedAddons = document.getElementById("activatedAddons");
+      var deactivatedAddons = document.getElementById("deactivatedAddons");
+      var totalAddons = document.getElementById("totalAddons");
+
+      getExtensions(function()
       {
-         var activatedAddons = document.getElementById("activatedAddons");
-         var deactivatedAddons = document.getElementById("deactivatedAddons");
-         var totalAddons = document.getElementById("totalAddons");
-
-         getExtensions(function()
-         {
-            activatedAddons.value = extensionVars.activatedAddons;
-            deactivatedAddons.value = extensionVars.deactivatedAddons;
-            totalAddons.value = extensionVars.allAddons;
-
-            callback();
-         });
-      }, 1);
-      //setTimeout(function(){sort();}, 1000);
-   }(function()
-   {
-    sort();
-   }));
+         activatedAddons.value = extensionVars.activatedAddons;
+         deactivatedAddons.value = extensionVars.deactivatedAddons;
+         totalAddons.value = extensionVars.allAddons;
+      });
+   }, 1);
+   // has to changed cause not a good solution
+   setTimeout(function(){sort();}, 400);
 })();
