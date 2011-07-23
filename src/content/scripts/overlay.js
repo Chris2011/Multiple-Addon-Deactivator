@@ -13,16 +13,8 @@ var {appname} = {
 
    onToolbarButtonCommand: function(event)
    {
-      if(event.button == 0)
-      {
-         window.open("chrome://{appname}/content/window.xul", "", "chrome,"+
-                     "titlebar, toolbar, centerscreen, resizable=yes, modal");
-      }
-      else if(event.button == 2)
-      {
-         // TODO: for rightclick, open a contextmenue to show an option-entry
-         // to open the M.A.D. options.
-      }
+      window.open("chrome://{appname}/content/window.xul", "", "chrome,"+
+                  "titlebar, toolbar, centerscreen, resizable=yes, modal");
    },
 
    onMenuItemCommand: function(event)

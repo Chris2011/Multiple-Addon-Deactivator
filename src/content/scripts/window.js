@@ -355,6 +355,7 @@
          actionCounter(i);
       }
    };
+
    setTimeout(function()
    {
       var activatedAddons = document.getElementById("activatedAddons");
@@ -368,6 +369,4 @@
          totalAddons.value = extensionVars.allAddons;
       });
    }, 1);
-   // has to changed cause not a good solution
-   setTimeout(function(){sort();}, 400);
 })();
