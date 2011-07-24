@@ -62,7 +62,10 @@
 
          callback();
          fillTreeView(extensions);
-         sort();
+         setTimeout(function()
+         {
+          sort();
+         }, 1);
       });
    };
 
