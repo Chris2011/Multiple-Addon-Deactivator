@@ -62,6 +62,7 @@
 
          callback();
          fillTreeView(extensions);
+         sort();
       });
    };
 
