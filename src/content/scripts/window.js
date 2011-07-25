@@ -94,6 +94,7 @@
                                                 : "chrome://{appname}/skin/images/defaultIcon.png")
                                               : '';
          },
+
          getRowProperties: function(row, props)
          {
             if(extensionModel[row].isDeactivated)
@@ -109,6 +110,7 @@
                setNewStyle(props, "incompatible")
             }
          },
+
          getCellProperties: function(row, column, props)
          {
             if(extensionModel[row].isDeactivated)
@@ -124,6 +126,7 @@
                setNewStyle(props, "incompatible");
             }
          },
+
          getColumnProperties: function(){},
          cycleCell: function(){},
          cycleHeader: function(column)
@@ -145,6 +148,7 @@
                }
             }
          },
+
          setCellValue: function(row, column, cellValue)
          {
             if(!extensionModel[row].isIncompatible)
@@ -152,6 +156,7 @@
                extensionModel[row].isSelected = (column.id == "checkboxes") ? cellValue : null;
             }
          },
+         
          setCellText: function(){}
       };
 
