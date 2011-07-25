@@ -1,5 +1,8 @@
+<!ENTITY % brandDTD SYSTEM "chrome://branding/locale/brand.dtd">
+%brandDTD;
+
 <!-- Window Data //-->
-<!ENTITY title.label "Multiple Addon Deactivator">
+<!ENTITY title.label "{appdisplayname}">
 
 <!-- Application Data //-->
 <!ENTITY activated.label "Aktiverat">
@@ -10,4 +13,4 @@
 <!ENTITY activatedButton.label "Inaktivera alla">
 <!ENTITY deactivatedButton.label "Aktivera alla">
 <!ENTITY actionButton.label "Utför åtgärden för markerade tillägg">
-<!ENTITY restartButton.label "Starta om program">
+<!ENTITY restartButton.label "Starta om &brandShortName;">

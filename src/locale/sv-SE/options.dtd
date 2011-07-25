@@ -3,5 +3,6 @@
                          kommer M.A.D. att undantas när
                          du klickar på &quot;Inaktivera alla&quot;">
 <!ENTITY legend.label "förklaring:">
-<!ENTITY disabledAddon.label " - inaktiverat tillägg">
+<!ENTITY activatedAddon.label " - aktiverat tillägg">
+<!ENTITY deactivatedAddon.label " - inaktiverat tillägg">
 <!ENTITY incompatibleAddon.label " - inkompatibelt med aktuell program-version">

@@ -3,7 +3,7 @@ row > label
    width: 4em;
    height: 1.5em;
    border: 0.0625em solid black;
-   background-color: #ff8e9b;
+   background-color: palegreen;
 }
 
 .groupboxStyle
@@ -17,7 +17,12 @@ row > label
    padding-top: 0.7em;
 }
 
-#disabledLabel
+#deactivatedLabel
 {
    background-color: #ddd;
+}
+
+#incompatibleLabel
+{
+   background-color: #ff8e9b;
 }

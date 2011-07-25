@@ -2,5 +2,6 @@
 <!ENTITY checkbox.label 'M.A.D. wird von der Deaktivierung ausgeschlossen,
                          wenn diese Option aktiviert ist.'>
 <!ENTITY legend.label "Legende:">
-<!ENTITY disabledAddon.label " - deaktiviertes Add-on">
+<!ENTITY activatedAddon.label " - aktiviertes Add-on">
+<!ENTITY deactivatedAddon.label " - deaktiviertes Add-on">
 <!ENTITY incompatibleAddon.label " - inkompatibles Add-on">

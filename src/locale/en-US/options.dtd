@@ -3,5 +3,6 @@
                          M.A.D. will be excluded
                          when you click on "Deactivate all"'>
 <!ENTITY legend.label "legend:">
-<!ENTITY disabledAddon.label " - deactivated add-on">
+<!ENTITY activatedAddon.label " - activated add-on">
+<!ENTITY deactivatedAddon.label " - deactivated add-on">
 <!ENTITY incompatibleAddon.label " - incompatible add-on">

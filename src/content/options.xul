@@ -34,12 +34,16 @@
      </columns>
      <rows>
       <row>
-       <label id="disabledLabel" />
-       <description flex="1">&disabledAddon.label;</description>
+       <label id="activatedLabel" />
+       <description flex="1">&activatedAddon.label;</description>
+      </row>
+      <row>
+       <label id="deactivatedLabel" />
+       <description flex="1">&deactivatedAddon.label;</description>
       </row>
       <row>
        <label id="incompatibleLabel" />
-       <description>&incompatibleAddon.label;</description>
+       <description flex="1">&incompatibleAddon.label;</description>
       </row>
      </rows>
     </grid>
