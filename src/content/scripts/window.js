@@ -100,16 +100,24 @@
             {
                setNewStyle(props, "deactivated");
             }
+            else
+            {
+              setNewStyle(props, "activated");
+            }
             if (extensionModel[row].isIncompatible)
             {
                setNewStyle(props, "incompatible")
             }
          },
-         getCellProperties: function(row, col, props)
+         getCellProperties: function(row, column, props)
          {
             if(extensionModel[row].isDeactivated)
             {
                setNewStyle(props, "deactivated");
+            }
+            else
+            {
+               setNewStyle(props, "activated");
             }
             if(extensionModel[row].isIncompatible)
             {
@@ -162,11 +170,15 @@
                              .getService(Ci.nsIAtomService);
          var style = null;
 
-         if (status == "deactivated")
+         if(status == "deactivated")
          {
             style = atomService.getAtom("isDeactivatedStyle");
          }
-         else
+         if(status == "activated")
+         {
+          style = atomService.getAtom("isActivatedStyle");
+         }
+         if(status == "incompatible")
          {
             style = atomService.getAtom("isIncompatibleStyle");
          }

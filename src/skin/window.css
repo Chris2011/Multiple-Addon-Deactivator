@@ -56,9 +56,15 @@ listitem
    max-width: 2em;
 }
 
+treechildren::-moz-tree-row
+{
+   border-bottom-color: gray;
+}
+
 treechildren::-moz-tree-cell-text
 {
    color: #000;
+   font-weight: bold;
 }
 
 treechildren::-moz-tree-image
@@ -78,14 +84,9 @@ treechildren::-moz-tree-checkbox(checked)
    list-style-image: url("images/selected.png");
 }
 
-treechildren::-moz-tree-row(even)
+treechildren::-moz-tree-row(isActivatedStyle)
 {
-  background-color: #eee;
-}
-
-treechildren::-moz-tree-row(hover)
-{
-  background-color: #bbb;
+   background-color: palegreen;
 }
 
 treechildren::-moz-tree-row(isDeactivatedStyle)
@@ -101,11 +102,18 @@ treechildren::-moz-tree-row(isIncompatibleStyle)
 treechildren::-moz-tree-cell-text(isDeactivatedStyle)
 {
    color: #a2a2a2;
-   font-weight: bold;
 }
 
 treechildren::-moz-tree-cell-text(isIncompatibleStyle)
 {
    color: #fff;
-   font-weight: bold;
+}
+
+treechildren::-moz-tree-row(hover)
+{
+  background-color: #bbb;
+}
+treechildren::-moz-tree-cell-text(hover)
+{
+   color: #000;
 }
