@@ -10,7 +10,7 @@
 <!ENTITY total.label "Totalt">
 <!ENTITY name.label "Namn">
 <!ENTITY version.label "Version">
-<!ENTITY activatedButton.label "Inaktivera alla">
-<!ENTITY deactivatedButton.label "Aktivera alla">
+<!ENTITY deactivatedButton.label "Inaktivera alla">
+<!ENTITY activatedButton.label "Aktivera alla">
 <!ENTITY actionButton.label "Utför åtgärden för markerade tillägg">
 <!ENTITY restartButton.label "Starta om &brandShortName;">

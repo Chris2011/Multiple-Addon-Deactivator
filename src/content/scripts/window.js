@@ -26,7 +26,7 @@
          allExtensions = addons.all;
          extensionVars.allAddons = addons.all.length;
 
-         for (var i = 0; i < extensionVars.allAddons; ++i)
+         for (var i = 0; i < extensionVars.allAddons; i++)
          {
             extensions.push(
             {
@@ -38,6 +38,7 @@
                   isDeactivated: false,
                   isIncompatible: false
             });
+
             countFunction = function(counter)
             {
                AddonManager.getAddonByID(allExtensions[counter].id, function(addon)
@@ -62,7 +63,7 @@
 
          callback();
          fillTreeView(extensions);
-         setTimeout(function(){sort();}, 1);
+         setTimeout(function(){sort();}, 10);
       });
    };
 
@@ -76,16 +77,18 @@
             return (column.id == "addonName") ? "  "+extensionModel[row].addonName
                                               : extensionModel[row].addonVersion;
          },
+
          getCellValue: function(row, column)
          {
             return (column.id == "checkboxes") ? extensionModel[row].isSelected
                                                : null;
          },
-         setTree: function(){},
-         isContainer: function(){},
-         isEditable: function(){},
-         isSeparator: function(){},
-         isSorted: function(){},
+
+         setTree: function(treebox){this.treebox = treebox;},
+         isContainer: function(row){return false;},
+         isSeparator: function(row){return false;},
+         isSorted: function(){return false;},
+         isEditable: function(row, column){return false;},
          getLevel: function(){},
          getImageSrc: function(row, column)
          {
@@ -156,7 +159,7 @@
                extensionModel[row].isSelected = (column.id == "checkboxes") ? cellValue : null;
             }
          },
-         
+
          setCellText: function(){}
       };
 
@@ -333,11 +336,9 @@
       var prefs = Cc["@mozilla.org/preferences-service;1"]
                     .getService(Ci.nsIPrefService)
                     .getBranch("extensions.multiple-addon-deactivator.ChrisLE@mozilla.org.");
-
       var prefValue = prefs.getBoolPref("excludeMAD");
-      var rows = addonTree.view.rowCount;
 
-      for(var i = 0; i < rows; ++i)
+      for(var i = 0, rows = addonTree.view.rowCount; i < rows; i++)
       {
          actionCounter = function(counterVar)
          {

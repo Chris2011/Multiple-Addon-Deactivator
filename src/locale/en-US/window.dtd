@@ -10,7 +10,7 @@
 <!ENTITY total.label "Total">
 <!ENTITY name.label "Name">
 <!ENTITY version.label "Version">
-<!ENTITY activatedButton.label "Deactivate all">
-<!ENTITY deactivatedButton.label "Activate all">
+<!ENTITY deactivatedButton.label "Deactivate all">
+<!ENTITY activatedButton.label "Activate all">
 <!ENTITY actionButton.label "De-/Activate checked add-ons">
 <!ENTITY restartButton.label "Restart &brandShortName;">

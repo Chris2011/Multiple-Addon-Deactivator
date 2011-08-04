@@ -48,7 +48,8 @@
   <rows>
    <row flex="1">
     <tree id="addonTree" flex="1" rows="15" enableColumnDrag="true"
-          sortResource="addonName" sortDirection="ascending">
+          persist="sortDirection sortResource" sortResource="addonName"
+          sortDirection="ascending">
      <treecols>
       <treecol id="checkboxes" type="checkbox"
                value="true" flex="1" editable="true">
