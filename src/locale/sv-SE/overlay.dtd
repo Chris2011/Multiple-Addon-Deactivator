@@ -1,4 +1,4 @@
-<!ENTITY MAD "M.A.D.">
+<!ENTITY {appname} "{appname}">
 
 <!-- Toolbarbutton Messages //-->
 <!ENTITY madToolbarButton.label "Multiple Addon Deactivator">

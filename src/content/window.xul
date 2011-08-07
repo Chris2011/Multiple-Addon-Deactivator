@@ -75,8 +75,8 @@
   </columns>
   <rows>
    <row>
-    <button label="&activatedButton.label;" command="deactivateAllCommand" />
-    <button label="&deactivatedButton.label;" command="activateAllCommand" />
+    <button label="&deactivatedButton.label;" command="deactivateAllCommand" />
+    <button label="&activatedButton.label;" command="activateAllCommand" />
    </row>
    <row>
     <button label="&actionButton.label;" command="executeActionCommand" />
