@@ -74,72 +74,50 @@
          rowCount: extensionModel.length,
          getCellText: function(row, column)
          {
-            return (column.id == "addonName") ? "  "+extensionModel[row].addonName
-                                              : extensionModel[row].addonVersion;
+            return (column.id === "addonName") ? "  "+extensionModel[row].addonName
+                                               : extensionModel[row].addonVersion;
          },
 
          getCellValue: function(row, column)
          {
-            return (column.id == "checkboxes") ? extensionModel[row].isSelected
-                                               : null;
+            return (column.id === "checkboxes") ? extensionModel[row].isSelected
+                                                : null;
          },
 
          setTree: function(treebox){this.treebox = treebox;},
-         isContainer: function(row){return false;},
-         isSeparator: function(row){return false;},
-         isSorted: function(){return false;},
-         isEditable: function(row, column){return false;},
+         isContainer: function(){},
+         isSeparator: function(){},
+         isSorted: function(){},
+         isEditable: function(){},
          getLevel: function(){},
          getImageSrc: function(row, column)
          {
-            return (column.id == "addonName") ? ((extensionModel[row].addonIcon)
+            return (column.id === "addonName") ? ((extensionModel[row].addonIcon)
                                                 ? extensionModel[row].addonIcon
                                                 : "chrome://{appname}/skin/images/defaultIcon.png")
-                                              : '';
+                                               : '';
          },
 
          getRowProperties: function(row, props)
          {
-            if(extensionModel[row].isDeactivated)
-            {
-               setNewStyle(props, "deactivated");
-            }
-            else
-            {
-              setNewStyle(props, "activated");
-            }
-            if (extensionModel[row].isIncompatible)
-            {
-               setNewStyle(props, "incompatible")
-            }
+            setStyle(row, props);
          },
 
          getCellProperties: function(row, column, props)
          {
-            if(extensionModel[row].isDeactivated)
-            {
-               setNewStyle(props, "deactivated");
-            }
-            else
-            {
-               setNewStyle(props, "activated");
-            }
-            if(extensionModel[row].isIncompatible)
-            {
-               setNewStyle(props, "incompatible");
-            }
+            setStyle(row, props);
          },
 
          getColumnProperties: function(){},
          cycleCell: function(){},
          cycleHeader: function(column)
          {
-            if(column.id == "checkboxes")
+            if(column.id === "checkboxes")
             {
                var headerImage = document.getElementById("checkAll");
                var imagePath = "../skin/images/";
 
-               if (headerImage.src == imagePath+"unselected.png")
+               if (headerImage.src === imagePath+"unselected.png")
                {
                   checkAll(headerImage, true, imagePath+"selected.png",
                            column, this.rowCount);
@@ -156,7 +134,7 @@
          {
             if(!extensionModel[row].isIncompatible)
             {
-               extensionModel[row].isSelected = (column.id == "checkboxes") ? cellValue : null;
+               extensionModel[row].isSelected = (column.id === "checkboxes") ? cellValue : null;
             }
          },
 
@@ -172,21 +150,38 @@
          }
       };
 
+      function setStyle(row, props)
+      {
+         if(extensionModel[row].isDeactivated)
+         {
+            setNewStyle(props, "deactivated");
+         }
+         else
+         {
+            setNewStyle(props, "activated");
+         }
+
+         if(extensionModel[row].isIncompatible)
+         {
+            setNewStyle(props, "incompatible");
+         }
+      };
+
       function setNewStyle(props, status)
       {
          var atomService = Cc["@mozilla.org/atom-service;1"]
                              .getService(Ci.nsIAtomService);
          var style = null;
 
-         if(status == "deactivated")
+         if(status === "deactivated")
          {
             style = atomService.getAtom("isDeactivatedStyle");
          }
-         if(status == "activated")
+         if(status === "activated")
          {
           style = atomService.getAtom("isActivatedStyle");
          }
-         if(status == "incompatible")
+         if(status === "incompatible")
          {
             style = atomService.getAtom("isIncompatibleStyle");
          }
@@ -198,23 +193,20 @@
 
    function prepareForComparison(o)
    {
-      return (typeof o == "string") ? o.toLowerCase() : o;
+      return (typeof o === "string") ? o.toLowerCase() : o;
    };
 
    this.sort = function(column)
    {
       var addonTree = document.getElementById("addonTree");
       var columnName;
-      var order = addonTree.getAttribute("sortDirection") == "ascending" ? 1 : -1;
+      var order = addonTree.getAttribute("sortDirection") === "ascending" ? 1 : -1;
 
       //if the column is passed and it's already sorted by that column, reverse sort
       if(column)
       {
          columnName = column.id;
-         if(addonTree.getAttribute("sortResource") == columnName)
-         {
-           order *= -1;
-         }
+         order *= (addonTree.getAttribute("sortResource") === columnName) ? -1 : null;
       }
       else
       {
@@ -236,17 +228,19 @@
       };
 
       extensions.sort(columnSort);
-      //setting these will make the sort option persist
-      addonTree.setAttribute("sortDirection", order == 1 ? "ascending" : "descending");
+      // Setting these will make the sort option persist.
+      addonTree.setAttribute("sortDirection", order === 1 ? "ascending" : "descending");
       addonTree.setAttribute("sortResource", columnName);
 
-      //set the appropriate attributes to show to indicator
+      // Set the appropriate attributes to show to indicator.
       var cols = addonTree.getElementsByTagName("treecol");
-      for(var i = 0; i < cols.length; i++)
+      var colLength = cols.length;
+
+      for(var i = 0; i < colLength; i++)
       {
          cols[i].removeAttribute("sortDirection");
       }
-      document.getElementById(columnName).setAttribute("sortDirection", order == 1 ? "ascending" : "descending");
+      document.getElementById(columnName).setAttribute("sortDirection", order === 1 ? "ascending" : "descending");
    };
 
    this.uninit = function()
@@ -273,17 +267,17 @@
 
    this.setActionForAddons = function(addonAction)
    {
-      if(addonAction == addonActionEnum.deactivateAll)
+      if(addonAction === addonActionEnum.deactivateAll)
       {
          stdAddonAction(true);
          alert(propertyStrings.getString("allDeactivatedMessage"));
       }
-      else if(addonAction == addonActionEnum.activateAll)
+      else if(addonAction === addonActionEnum.activateAll)
       {
          stdAddonAction(false);
          alert(propertyStrings.getString("allActivatedMessage"));
       }
-      else if(addonAction == addonActionEnum.actionForMarkedEntry)
+      else if(addonAction === addonActionEnum.actionForMarkedEntry)
       {
          stdAddonAction(null);
          alert(propertyStrings.getString("executeActionMessage"));
@@ -312,7 +306,7 @@
          // Notify all windows that an application quit has been granted.
          os.notifyObservers(null, "quit-application-granted", null);
 
-         // Enumerate all windows and call shutdown handlers
+         // Enumerate all windows and call shutdown handlers.
          var wm = Cc["@mozilla.org/appshell/window-mediator;1"]
                     .getService(Ci.nsIWindowMediator);
          var windows = wm.getEnumerator(null);
@@ -324,6 +318,7 @@
                return;
             }
          }
+
          Cc["@mozilla.org/toolkit/app-startup;1"]
            .getService(nsIAppStartup)
            .quit(nsIAppStartup.eRestart | nsIAppStartup.eAttemptQuit);
@@ -344,7 +339,7 @@
          {
             AddonManager.getAddonByID(extensions[counterVar].addonId, function(addon)
             {
-               if(activateAddon == null)
+               if(activateAddon === null)
                {
                   var isChecked = toBool((addonTree.view.getCellValue(counterVar,
                                           addonTree.view.selection.tree.columns[0])));
@@ -358,7 +353,7 @@
                {
                   if((!addon.userDisabled && activateAddon))
                   {
-                     if(!prefValue || (prefValue && addon.id != "ChrisLE@mozilla.org"))
+                     if(!prefValue || (prefValue && addon.id !== "ChrisLE@mozilla.org"))
                      {
                         addon.userDisabled = activateAddon;
                      }
