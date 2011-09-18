@@ -3,7 +3,7 @@ var {appname} = {
    Ci: Components.interfaces,
    onLoad: function()
    {
-      // initialization code
+      // Initialization code.
       this.initialized = true;
       this.gfiltersimportexportBundle = Cc["@mozilla.org/intl/stringbundle;1"]
                                           .getService(Ci.nsIStringBundleService);
@@ -13,18 +13,18 @@ var {appname} = {
 
    onToolbarButtonCommand: function(event)
    {
-      window.open("chrome://{appname}/content/window.xul", "", "chrome,"+
-                  "titlebar, toolbar, centerscreen, resizable=yes, modal");
+      window.open("chrome://{appname}/content/window.xul", "",
+                  "chrome, titlebar, toolbar, centerscreen, resizable=yes, modal");
    },
 
    onMenuItemCommand: function(event)
    {
-      window.open("chrome://{appname}/content/window.xul", "", "chrome,"+
-                  "titlebar, toolbar, centerscreen, resizable=yes, modal");
+      window.open("chrome://{appname}/content/window.xul", "",
+                  "chrome, titlebar, toolbar, centerscreen, resizable=yes, modal");
    }
 };
 
-window.addEventListener("load", function(e)
+window.onload = function(e)
 {
    {appname}.onLoad(e);
-}, false);
+};
