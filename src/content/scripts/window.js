@@ -26,6 +26,16 @@
          allExtensions = addons.all;
          extensionVars.allAddons = addons.all.length;
 
+         countFunction = function(counter)
+         {
+            AddonManager.getAddonByID(allExtensions[counter].id, function(addon)
+            {
+               extensions[counter].addonIcon = addon.iconURL;
+               extensions[counter].isDeactivated = addon.userDisabled;
+               extensions[counter].isIncompatible = addon.appDisabled;
+            });
+         }
+
          for (var i = 0; i < extensionVars.allAddons; i++)
          {
             extensions.push(
@@ -38,16 +48,6 @@
                   isDeactivated: false,
                   isIncompatible: false
             });
-
-            countFunction = function(counter)
-            {
-               AddonManager.getAddonByID(allExtensions[counter].id, function(addon)
-               {
-                  extensions[counter].addonIcon = addon.iconURL;
-                  extensions[counter].isDeactivated = addon.userDisabled;
-                  extensions[counter].isIncompatible = addon.appDisabled;
-               });
-            }
 
             countFunction(i);
 

@@ -24,7 +24,7 @@ var {appname} = {
    }
 };
 
-window.onload = function(e)
+window.addEventListener("load", function(e)
 {
    {appname}.onLoad(e);
-};
+}, false);

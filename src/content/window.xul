@@ -70,6 +70,19 @@
  </grid>
  <grid>
   <columns>
+   <column />
+  </columns>
+  <rows>
+   <row>
+    <checkbox id="checkAllActivated" />
+    <description>&checkAllActivated.label;</description>
+    <checkbox id="checkAllDeactivated" />
+    <description>&checkAllDeactivated.label;</description>
+   </row>
+  </rows>
+ </grid>
+ <grid>
+  <columns>
    <column flex="1" />
    <column flex="1" />
   </columns>

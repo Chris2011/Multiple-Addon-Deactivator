@@ -56,6 +56,17 @@ listitem
    max-width: 2em;
 }
 
+#checkAllActivated, #checkAllDeactivated
+{
+   margin-right: -0.25em;
+}
+
+#checkAllDeactivated
+{
+   margin-left: 3em;
+   margin-right: -0.55em;
+}
+
 treechildren::-moz-tree-row
 {
    border-bottom-color: gray;
