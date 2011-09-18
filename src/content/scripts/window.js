@@ -120,12 +120,12 @@
                if (headerImage.src === imagePath+"unselected.png")
                {
                   checkAll(headerImage, true, imagePath+"selected.png",
-                           column, this.rowCount);
+                           column, true, null);
                }
                else
                {
                   checkAll(headerImage, false, imagePath+"unselected.png",
-                           column, this.rowCount);
+                           column, true, null);
                }
             }
          },
@@ -139,15 +139,6 @@
          },
 
          setCellText: function(){}
-      };
-
-      function checkAll(imageControl, boolValue, picture, column, rows)
-      {
-         imageControl.src = picture;
-         for(var i = 0; i < rows; i++)
-         {
-            treeView.setCellValue(i, column, boolValue);
-         }
       };
 
       function setStyle(row, props)
@@ -185,10 +176,46 @@
          {
             style = atomService.getAtom("isIncompatibleStyle");
          }
+
          props.AppendElement(style);
       };
 
       document.getElementById("addonTree").view = treeView;
+   };
+
+   this.checkAll = function(imageControl, boolValue, picture,
+                            column, checkAll, checkActivated)
+   {
+      var addonTree = document.getElementById("addonTree");
+      var i = 0, rows = addonTree.view.rowCount;
+      imageControl.src = picture;
+
+      actionCounter = function(counterVar)
+      {
+         AddonManager.getAddonByID(extensions[counterVar].addonId, function(addon)
+         {
+            if(!addon.userDisabled && checkActivated)
+            {
+               addonTree.view.setCellValue(counterVar, column, boolValue);
+            }
+            if(addon.userDisabled && !checkActivated)
+            {
+              addonTree.view.setCellValue(counterVar, column, boolValue);
+            }
+         });
+      }
+
+      for(; i < rows; i++)
+      {
+         if(checkAll)
+         {
+            addonTree.view.setCellValue(i, column, boolValue);
+         }
+         else
+         {
+            actionCounter(i);
+         }
+      }
    };
 
    function prepareForComparison(o)
@@ -251,6 +278,24 @@
    this.toBool = function(boolParam)
    {
       return "true" == boolParam;
+   };
+
+   this.checkAddons = function(checkBoxObject, checkActivated)
+   {
+      var addonTree = document.getElementById("addonTree");
+      var checkboxColumn = document.getElementById("checkAll");
+      var imagePath = "../skin/images/";
+
+      if (checkboxColumn.src === imagePath+"unselected.png")
+      {
+         checkAll(checkboxColumn, true, imagePath+"selected.png",
+                  addonTree.view.selection.tree.columns[0], false, checkActivated);
+      }
+      else
+      {
+         checkAll(checkboxColumn, false, imagePath+"unselected.png",
+                  addonTree.view.selection.tree.columns[0], false, checkActivated);
+      }
    };
 
    this.onRowClick = function()

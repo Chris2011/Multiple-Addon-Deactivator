@@ -74,9 +74,9 @@
   </columns>
   <rows>
    <row>
-    <checkbox id="checkAllActivated" />
+    <checkbox id="checkAllActivated" onclick="checkAddons(this, true)" />
     <description>&checkAllActivated.label;</description>
-    <checkbox id="checkAllDeactivated" />
+    <checkbox id="checkAllDeactivated" onclick="checkAddons(this, false)" />
     <description>&checkAllDeactivated.label;</description>
    </row>
   </rows>
