@@ -204,16 +204,20 @@
          });
       }
 
+      if(checkAll)
+      {
+         document.getElementById("checkAllActivated").disabled = boolValue;
+         document.getElementById("checkAllDeactivated").disabled = boolValue;
+         document.getElementById("checkAllActivated").checked = false;
+         document.getElementById("checkAllDeactivated").checked = false;
+
+         imageControl.src = picture;
+      }
+
       for(; i < rows; i++)
       {
          if(checkAll)
          {
-            document.getElementById("checkAllActivated").disabled = boolValue;
-            document.getElementById("checkAllDeactivated").disabled = boolValue;
-            document.getElementById("checkAllActivated").checked = false;
-            document.getElementById("checkAllDeactivated").checked = false;
-
-            imageControl.src = picture;
             addonTree.view.setCellValue(i, column, boolValue);
          }
          else
@@ -291,16 +295,16 @@
       var checkboxColumn = document.getElementById("checkAll");
       var imagePath = "../skin/images/";
 
-      if (checkboxColumn.src === imagePath+"unselected.png")
+      if(checkActivated)
       {
-         checkAll(checkboxColumn, true, imagePath+"selected.png",
+         checkAll(checkboxColumn, document.getElementById("checkAllActivated").checked ? true : false, imagePath+"selected.png",
                   addonTree.view.selection.tree.columns[0], false, checkActivated);
       }
-      else
-      {
-         checkAll(checkboxColumn, false, imagePath+"unselected.png",
-                  addonTree.view.selection.tree.columns[0], false, checkActivated);
-      }
+//      else
+//      {
+//         checkAll(checkboxColumn, false, imagePath+"unselected.png",
+//                  addonTree.view.selection.tree.columns[0], false, checkActivated);
+//      }
    };
 
    this.onRowClick = function()
