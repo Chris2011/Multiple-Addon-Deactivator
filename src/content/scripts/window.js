@@ -188,7 +188,6 @@
    {
       var addonTree = document.getElementById("addonTree");
       var i = 0, rows = addonTree.view.rowCount;
-      imageControl.src = picture;
 
       actionCounter = function(counterVar)
       {
@@ -209,6 +208,12 @@
       {
          if(checkAll)
          {
+            document.getElementById("checkAllActivated").disabled = boolValue;
+            document.getElementById("checkAllDeactivated").disabled = boolValue;
+            document.getElementById("checkAllActivated").checked = false;
+            document.getElementById("checkAllDeactivated").checked = false;
+
+            imageControl.src = picture;
             addonTree.view.setCellValue(i, column, boolValue);
          }
          else
@@ -280,7 +285,7 @@
       return "true" == boolParam;
    };
 
-   this.checkAddons = function(checkBoxObject, checkActivated)
+   this.checkAddons = function(checkActivated)
    {
       var addonTree = document.getElementById("addonTree");
       var checkboxColumn = document.getElementById("checkAll");
