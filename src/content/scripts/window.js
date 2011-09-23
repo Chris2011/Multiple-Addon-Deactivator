@@ -293,18 +293,12 @@
    {
       var addonTree = document.getElementById("addonTree");
       var checkboxColumn = document.getElementById("checkAll");
-      var imagePath = "../skin/images/";
 
-      if(checkActivated)
-      {
-         checkAll(checkboxColumn, document.getElementById("checkAllActivated").checked ? true : false, imagePath+"selected.png",
-                  addonTree.view.selection.tree.columns[0], false, checkActivated);
-      }
-//      else
-//      {
-//         checkAll(checkboxColumn, false, imagePath+"unselected.png",
-//                  addonTree.view.selection.tree.columns[0], false, checkActivated);
-//      }
+      checkAll(checkboxColumn,
+               checkActivated
+               ? (document.getElementById("checkAllActivated").checked)
+               : (document.getElementById("checkAllDeactivated").checked), null,
+               addonTree.view.selection.tree.columns[0], false, checkActivated);
    };
 
    this.onRowClick = function()
@@ -395,10 +389,8 @@
             {
                if(activateAddon === null)
                {
-                  var isChecked = toBool((addonTree.view.getCellValue(counterVar,
-                                          addonTree.view.selection.tree.columns[0])));
-
-                  if(isChecked)
+                  if(toBool((addonTree.view.getCellValue(counterVar,
+                             addonTree.view.selection.tree.columns[0]))))
                   {
                      addon.userDisabled = !addon.userDisabled;
                   }
