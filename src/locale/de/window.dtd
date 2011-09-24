@@ -2,7 +2,7 @@
 %brandDTD;
 
 <!-- Fensterdaten //-->
-<!ENTITY title.label "{appdisplayname}">
+<!ENTITY title.label "{appdisplayname} {appversion}">
 
 <!-- Anwendungsdaten //-->
 <!ENTITY activated.label "Aktviert">

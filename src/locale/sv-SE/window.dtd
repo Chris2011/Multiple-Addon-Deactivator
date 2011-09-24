@@ -2,7 +2,7 @@
 %brandDTD;
 
 <!-- Window Data //-->
-<!ENTITY title.label "{appdisplayname}">
+<!ENTITY title.label "{appdisplayname} {appversion}">
 
 <!-- Application Data //-->
 <!ENTITY activated.label "Aktiverat">
