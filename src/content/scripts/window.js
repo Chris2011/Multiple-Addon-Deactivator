@@ -1,22 +1,26 @@
 (function()
 {
-   var Cc = Components.classes;
-   var Ci = Components.interfaces;
-   var propertyStrings = document.getElementById("string-bundle");
-   var extensions = [];
-   var extensionVars = {
-      allAddons: 0,
-      activatedAddons: 0,
-      deactivatedAddons: 0
-   };
+   "use strict";
 
-   this.addonActionEnum = {
-      deactivateAll: 0,
-      activateAll: 1,
-      actionForMarkedEntry: 2
-   };
+   var Cc = Components.classes,
+         Ci = Components.interfaces,
+         propertyStrings = document.getElementById("string-bundle"),
+         extensions = [],
+         tempArr = [],
 
-   function getExtensions(callback)
+         extensionVars = {
+            allAddons: 0,
+            activatedAddons: 0,
+            deactivatedAddons: 0
+         },
+
+         addonActionEnum = {
+            deactivateAll: 0,
+            activateAll: 1,
+            actionForMarkedEntry: 2
+         };
+
+   var getExtensions = function(numberControlObj)
    {
       var allExtensions = null;
 
@@ -26,7 +30,7 @@
          allExtensions = addons.all;
          extensionVars.allAddons = addons.all.length;
 
-         countFunction = function(counter)
+         var countFunction = function(counter)
          {
             AddonManager.getAddonByID(allExtensions[counter].id, function(addon)
             {
@@ -49,6 +53,8 @@
                   isIncompatible: false
             });
 
+            tempArr[i] = allExtensions[i].name;
+
             countFunction(i);
 
             if(addons.get(extensions[i].addonId).enabled)
@@ -61,51 +67,72 @@
             }
          }
 
-         callback();
+         numberControlObj.activatedAddons.value = extensionVars.activatedAddons;
+         numberControlObj.deactivatedAddons.value = extensionVars.deactivatedAddons;
+         numberControlObj.totalAddons.value = extensionVars.allAddons;
+
+         extensions.sort(function(firstObj, nextObj)
+         {
+               var firstAddonName = firstObj.addonName.toLowerCase( ),
+                     nextAddonName = nextObj.addonName.toLowerCase( );
+
+               if(firstAddonName < nextAddonName)
+               {
+                  return -1;
+               }
+
+               if(firstAddonName > nextAddonName)
+               {
+                  return 1;
+               }
+
+               return 0;
+         });
+
          fillTreeView(extensions);
-         setTimeout(function(){sort();}, 10);
       });
    };
 
-   function fillTreeView(extensionModel)
+   var fillTreeView = function(extensionModel)
    {
-      var treeView =
-      {
+      var treeView = {
          rowCount: extensionModel.length,
          getCellText: function(row, column)
          {
-            return (column.id === "addonName") ? "  "+extensionModel[row].addonName
-                                               : extensionModel[row].addonVersion;
+            return (column.id === "addonName") ? "  "+extensionModel[row].addonName : extensionModel[row].addonVersion;
          },
 
          getCellValue: function(row, column)
          {
-            return (column.id === "checkboxes") ? extensionModel[row].isSelected
-                                                : null;
+            return (column.id === "checkboxes") ? extensionModel[row].isSelected : null;
          },
 
-         setTree: function(treebox){this.treebox = treebox;},
+         setTree: function(/*treebox*/)
+         {
+            //this.treebox = treebox;
+         },
+
          isContainer: function(){},
          isSeparator: function(){},
          isSorted: function(){},
          isEditable: function(){},
          getLevel: function(){},
+
          getImageSrc: function(row, column)
          {
             return (column.id === "addonName") ? ((extensionModel[row].addonIcon)
-                                                ? extensionModel[row].addonIcon
-                                                : "chrome://{appname}/skin/images/defaultIcon.png")
-                                               : '';
+                                                                           ? extensionModel[row].addonIcon : "chrome://{appname}/skin/images/defaultIcon.png")
+                                                                       : '';
          },
 
          getRowProperties: function(row, props)
          {
-            setStyle(row, props);
+            //setStyle(row, props);
          },
 
          getCellProperties: function(row, column, props)
          {
-            setStyle(row, props);
+            //setStyle(row, props);
          },
 
          getColumnProperties: function(){},
@@ -134,14 +161,17 @@
          {
             if(!extensionModel[row].isIncompatible)
             {
-               extensionModel[row].isSelected = (column.id === "checkboxes") ? cellValue : null;
+               if(column.id === "checkboxes")
+               {
+                   extensionModel[row].isSelected = cellValue
+               }
             }
          },
 
          setCellText: function(){}
       };
 
-      function setStyle(row, props)
+      var setStyle = function(row, props)
       {
          if(extensionModel[row].isDeactivated)
          {
@@ -158,20 +188,20 @@
          }
       };
 
-      function setNewStyle(props, status)
+      var setNewStyle = function(props, status)
       {
-         var atomService = Cc["@mozilla.org/atom-service;1"]
-                             .getService(Ci.nsIAtomService);
+         var atomService = Cc["@mozilla.org/atom-service;1"].getService(Ci.nsIAtomService);
          var style = null;
 
          if(status === "deactivated")
          {
             style = atomService.getAtom("isDeactivatedStyle");
          }
-         if(status === "activated")
+         else
          {
           style = atomService.getAtom("isActivatedStyle");
          }
+
          if(status === "incompatible")
          {
             style = atomService.getAtom("isIncompatibleStyle");
@@ -183,56 +213,55 @@
       document.getElementById("addonTree").view = treeView;
    };
 
-   this.checkAll = function(imageControl, boolValue, picture,
-                            column, checkAll, checkActivated)
-   {
-      var addonTree = document.getElementById("addonTree");
-      var i = 0, rows = addonTree.view.rowCount;
+//   var checkAll = function(imageControl, boolValue, picture, column, checkAll, checkActivated)
+//   {
+//      var addonTree = document.getElementById("addonTree");
+//      var rows = addonTree.view.rowCount;
+//
+//      actionCounter = function(counterVar)
+//      {
+//         AddonManager.getAddonByID(extensions[counterVar].addonId, function(addon)
+//         {
+//            if(!addon.userDisabled && checkActivated)
+//            {
+//               addonTree.view.setCellValue(counterVar, column, boolValue);
+//            }
+//            if(addon.userDisabled && !checkActivated)
+//            {
+//              addonTree.view.setCellValue(counterVar, column, boolValue);
+//            }
+//         });
+//      }
+//
+//      if(checkAll)
+//      {
+//         document.getElementById("checkAllActivated").disabled = boolValue;
+//         document.getElementById("checkAllDeactivated").disabled = boolValue;
+//         document.getElementById("checkAllActivated").checked = false;
+//         document.getElementById("checkAllDeactivated").checked = false;
+//
+//         imageControl.src = picture;
+//      }
+//
+//      for(var i = 0; i < rows; i++)
+//      {
+//         if(checkAll)
+//         {
+//            addonTree.view.setCellValue(i, column, boolValue);
+//         }
+//         else
+//         {
+//            actionCounter(i);
+//         }
+//      }
+//   };
 
-      actionCounter = function(counterVar)
-      {
-         AddonManager.getAddonByID(extensions[counterVar].addonId, function(addon)
-         {
-            if(!addon.userDisabled && checkActivated)
-            {
-               addonTree.view.setCellValue(counterVar, column, boolValue);
-            }
-            if(addon.userDisabled && !checkActivated)
-            {
-              addonTree.view.setCellValue(counterVar, column, boolValue);
-            }
-         });
-      }
-
-      if(checkAll)
-      {
-         document.getElementById("checkAllActivated").disabled = boolValue;
-         document.getElementById("checkAllDeactivated").disabled = boolValue;
-         document.getElementById("checkAllActivated").checked = false;
-         document.getElementById("checkAllDeactivated").checked = false;
-
-         imageControl.src = picture;
-      }
-
-      for(; i < rows; i++)
-      {
-         if(checkAll)
-         {
-            addonTree.view.setCellValue(i, column, boolValue);
-         }
-         else
-         {
-            actionCounter(i);
-         }
-      }
-   };
-
-   function prepareForComparison(o)
+   var prepareForComparison = function(o)
    {
       return (typeof o === "string") ? o.toLowerCase() : o;
    };
 
-   this.sort = function(column)
+   var sort = function(column)
    {
       var addonTree = document.getElementById("addonTree");
       var columnName;
@@ -249,7 +278,7 @@
          columnName = addonTree.getAttribute("sortResource");
       }
 
-      function columnSort(a, b)
+      var columnSort = function(a, b)
       {
          if(prepareForComparison(a[columnName]) > prepareForComparison(b[columnName]))
          {
@@ -279,154 +308,156 @@
       document.getElementById(columnName).setAttribute("sortDirection", order === 1 ? "ascending" : "descending");
    };
 
-   this.uninit = function()
+   var uninit = function()
    {
       document.getElementById("addonTree").view = null;
    };
 
-   this.toBool = function(boolParam)
-   {
-      return "true" == boolParam;
+//   var toBool = function(boolParam)
+//   {
+//      return "true" === boolParam;
+//   };
+
+//   var checkAddons = function(checkActivated)
+//   {
+//      var addonTree = document.getElementById("addonTree");
+//      var checkboxColumn = document.getElementById("checkAll");
+//
+//      checkAll(checkboxColumn, checkActivated
+//               ? (document.getElementById("checkAllActivated").checked)
+//               : (document.getElementById("checkAllDeactivated").checked), null,
+//               addonTree.view.selection.tree.columns[0], false, checkActivated);
+//   };
+
+//   var onRowClick = function()
+//   {
+//      var addonTree = document.getElementById("addonTree");
+//      var cellVal = !toBool((addonTree.view.getCellValue(addonTree.view.selection.currentIndex, addonTree.view.selection.tree.columns[0])));
+//
+//      addonTree.view.setCellValue(
+//      addonTree.view.selection.currentIndex,
+//      addonTree.view.selection.tree.columns[0], cellVal);
+//   };
+
+//   var setActionForAddons = function(addonAction)
+//   {
+//      if(addonAction === addonActionEnum.deactivateAll)
+//      {
+//         stdAddonAction(true);
+//         alert(propertyStrings.getString("allDeactivatedMessage"));
+//      }
+//      else if(addonAction === addonActionEnum.activateAll)
+//      {
+//         stdAddonAction(false);
+//         alert(propertyStrings.getString("allActivatedMessage"));
+//      }
+//      else if(addonAction === addonActionEnum.actionForMarkedEntry)
+//      {
+//         stdAddonAction(null);
+//         alert(propertyStrings.getString("executeActionMessage"));
+//      }
+//   };
+
+//   var restartFirefox = function()
+//   {
+//      if(window.confirm(propertyStrings.getString("restartFirefoxMessage")))
+//      {
+//         const nsIAppStartup = Components.interfaces.nsIAppStartup;
+//
+//         // Notify all windows that an application quit has been requested.
+//         var os = Cc["@mozilla.org/observer-service;1"]
+//                    .getService(Ci.nsIObserverService);
+//         var cancelQuit = Cc["@mozilla.org/supports-PRBool;1"]
+//                            .createInstance(Ci.nsISupportsPRBool);
+//         os.notifyObservers(cancelQuit, "quit-application-requested", null);
+//
+//         // Something aborted the quit process.
+//         if(cancelQuit.data)
+//         {
+//            return;
+//         }
+//
+//         // Notify all windows that an application quit has been granted.
+//         os.notifyObservers(null, "quit-application-granted", null);
+//
+//         // Enumerate all windows and call shutdown handlers.
+//         var wm = Cc["@mozilla.org/appshell/window-mediator;1"]
+//                    .getService(Ci.nsIWindowMediator);
+//         var windows = wm.getEnumerator(null);
+//         while(windows.hasMoreElements())
+//         {
+//            var win = windows.getNext();
+//            if(("tryToClose" in win) && !win.tryToClose())
+//            {
+//               return;
+//            }
+//         }
+//
+//         Cc["@mozilla.org/toolkit/app-startup;1"]
+//           .getService(nsIAppStartup)
+//           .quit(nsIAppStartup.eRestart | nsIAppStartup.eAttemptQuit);
+//      }
+//   };
+
+//   var stdAddonAction = function(activateAddon)
+//   {
+//      var addonTree = document.getElementById("addonTree");
+//      var prefs = Cc["@mozilla.org/preferences-service;1"]
+//                    .getService(Ci.nsIPrefService)
+//                    .getBranch("extensions.multiple-addon-deactivator.ChrisLE@mozilla.org.");
+//      var prefValue = prefs.getBoolPref("excludeMAD");
+//
+//      for(var i = 0, rows = addonTree.view.rowCount; i < rows; i++)
+//      {
+//         actionCounter = function(counterVar)
+//         {
+//            AddonManager.getAddonByID(extensions[counterVar].addonId, function(addon)
+//            {
+//               if(activateAddon === null)
+//               {
+//                  if(toBool((addonTree.view.getCellValue(counterVar,
+//                             addonTree.view.selection.tree.columns[0]))))
+//                  {
+//                     addon.userDisabled = !addon.userDisabled;
+//                  }
+//               }
+//               else
+//               {
+//                  if((!addon.userDisabled && activateAddon))
+//                  {
+//                     if(!prefValue || (prefValue && addon.id !== "ChrisLE@mozilla.org"))
+//                     {
+//                        addon.userDisabled = activateAddon;
+//                     }
+//                  }
+//                  else if(addon.userDisabled && !activateAddon)
+//                  {
+//                     addon.userDisabled = activateAddon;
+//                  }
+//               }
+//            });
+//         }
+//
+//         actionCounter(i);
+//      }
+//   };
+
+   window.uninit = uninit;
+   //window.checkAddons = checkAddons;
+   //window.onRowClick = onRowClick;
+   //window.setActionForAddons = setActionForAddons;
+   //window.restartFirefox = restartFirefox;
+   window.sort = sort;
+   window.getExtensions = getExtensions;
+}());
+
+window.onload = function()
+{
+   var numberControls = {
+      activatedAddons: document.getElementById("activatedAddons"),
+      deactivatedAddons: document.getElementById("deactivatedAddons"),
+      totalAddons: document.getElementById("totalAddons")
    };
 
-   this.checkAddons = function(checkActivated)
-   {
-      var addonTree = document.getElementById("addonTree");
-      var checkboxColumn = document.getElementById("checkAll");
-
-      checkAll(checkboxColumn,
-               checkActivated
-               ? (document.getElementById("checkAllActivated").checked)
-               : (document.getElementById("checkAllDeactivated").checked), null,
-               addonTree.view.selection.tree.columns[0], false, checkActivated);
-   };
-
-   this.onRowClick = function()
-   {
-      var addonTree = document.getElementById("addonTree");
-      var cellVal = !toBool((addonTree.view.getCellValue(
-                             addonTree.view.selection.currentIndex,
-                             addonTree.view.selection.tree.columns[0])));
-
-      addonTree.view.setCellValue(
-      addonTree.view.selection.currentIndex,
-      addonTree.view.selection.tree.columns[0], cellVal);
-   };
-
-   this.setActionForAddons = function(addonAction)
-   {
-      if(addonAction === addonActionEnum.deactivateAll)
-      {
-         stdAddonAction(true);
-         alert(propertyStrings.getString("allDeactivatedMessage"));
-      }
-      else if(addonAction === addonActionEnum.activateAll)
-      {
-         stdAddonAction(false);
-         alert(propertyStrings.getString("allActivatedMessage"));
-      }
-      else if(addonAction === addonActionEnum.actionForMarkedEntry)
-      {
-         stdAddonAction(null);
-         alert(propertyStrings.getString("executeActionMessage"));
-      }
-   };
-
-   this.restartFirefox = function()
-   {
-      if(window.confirm(propertyStrings.getString("restartFirefoxMessage")))
-      {
-         const nsIAppStartup = Components.interfaces.nsIAppStartup;
-
-         // Notify all windows that an application quit has been requested.
-         var os = Cc["@mozilla.org/observer-service;1"]
-                    .getService(Ci.nsIObserverService);
-         var cancelQuit = Cc["@mozilla.org/supports-PRBool;1"]
-                            .createInstance(Ci.nsISupportsPRBool);
-         os.notifyObservers(cancelQuit, "quit-application-requested", null);
-
-         // Something aborted the quit process.
-         if(cancelQuit.data)
-         {
-            return;
-         }
-
-         // Notify all windows that an application quit has been granted.
-         os.notifyObservers(null, "quit-application-granted", null);
-
-         // Enumerate all windows and call shutdown handlers.
-         var wm = Cc["@mozilla.org/appshell/window-mediator;1"]
-                    .getService(Ci.nsIWindowMediator);
-         var windows = wm.getEnumerator(null);
-         while(windows.hasMoreElements())
-         {
-            var win = windows.getNext();
-            if(("tryToClose" in win) && !win.tryToClose())
-            {
-               return;
-            }
-         }
-
-         Cc["@mozilla.org/toolkit/app-startup;1"]
-           .getService(nsIAppStartup)
-           .quit(nsIAppStartup.eRestart | nsIAppStartup.eAttemptQuit);
-      }
-   };
-
-   function stdAddonAction(activateAddon)
-   {
-      var addonTree = document.getElementById("addonTree");
-      var prefs = Cc["@mozilla.org/preferences-service;1"]
-                    .getService(Ci.nsIPrefService)
-                    .getBranch("extensions.multiple-addon-deactivator.ChrisLE@mozilla.org.");
-      var prefValue = prefs.getBoolPref("excludeMAD");
-
-      for(var i = 0, rows = addonTree.view.rowCount; i < rows; i++)
-      {
-         actionCounter = function(counterVar)
-         {
-            AddonManager.getAddonByID(extensions[counterVar].addonId, function(addon)
-            {
-               if(activateAddon === null)
-               {
-                  if(toBool((addonTree.view.getCellValue(counterVar,
-                             addonTree.view.selection.tree.columns[0]))))
-                  {
-                     addon.userDisabled = !addon.userDisabled;
-                  }
-               }
-               else
-               {
-                  if((!addon.userDisabled && activateAddon))
-                  {
-                     if(!prefValue || (prefValue && addon.id !== "ChrisLE@mozilla.org"))
-                     {
-                        addon.userDisabled = activateAddon;
-                     }
-                  }
-                  else if(addon.userDisabled && !activateAddon)
-                  {
-                     addon.userDisabled = activateAddon;
-                  }
-               }
-            });
-         }
-
-         actionCounter(i);
-      }
-   };
-
-   setTimeout(function()
-   {
-      var activatedAddons = document.getElementById("activatedAddons");
-      var deactivatedAddons = document.getElementById("deactivatedAddons");
-      var totalAddons = document.getElementById("totalAddons");
-
-      getExtensions(function()
-      {
-         activatedAddons.value = extensionVars.activatedAddons;
-         deactivatedAddons.value = extensionVars.deactivatedAddons;
-         totalAddons.value = extensionVars.allAddons;
-      });
-   }, 1);
-})();
+   getExtensions(numberControls);
+};
