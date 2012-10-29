@@ -2,215 +2,220 @@
 {
    "use strict";
 
-   var Cc = Components.classes,
-         Ci = Components.interfaces,
-         propertyStrings = document.getElementById("string-bundle"),
-         extensions = [],
-         tempArr = [],
+   var madExt = function()
+   {
+      var privates = {
+         Cc: Components.classes,
+         Ci: Components.interfaces,
+         propertyStrings: document.getElementById("string-bundle"),
+         extensions: [],
+         addonGrid: null,
 
-         extensionVars = {
+         extensionVars: {
             allAddons: 0,
             activatedAddons: 0,
             deactivatedAddons: 0
          },
 
-         addonActionEnum = {
+         addonActionEnum: {
             deactivateAll: 0,
             activateAll: 1,
             actionForMarkedEntry: 2
-         };
+         },
 
-   var getExtensions = function(numberControlObj)
-   {
-      var allExtensions = null;
-
-      Components.utils.import("resource://gre/modules/AddonManager.jsm");
-      Application.getExtensions(function(addons)
-      {
-         allExtensions = addons.all;
-         extensionVars.allAddons = addons.all.length;
-
-         var countFunction = function(counter)
+         fillTreeView: function(extensionModel)
          {
-            AddonManager.getAddonByID(allExtensions[counter].id, function(addon)
-            {
-               extensions[counter].addonIcon = addon.iconURL;
-               extensions[counter].isDeactivated = addon.userDisabled;
-               extensions[counter].isIncompatible = addon.appDisabled;
-            });
-         }
+            var treeView = {
+               rowCount: extensionModel.length,
 
-         for (var i = 0; i < extensionVars.allAddons; i++)
-         {
-            extensions.push(
-            {
-                  addonId: allExtensions[i].id,
-                  addonName: allExtensions[i].name,
-                  addonVersion: allExtensions[i].version,
-                  addonIcon: '',
-                  isSelected: false,
-                  isDeactivated: false,
-                  isIncompatible: false
-            });
-
-            tempArr[i] = allExtensions[i].name;
-
-            countFunction(i);
-
-            if(addons.get(extensions[i].addonId).enabled)
-            {
-               ++extensionVars.activatedAddons;
-            }
-            else
-            {
-               ++extensionVars.deactivatedAddons;
-            }
-         }
-
-         numberControlObj.activatedAddons.value = extensionVars.activatedAddons;
-         numberControlObj.deactivatedAddons.value = extensionVars.deactivatedAddons;
-         numberControlObj.totalAddons.value = extensionVars.allAddons;
-
-         extensions.sort(function(firstObj, nextObj)
-         {
-               var firstAddonName = firstObj.addonName.toLowerCase( ),
-                     nextAddonName = nextObj.addonName.toLowerCase( );
-
-               if(firstAddonName < nextAddonName)
+               getCellText: function(row, column)
                {
-                  return -1;
-               }
+                  return (column.id === "addonName") ? "  "+extensionModel[row].addonName : extensionModel[row].addonVersion;
+               },
 
-               if(firstAddonName > nextAddonName)
+               getCellValue: function(row, column)
                {
-                  return 1;
-               }
+                  return (column.id === "checkboxes") ? extensionModel[row].isSelected : null;
+               },
 
-               return 0;
-         });
+               setTree: function(/*treebox*/)
+               {
+                  //this.treebox = treebox;
+               },
 
-         fillTreeView(extensions);
-      });
-   };
+               isContainer: function(){},
+               isSeparator: function(){},
+               isSorted: function(){},
+               isEditable: function(){},
+               getLevel: function(){},
 
-   var fillTreeView = function(extensionModel)
-   {
-      var treeView = {
-         rowCount: extensionModel.length,
-         getCellText: function(row, column)
-         {
-            return (column.id === "addonName") ? "  "+extensionModel[row].addonName : extensionModel[row].addonVersion;
-         },
+               getImageSrc: function(row, column)
+               {
+//                  if(column.id === "addonName")
+//                     {
+//                        return extensionModel[row].addonIcon;
+//                     }
+//
+                  return (column.id === "addonName") ? ((extensionModel[row].addonIcon)
+                                                                                 ? extensionModel[row].addonIcon : "chrome://{appname}/skin/images/defaultIcon.png")
+                                                                             : '';
+               },
 
-         getCellValue: function(row, column)
-         {
-            return (column.id === "checkboxes") ? extensionModel[row].isSelected : null;
-         },
+               getRowProperties: function(row, props)
+               {
+                  setStyle(row, props);
+               },
 
-         setTree: function(/*treebox*/)
-         {
-            //this.treebox = treebox;
-         },
+               getCellProperties: function(row, column, props)
+               {
+                  setStyle(row, props);
+               },
 
-         isContainer: function(){},
-         isSeparator: function(){},
-         isSorted: function(){},
-         isEditable: function(){},
-         getLevel: function(){},
+               getColumnProperties: function(){},
+               cycleCell: function(){},
 
-         getImageSrc: function(row, column)
-         {
-            return (column.id === "addonName") ? ((extensionModel[row].addonIcon)
-                                                                           ? extensionModel[row].addonIcon : "chrome://{appname}/skin/images/defaultIcon.png")
-                                                                       : '';
-         },
+               cycleHeader: function(column)
+               {
+                  if(column.id === "checkboxes")
+                  {
+                     var headerImage = document.getElementById("checkAll");
+                     var imagePath = "../skin/images/";
 
-         getRowProperties: function(row, props)
-         {
-            //setStyle(row, props);
-         },
+                     if (headerImage.src === imagePath+"unselected.png")
+                     {
+                        checkAll(headerImage, true, imagePath+"selected.png", column, true, null);
+                     }
+                     else
+                     {
+                        checkAll(headerImage, false, imagePath+"unselected.png", column, true, null);
+                     }
+                  }
+               },
 
-         getCellProperties: function(row, column, props)
-         {
-            //setStyle(row, props);
-         },
+               setCellValue: function(row, column, cellValue)
+               {
+                  if(!extensionModel[row].isIncompatible)
+                  {
+                     if(column.id === "checkboxes")
+                     {
+                         extensionModel[row].isSelected = cellValue
+                     }
+                  }
+               },
 
-         getColumnProperties: function(){},
-         cycleCell: function(){},
-         cycleHeader: function(column)
-         {
-            if(column.id === "checkboxes")
+               setCellText: function(){}
+            };
+
+            var setStyle = function(row, props)
             {
-               var headerImage = document.getElementById("checkAll");
-               var imagePath = "../skin/images/";
-
-               if (headerImage.src === imagePath+"unselected.png")
+               if(extensionModel[row].isDeactivated)
                {
-                  checkAll(headerImage, true, imagePath+"selected.png",
-                           column, true, null);
+                  setNewStyle(props, "deactivated");
                }
                else
                {
-                  checkAll(headerImage, false, imagePath+"unselected.png",
-                           column, true, null);
+                  setNewStyle(props, "activated");
                }
-            }
-         },
 
-         setCellValue: function(row, column, cellValue)
-         {
-            if(!extensionModel[row].isIncompatible)
-            {
-               if(column.id === "checkboxes")
+               if(extensionModel[row].isIncompatible)
                {
-                   extensionModel[row].isSelected = cellValue
+                  setNewStyle(props, "incompatible");
                }
-            }
+            };
+
+            var setNewStyle = function(props, status)
+            {
+               var atomService = Cc["@mozilla.org/atom-service;1"].getService(Ci.nsIAtomService);
+               var style = null;
+
+               if(status === "deactivated")
+               {
+                  style = atomService.getAtom("isDeactivatedStyle");
+               }
+               else
+               {
+                style = atomService.getAtom("isActivatedStyle");
+               }
+
+               if(status === "incompatible")
+               {
+                  style = atomService.getAtom("isIncompatibleStyle");
+               }
+
+               props.AppendElement(style);
+            };
+
+            privates.addonGrid.view = treeView;
+         }
+      };
+
+      var publics = {
+         init: function(callback)
+         {
+            Components.utils.import("resource://gre/modules/AddonManager.jsm");
+
+            Application.getExtensions(function(addons)
+            {
+               privates.extensionVars.allAddons = addons.all.length;
+
+               for(var addon in addons.all)
+               {
+                  AddonManager.getAddonByID(addons.all[addon].id, function(addonObj)
+                  {
+                     callback(addonObj);
+                  });
+
+                  addons.get(addons.all[addon].id).enabled ? ++privates.extensionVars.activatedAddons : ++privates.extensionVars.deactivatedAddons;
+               }
+            });
          },
 
-         setCellText: function(){}
+         fillExtensionArr: function(controlObj, addon)
+         {
+            privates.addonGrid = controlObj.addonTree;
+
+            controlObj.activatedAddons.value = privates.extensionVars.activatedAddons;
+            controlObj.deactivatedAddons.value =privates.extensionVars.deactivatedAddons;
+            controlObj.totalAddons.value = privates.extensionVars.allAddons;
+
+            privates.extensions.push({
+               addonId: addon.id,
+               addonName: addon.name,
+               addonVersion: addon.version,
+               addonIcon: addon.iconURL,
+               isSelected: false,
+               isDeactivated: addon.userDisabled,
+               isIncompatible: addon.appDisabled
+            });
+
+            privates.extensions.sort(function(firstObj, nextObj)
+            {
+                  var firstAddonName = firstObj.addonName.toLowerCase( ),
+                        nextAddonName = nextObj.addonName.toLowerCase( );
+
+                  if(firstAddonName < nextAddonName)
+                  {
+                     return -1;
+                  }
+
+                  if(firstAddonName > nextAddonName)
+                  {
+                     return 1;
+                  }
+
+                  return 0;
+            });
+
+            privates.fillTreeView(privates.extensions);
+         },
+
+         uninit: function()
+         {
+            document.getElementById("addonTree").view = null;
+         }
       };
 
-      var setStyle = function(row, props)
-      {
-         if(extensionModel[row].isDeactivated)
-         {
-            setNewStyle(props, "deactivated");
-         }
-         else
-         {
-            setNewStyle(props, "activated");
-         }
-
-         if(extensionModel[row].isIncompatible)
-         {
-            setNewStyle(props, "incompatible");
-         }
-      };
-
-      var setNewStyle = function(props, status)
-      {
-         var atomService = Cc["@mozilla.org/atom-service;1"].getService(Ci.nsIAtomService);
-         var style = null;
-
-         if(status === "deactivated")
-         {
-            style = atomService.getAtom("isDeactivatedStyle");
-         }
-         else
-         {
-          style = atomService.getAtom("isActivatedStyle");
-         }
-
-         if(status === "incompatible")
-         {
-            style = atomService.getAtom("isIncompatibleStyle");
-         }
-
-         props.AppendElement(style);
-      };
-
-      document.getElementById("addonTree").view = treeView;
+      return publics;
    };
 
 //   var checkAll = function(imageControl, boolValue, picture, column, checkAll, checkActivated)
@@ -306,11 +311,6 @@
          cols[i].removeAttribute("sortDirection");
       }
       document.getElementById(columnName).setAttribute("sortDirection", order === 1 ? "ascending" : "descending");
-   };
-
-   var uninit = function()
-   {
-      document.getElementById("addonTree").view = null;
    };
 
 //   var toBool = function(boolParam)
@@ -442,22 +442,27 @@
 //      }
 //   };
 
-   window.uninit = uninit;
    //window.checkAddons = checkAddons;
    //window.onRowClick = onRowClick;
    //window.setActionForAddons = setActionForAddons;
    //window.restartFirefox = restartFirefox;
    window.sort = sort;
-   window.getExtensions = getExtensions;
+   window.madExt = madExt();
 }());
 
 window.onload = function()
 {
-   var numberControls = {
+   var controls = {
       activatedAddons: document.getElementById("activatedAddons"),
       deactivatedAddons: document.getElementById("deactivatedAddons"),
-      totalAddons: document.getElementById("totalAddons")
+      totalAddons: document.getElementById("totalAddons"),
+      addonTree: document.getElementById("addonTree")
    };
 
-   getExtensions(numberControls);
+   madExt.init(function(addonObj)
+   {
+      madExt.fillExtensionArr(controls, addonObj);
+   });
 };
+
+//window.onunload = madExt.uninit();
