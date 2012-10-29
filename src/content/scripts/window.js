@@ -125,7 +125,7 @@
 
             var setNewStyle = function(props, status)
             {
-               var atomService = Cc["@mozilla.org/atom-service;1"].getService(Ci.nsIAtomService);
+               var atomService = privates.Cc["@mozilla.org/atom-service;1"].getService(privates.Ci.nsIAtomService);
                var style = null;
 
                if(status === "deactivated")
