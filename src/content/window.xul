@@ -58,8 +58,7 @@
       </treecol>
 
       <splitter class="tree-splitter" disabled="true" />
-      <treecol id="addonName" label="&name.label;" flex="2"
-               onclick="sort(this)" class="sortDirectionIndicator" />
+      <treecol id="addonName" label="&name.label;" flex="2"  class="sortDirectionIndicator" />
 
       <splitter class="tree-splitter" />
       <treecol id="addonVersion" label="&version.label;" flex="3" />

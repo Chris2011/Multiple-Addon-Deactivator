@@ -10,6 +10,7 @@
          propertyStrings: document.getElementById("string-bundle"),
          extensions: [],
          addonGrid: null,
+         order: 1,
 
          extensionVars: {
             allAddons: 0,
@@ -21,6 +22,81 @@
             deactivateAll: 0,
             activateAll: 1,
             actionForMarkedEntry: 2
+         },
+
+         sortFunc: function(firstObj, nextObj)
+         {
+               var firstAddonName = firstObj.addonName.toLowerCase( ),
+                     nextAddonName = nextObj.addonName.toLowerCase( );
+
+               if(firstAddonName < nextAddonName)
+               {
+                  return -1 * privates.order
+               }
+
+               if(firstAddonName > nextAddonName)
+               {
+                  return 1 * privates.order;
+               }
+
+               return 0;
+         },
+
+//         prepareForComparison: function(o)
+//         {
+//            return (typeof o === "string") ? o.toLowerCase() : o;
+//         },
+
+         checkAll: function(imageControl, boolValue, picture, column, checkAll, checkActivated)
+         {
+            var rows = privates.addonGrid.view.rowCount;
+
+//            actionCounter = function(counterVar)
+//            {
+            for(var i = 0; i < rows; i++)
+            {
+               if(checkAll)
+               {
+                  privates.addonGrid.view.setCellValue(i, column, boolValue);
+               }
+               else
+               {
+                  AddonManager.getAddonByID(extensions[counterVar].addonId, function(addon)
+                  {
+                     if(!addon.userDisabled && checkActivated)
+                     {
+                        privates.addonGrid.view.setCellValue(counterVar, column, boolValue);
+                     }
+
+                     if(addon.userDisabled && !checkActivated)
+                     {
+                        privates.addonGrid.view.setCellValue(counterVar, column, boolValue);
+                     }
+                  });
+               }
+            }
+
+            if(checkAll)
+            {
+               document.getElementById("checkAllActivated").disabled = boolValue;
+               document.getElementById("checkAllDeactivated").disabled = boolValue;
+               document.getElementById("checkAllActivated").checked = false;
+               document.getElementById("checkAllDeactivated").checked = false;
+
+               imageControl.src = picture;
+            }
+
+//            for(var i = 0; i < rows; i++)
+//            {
+//               if(checkAll)
+//               {
+//                  privates.addonGrid.view.setCellValue(i, column, boolValue);
+//               }
+//               else
+//               {
+//                  actionCounter(i);
+//               }
+//            }
          },
 
          fillTreeView: function(extensionModel)
@@ -38,9 +114,9 @@
                   return (column.id === "checkboxes") ? extensionModel[row].isSelected : null;
                },
 
-               setTree: function(/*treebox*/)
+               setTree: function(treebox)
                {
-                  //this.treebox = treebox;
+                  this.treebox = treebox;
                },
 
                isContainer: function(){},
@@ -51,11 +127,6 @@
 
                getImageSrc: function(row, column)
                {
-//                  if(column.id === "addonName")
-//                     {
-//                        return extensionModel[row].addonIcon;
-//                     }
-//
                   return (column.id === "addonName") ? ((extensionModel[row].addonIcon)
                                                                                  ? extensionModel[row].addonIcon : "chrome://{appname}/skin/images/defaultIcon.png")
                                                                              : '';
@@ -83,11 +154,11 @@
 
                      if (headerImage.src === imagePath+"unselected.png")
                      {
-                        checkAll(headerImage, true, imagePath+"selected.png", column, true, null);
+                        privates.checkAll(headerImage, true, imagePath+"selected.png", column, true, null);
                      }
                      else
                      {
-                        checkAll(headerImage, false, imagePath+"unselected.png", column, true, null);
+                        privates.checkAll(headerImage, false, imagePath+"unselected.png", column, true, null);
                      }
                   }
                },
@@ -173,7 +244,6 @@
          fillExtensionArr: function(controlObj, addon)
          {
             privates.addonGrid = controlObj.addonTree;
-
             controlObj.activatedAddons.value = privates.extensionVars.activatedAddons;
             controlObj.deactivatedAddons.value =privates.extensionVars.deactivatedAddons;
             controlObj.totalAddons.value = privates.extensionVars.allAddons;
@@ -188,129 +258,83 @@
                isIncompatible: addon.appDisabled
             });
 
-            privates.extensions.sort(function(firstObj, nextObj)
-            {
-                  var firstAddonName = firstObj.addonName.toLowerCase( ),
-                        nextAddonName = nextObj.addonName.toLowerCase( );
-
-                  if(firstAddonName < nextAddonName)
-                  {
-                     return -1;
-                  }
-
-                  if(firstAddonName > nextAddonName)
-                  {
-                     return 1;
-                  }
-
-                  return 0;
-            });
+            privates.extensions.sort(privates.sortFunc);
 
             privates.fillTreeView(privates.extensions);
          },
 
+         sort: function(column)
+         {
+            var columnName;
+            privates.order = privates.addonGrid.getAttribute("sortDirection") === "ascending" ? 1 : -1;
+
+            //if the column is passed and it's already sorted by that column, reverse sort
+            if(column)
+            {
+               columnName = column.id;
+               privates.order *= (privates.addonGrid.getAttribute("sortResource") === columnName) ? -1 : null;
+            }
+            else
+            {
+               columnName = privates.addonGrid.getAttribute("sortResource");
+            }
+
+//            var columnSort = function(firstObj, nextObj)
+//            {
+//               //Application.console.log(a.addonName);
+//
+//                                 var firstAddonName = firstObj.addonName.toLowerCase( ),
+//                        nextAddonName = nextObj.addonName.toLowerCase( );
+//
+//                  if(firstAddonName < nextAddonName)
+//                  {
+//                     return -1 * privates.order
+//                  }
+//
+//                  if(firstAddonName > nextAddonName)
+//                  {
+//                     return 1 * privates.order
+//                  }
+//
+//                  return 0;
+//
+////               if(privates.prepareForComparison(a[columnName]) > privates.prepareForComparison(b[columnName]))
+////               {
+////                  return 1 * order;
+////               }
+////
+////               if(privates.prepareForComparison(a[columnName]) < privates.prepareForComparison(b[columnName]))
+////               {
+////                  return -1 * order;
+////               }
+////
+////               return 0;
+//            };
+
+            privates.extensions.sort(privates.sortFunc);
+            // Setting these will make the sort option persist.
+            privates.addonGrid.setAttribute("sortDirection", privates.order === 1 ? "ascending" : "descending");
+            privates.addonGrid.setAttribute("sortResource", columnName);
+
+            // Set the appropriate attributes to show to indicator.
+            var cols = privates.addonGrid.getElementsByTagName("treecol");
+            var colLength = cols.length;
+
+            for(var i = 0; i < colLength; i++)
+            {
+               cols[i].removeAttribute("sortDirection");
+            }
+
+            document.getElementById(columnName).setAttribute("sortDirection", privates.order === 1 ? "ascending" : "descending");
+         },
+
          uninit: function()
          {
-            document.getElementById("addonTree").view = null;
+            privates.addonGrid.view = null;
          }
       };
 
       return publics;
-   };
-
-//   var checkAll = function(imageControl, boolValue, picture, column, checkAll, checkActivated)
-//   {
-//      var addonTree = document.getElementById("addonTree");
-//      var rows = addonTree.view.rowCount;
-//
-//      actionCounter = function(counterVar)
-//      {
-//         AddonManager.getAddonByID(extensions[counterVar].addonId, function(addon)
-//         {
-//            if(!addon.userDisabled && checkActivated)
-//            {
-//               addonTree.view.setCellValue(counterVar, column, boolValue);
-//            }
-//            if(addon.userDisabled && !checkActivated)
-//            {
-//              addonTree.view.setCellValue(counterVar, column, boolValue);
-//            }
-//         });
-//      }
-//
-//      if(checkAll)
-//      {
-//         document.getElementById("checkAllActivated").disabled = boolValue;
-//         document.getElementById("checkAllDeactivated").disabled = boolValue;
-//         document.getElementById("checkAllActivated").checked = false;
-//         document.getElementById("checkAllDeactivated").checked = false;
-//
-//         imageControl.src = picture;
-//      }
-//
-//      for(var i = 0; i < rows; i++)
-//      {
-//         if(checkAll)
-//         {
-//            addonTree.view.setCellValue(i, column, boolValue);
-//         }
-//         else
-//         {
-//            actionCounter(i);
-//         }
-//      }
-//   };
-
-   var prepareForComparison = function(o)
-   {
-      return (typeof o === "string") ? o.toLowerCase() : o;
-   };
-
-   var sort = function(column)
-   {
-      var addonTree = document.getElementById("addonTree");
-      var columnName;
-      var order = addonTree.getAttribute("sortDirection") === "ascending" ? 1 : -1;
-
-      //if the column is passed and it's already sorted by that column, reverse sort
-      if(column)
-      {
-         columnName = column.id;
-         order *= (addonTree.getAttribute("sortResource") === columnName) ? -1 : null;
-      }
-      else
-      {
-         columnName = addonTree.getAttribute("sortResource");
-      }
-
-      var columnSort = function(a, b)
-      {
-         if(prepareForComparison(a[columnName]) > prepareForComparison(b[columnName]))
-         {
-            return 1 * order;
-         }
-         if(prepareForComparison(a[columnName]) < prepareForComparison(b[columnName]))
-         {
-            return -1 * order;
-         }
-
-         return 0;
-      };
-
-      extensions.sort(columnSort);
-      // Setting these will make the sort option persist.
-      addonTree.setAttribute("sortDirection", order === 1 ? "ascending" : "descending");
-      addonTree.setAttribute("sortResource", columnName);
-
-      // Set the appropriate attributes to show to indicator.
-      var cols = addonTree.getElementsByTagName("treecol");
-      var colLength = cols.length;
-
-      for(var i = 0; i < colLength; i++)
-      {
-         cols[i].removeAttribute("sortDirection");
-      }
-      document.getElementById(columnName).setAttribute("sortDirection", order === 1 ? "ascending" : "descending");
    };
 
 //   var toBool = function(boolParam)
@@ -446,7 +470,6 @@
    //window.onRowClick = onRowClick;
    //window.setActionForAddons = setActionForAddons;
    //window.restartFirefox = restartFirefox;
-   window.sort = sort;
    window.madExt = madExt();
 }());
 
@@ -458,6 +481,12 @@ window.onload = function()
       totalAddons: document.getElementById("totalAddons"),
       addonTree: document.getElementById("addonTree")
    };
+
+   document.getElementById("addonName").onclick = function(e)
+   {
+      Application.console.log("test");
+    madExt.sort(this) ;
+   }
 
    madExt.init(function(addonObj)
    {
