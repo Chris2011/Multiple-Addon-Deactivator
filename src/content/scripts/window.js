@@ -374,10 +374,9 @@
          onRowClick: function()
          {
             var addonTree = document.getElementById("addonTree");
-
             var cellVal = !privates.toBool((addonTree.view.getCellValue(addonTree.view.selection.currentIndex, addonTree.view.selection.tree.columns[0])));
 
-            addonTreeview.setCellValue(addonTree.view.selection.currentIndex, addonTree.view.selection.tree.columns[0], cellVal);
+            addonTree.view.setCellValue(addonTree.view.selection.currentIndex, addonTree.view.selection.tree.columns[0], cellVal);
          },
 
          setActionForAddons: function(addonAction)
