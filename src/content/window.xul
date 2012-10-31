@@ -2,22 +2,17 @@
 <?xml-stylesheet href="chrome://{appname}/skin/window.css" type="text/css"?>
 <!DOCTYPE window SYSTEM "chrome://{appname}/locale/window.dtd">
 
-<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-        title="&title.label;" id="madWindow"
-        persist="width height screenX screenY sizemode">
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&title.label;" id="madWindow"
+              persist="width height screenX screenY sizemode" onunload="madExt.uninit()">
  <stringbundleset id="stringbundleset">
-  <stringbundle id="string-bundle"
-                src="chrome://{appname}/locale/description.properties"/>
+  <stringbundle id="string-bundle" src="chrome://{appname}/locale/description.properties"/>
  </stringbundleset>
  <script src="scripts/window.js" />
 
  <commandset>
-  <command id="deactivateAllCommand"
-           oncommand="madExt.setActionForAddons(madExt.addonActionEnum.deactivateAll)" />
-  <command id="activateAllCommand"
-           oncommand="madExt.setActionForAddons(madExt.addonActionEnum.activateAll)" />
-  <command id="executeActionCommand"
-           oncommand="madExt.setActionForAddons(madExt.addonActionEnum.actionForMarkedEntry)" />
+  <command id="deactivateAllCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.deactivateAll)" />
+  <command id="activateAllCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.activateAll)" />
+  <command id="executeActionCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.actionForMarkedEntry)" />
   <command id="restartCommand" oncommand="madExt.restartFirefox()" />
   <!--<command id="checkActivatedAddons" oncommand="madExt.checkAddons(true)" />-->
   <command id="checkDeactivatedAddons" oncommand="madExt.checkAddons(false)" />
