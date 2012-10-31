@@ -13,14 +13,14 @@
 
  <commandset>
   <command id="deactivateAllCommand"
-           oncommand="setActionForAddons(addonActionEnum.deactivateAll)" />
+           oncommand="madExt.setActionForAddons(madExt.addonActionEnum.deactivateAll)" />
   <command id="activateAllCommand"
-           oncommand="setActionForAddons(addonActionEnum.activateAll)" />
+           oncommand="madExt.setActionForAddons(madExt.addonActionEnum.activateAll)" />
   <command id="executeActionCommand"
-           oncommand="setActionForAddons(addonActionEnum.actionForMarkedEntry)" />
-  <command id="restartCommand" oncommand="restartFirefox()" />
-  <command id="checkActivatedAddons" oncommand="checkAddons(true)" />
-  <command id="checkDeactivatedAddons" oncommand="checkAddons(false)" />
+           oncommand="madExt.setActionForAddons(madExt.addonActionEnum.actionForMarkedEntry)" />
+  <command id="restartCommand" oncommand="madExt.restartFirefox()" />
+  <!--<command id="checkActivatedAddons" oncommand="madExt.checkAddons(true)" />-->
+  <command id="checkDeactivatedAddons" oncommand="madExt.checkAddons(false)" />
  </commandset>
 
  <grid>
@@ -63,7 +63,7 @@
       <splitter class="tree-splitter" />
       <treecol id="addonVersion" label="&version.label;" flex="3" />
      </treecols>
-     <treechildren onclick="onRowClick()" />
+     <treechildren id="treechildren" />
     </tree>
    </row>
   </rows>
@@ -74,7 +74,8 @@
   </columns>
   <rows>
    <row>
-    <checkbox id="checkAllActivated" command="checkActivatedAddons" />
+    <checkbox id="checkAllActivated" />
+<!--    command="checkActivatedAddons" />-->
     <description>&checkAllActivated.label;</description>
     <checkbox id="checkAllDeactivated" command="checkDeactivatedAddons" />
     <description>&checkAllDeactivated.label;</description>
