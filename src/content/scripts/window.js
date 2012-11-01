@@ -15,7 +15,8 @@
          extensionVars: {
             allAddons: 0,
             activatedAddons: 0,
-            deactivatedAddons: 0
+            deactivatedAddons: 0,
+            incompatibleAddons: 0
          },
 
          fillTreeView: function(extensionModel)
@@ -162,7 +163,7 @@
                return 0;
          },
 
-         checkAll2: function(imageControl, boolValue, picture, column, checkAll, checkActivated)
+         checkAll: function(imageControl, boolValue, picture, column, checkAll, checkActivated)
          {
             var addonTree = document.getElementById("addonTree");
             var rows = addonTree.view.rowCount;
@@ -205,48 +206,49 @@
             }
          },
 
-         checkAll: function(imageControl, boolValue, picture, column, checkAll, checkActivated)
+         stdAddonAction: function(activateAddon)
          {
-            var addonTree = document.getElementById("addonTree"); // TODO: use a private variable to set it with document.getElementById("addonTree");
-            var checkAllActivatedControl =  document.getElementById("checkAllActivated");
-            var checkAllDeactivatedControl =  document.getElementById("checkAllDeactivated");
+            var addonTree = document.getElementById("addonTree");
             var rows = addonTree.view.rowCount;
+            var prefs = privates.Cc["@mozilla.org/preferences-service;1"].getService(privates.Ci.nsIPrefService)
+                                           .getBranch("extensions.multiple-addon-deactivator.ChrisLE@mozilla.org.");
+            var prefValue = prefs.getBoolPref("excludeMAD");
+
+            var actionCounter = function(counterVar)
+            {
+               AddonManager.getAddonByID(privates.extensions[counterVar].addonId, function(addon)
+               {
+                  if(activateAddon === null)
+                  {
+                     if(privates.toBool((addonTree.view.getCellValue(counterVar, addonTree.view.selection.tree.columns[0]))))
+                     {
+                        addon.userDisabled = !addon.userDisabled;
+                     }
+                  }
+                  else
+                  {
+                     if((!addon.userDisabled && activateAddon))
+                     {
+                        if(!prefValue || (prefValue && addon.id !== "ChrisLE@mozilla.org"))
+                        {
+                           addon.userDisabled = activateAddon;
+                        }
+                     }
+                     else if(addon.userDisabled && !activateAddon)
+                     {
+                        addon.userDisabled = activateAddon;
+                     }
+                  }
+               });
+            }
 
             for(var i = 0; i < rows; i++)
             {
-               if(checkAll)
-               {
-                  addonTree.view.setCellValue(i, column, boolValue);
-
-                  checkAllActivatedControl.disabled = boolValue;
-                  checkAllActivatedControl.checked = false;
-
-                  checkAllDeactivatedControl.disabled = boolValue;
-                  checkAllDeactivatedControl.checked = false;
-
-                  imageControl.src = picture;
-               }
-               else
-               {
-                  Application.console.log("test");
-
-                  AddonManager.getAddonByID(privates.extensions[i].addonId, function(addon)
-                  {
-                     if(!addon.userDisabled && checkActivated)
-                     {
-                        addonTree.view.setCellValue(i, column, boolValue);
-                     }
-
-                     if(addon.userDisabled && !checkActivated)
-                     {
-                        addonTree.view.setCellValue(i, column, boolValue);
-                     }
-                  });
-               }
+               actionCounter(i);
             }
          },
 
-         stdAddonAction: function(activateAddon)
+         stdAddonAction2: function(activateAddon)
          {
             var addonTree = document.getElementById("addonTree"); // TODO: use a private variable to set it with document.getElementById("addonTree");
             var rows = addonTree.view.rowCount;
