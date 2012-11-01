@@ -9,7 +9,7 @@
          Ci: Components.interfaces,
          propertyStrings: document.getElementById("string-bundle"),
          extensions: [],
-         //addonGrid: null,
+         //addonGrid: null, // TODO: use a private variable to set it with document.getElementById("addonTree");
          order: 1,
 
          extensionVars: {
@@ -136,7 +136,7 @@
             };
 
             document.getElementById("addonTree").view = treeView;
-            //privates.addonGrid.view = treeView;
+            //privates.addonGrid.view = treeView; // TODO: use a private variable to set it with document.getElementById("addonTree");
          },
 
          toBool: function(boolParam)
@@ -207,7 +207,7 @@
 
          checkAll2: function(imageControl, boolValue, picture, column, checkAll, checkActivated)
          {
-            var addonTree = document.getElementById("addonTree");
+            var addonTree = document.getElementById("addonTree"); // TODO: use a private variable to set it with document.getElementById("addonTree");
             var checkAllActivatedControl =  document.getElementById("checkAllActivated");
             var checkAllDeactivatedControl =  document.getElementById("checkAllDeactivated");
             var rows = addonTree.view.rowCount;
@@ -246,11 +246,11 @@
 
          stdAddonAction: function(activateAddon)
          {
-            var addonTree = document.getElementById("addonTree");
-            var prefs = privates.Cc["@mozilla.org/preferences-service;1"].getService(privates.Ci.nsIPrefService)
-                                                                                                            .getBranch("extensions.multiple-addon-deactivator.ChrisLE@mozilla.org.");
+            var addonTree = document.getElementById("addonTree"); // TODO: use a private variable to set it with document.getElementById("addonTree");
             var prefValue = prefs.getBoolPref("excludeMAD");
             var rows = addonTree.view.rowCount;
+            var prefs = privates.Cc["@mozilla.org/preferences-service;1"].getService(privates.Ci.nsIPrefService)
+                                                                                                            .getBranch("extensions.multiple-addon-deactivator.ChrisLE@mozilla.org.");
 
             for(var i = 0; i < rows; i++)
             {
@@ -258,8 +258,7 @@
                   {
                      if(activateAddon === null)
                      {
-                        if(privates.toBool((addonTree.view.getCellValue(i,
-                                   addonTree.view.selection.tree.columns[0]))))
+                        if(privates.toBool((addonTree.view.getCellValue(i, addonTree.view.selection.tree.columns[0]))))
                         {
                            addon.userDisabled = !addon.userDisabled;
                         }
@@ -313,7 +312,7 @@
 
          fillExtensionArr: function(controlObj, addon, counter)
          {
-            //privates.addonGrid = controlObj.addonTree;
+            //privates.addonGrid = controlObj.addonTree; // TODO: use a private variable to set it with document.getElementById("addonTree");
             controlObj.activatedAddons.value = privates.extensionVars.activatedAddons;
             controlObj.deactivatedAddons.value =privates.extensionVars.deactivatedAddons;
             controlObj.totalAddons.value = privates.extensionVars.allAddons;
@@ -340,7 +339,7 @@
          sort: function(column)
          {
             var columnName;
-            var addonTree = document.getElementById("addonTree");
+            var addonTree = document.getElementById("addonTree"); // TODO: use a private variable to set it with document.getElementById("addonTree");
             privates.order = addonTree.getAttribute("sortDirection") === "ascending" ? 1 : -1;
 
             //if the column is passed and it's already sorted by that column, reverse sort
@@ -413,10 +412,9 @@
                const nsIAppStartup = privates.Ci.nsIAppStartup;
 
                // Notify all windows that an application quit has been requested.
-               var os = privates.Cc["@mozilla.org/observer-service;1"]
-                          .getService(privates.Ci.nsIObserverService);
-               var cancelQuit = privates.Cc["@mozilla.org/supports-PRBool;1"]
-                                  .createInstance(privates.Ci.nsISupportsPRBool);
+               var os = privates.Cc["@mozilla.org/observer-service;1"].getService(privates.Ci.nsIObserverService);
+               var cancelQuit = privates.Cc["@mozilla.org/supports-PRBool;1"].createInstance(privates.Ci.nsISupportsPRBool);
+
                os.notifyObservers(cancelQuit, "quit-application-requested", null);
 
                // Something aborted the quit process.
@@ -447,7 +445,7 @@
 
          uninit: function()
          {
-            document.getElementById("addonTree").view = null;
+            document.getElementById("addonTree").view = null; // TODO: use a private variable to set it with document.getElementById("addonTree");
          }
       };
 
@@ -462,8 +460,8 @@ window.onload = function()
    var controls = {
       activatedAddons: document.getElementById("activatedAddons"),
       deactivatedAddons: document.getElementById("deactivatedAddons"),
-      totalAddons: document.getElementById("totalAddons")//,
-      //addonTree: document.getElementById("addonTree")
+      totalAddons: document.getElementById("totalAddons")
+      //addonTree: document.getElementById("addonTree") // TODO: use a private variable to set it with document.getElementById("addonTree");
    };
 
    madExt.init(function(addonObj, counterVar)
@@ -483,5 +481,3 @@ window.onload = function()
       madExt.checkAddons(true);
    };
 };
-
-//window.onunload = madExt.uninit();
