@@ -162,7 +162,7 @@
                return 0;
          },
 
-         checkAll: function(imageControl, boolValue, picture, column, checkAll, checkActivated)
+         checkAll2: function(imageControl, boolValue, picture, column, checkAll, checkActivated)
          {
             var addonTree = document.getElementById("addonTree");
             var rows = addonTree.view.rowCount;
@@ -205,7 +205,7 @@
             }
          },
 
-         checkAll2: function(imageControl, boolValue, picture, column, checkAll, checkActivated)
+         checkAll: function(imageControl, boolValue, picture, column, checkAll, checkActivated)
          {
             var addonTree = document.getElementById("addonTree"); // TODO: use a private variable to set it with document.getElementById("addonTree");
             var checkAllActivatedControl =  document.getElementById("checkAllActivated");
@@ -228,6 +228,8 @@
                }
                else
                {
+                  Application.console.log("test");
+
                   AddonManager.getAddonByID(privates.extensions[i].addonId, function(addon)
                   {
                      if(!addon.userDisabled && checkActivated)
@@ -247,10 +249,10 @@
          stdAddonAction: function(activateAddon)
          {
             var addonTree = document.getElementById("addonTree"); // TODO: use a private variable to set it with document.getElementById("addonTree");
-            var prefValue = prefs.getBoolPref("excludeMAD");
             var rows = addonTree.view.rowCount;
             var prefs = privates.Cc["@mozilla.org/preferences-service;1"].getService(privates.Ci.nsIPrefService)
                                                                                                             .getBranch("extensions.multiple-addon-deactivator.ChrisLE@mozilla.org.");
+            var prefValue = prefs.getBoolPref("excludeMAD");
 
             for(var i = 0; i < rows; i++)
             {
@@ -475,9 +477,4 @@ window.onload = function()
    };
 
    document.getElementById("treechildren").onclick = madExt.onRowClick;
-
-   document.getElementById("checkAllActivated").onclick = function()
-   {
-      madExt.checkAddons(true);
-   };
 };

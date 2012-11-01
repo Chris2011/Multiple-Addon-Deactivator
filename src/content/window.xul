@@ -14,7 +14,7 @@
   <command id="activateAllCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.activateAll)" />
   <command id="executeActionCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.actionForMarkedEntry)" />
   <command id="restartCommand" oncommand="madExt.restartFirefox()" />
-  <!--<command id="checkActivatedAddons" oncommand="madExt.checkAddons(true)" />-->
+  <command id="checkActivatedAddons" oncommand="madExt.checkAddons(true)" />
   <command id="checkDeactivatedAddons" oncommand="madExt.checkAddons(false)" />
  </commandset>
 
@@ -69,8 +69,7 @@
   </columns>
   <rows>
    <row>
-    <checkbox id="checkAllActivated" />
-<!--    command="checkActivatedAddons" />-->
+    <checkbox id="checkAllActivated" command="checkActivatedAddons" />
     <description>&checkAllActivated.label;</description>
     <checkbox id="checkAllDeactivated" command="checkDeactivatedAddons" />
     <description>&checkAllDeactivated.label;</description>
