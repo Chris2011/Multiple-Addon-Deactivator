@@ -7,7 +7,9 @@
 <!-- Anwendungsdaten //-->
 <!ENTITY activated.label "Aktviert">
 <!ENTITY deactivated.label "Deaktiviert">
+<!ENTITY incompatible.label "Inkompatibel">
 <!ENTITY total.label "Gesamt">
+<!ENTITY restartless.label "Kein Neustart">
 <!ENTITY name.label "Name">
 <!ENTITY version.label "Version">
 <!ENTITY checkAllActivated.label "Aktivierte auswählen">

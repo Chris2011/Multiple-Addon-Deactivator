@@ -32,9 +32,17 @@
     <description class="borderRight" value="&deactivated.label;" />
     <description id="deactivatedAddons" />
    </row>
+      <row>
+    <description class="borderRight" value="&incompatible.label;" />
+    <description id="incompatibleAddons" />
+   </row>
    <row>
     <description class="borderRight" value="&total.label;" />
     <description id="totalAddons" />
+   </row>
+   <row>
+    <description class="borderRight" value="&restartless.label;" />
+    <description id="restartlessAddons" />
    </row>
   </rows>
  </grid>

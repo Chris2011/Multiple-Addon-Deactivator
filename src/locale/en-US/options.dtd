@@ -6,3 +6,4 @@
 <!ENTITY activatedAddon.label " - activated add-on">
 <!ENTITY deactivatedAddon.label " - deactivated add-on">
 <!ENTITY incompatibleAddon.label " - incompatible add-on">
+<!ENTITY restartlessAddon.label " - activated add-on (restartless)">

@@ -34,6 +34,10 @@
      </columns>
      <rows>
       <row>
+       <label id="restartlessLabel" style="border: 0;" />
+       <description flex="1">&restartlessAddon.label;</description>
+      </row>
+      <row>
        <label id="activatedLabel" />
        <description flex="1">&activatedAddon.label;</description>
       </row>

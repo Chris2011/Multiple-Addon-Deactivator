@@ -7,7 +7,9 @@
 <!-- Application Data //-->
 <!ENTITY activated.label "Aktiverat">
 <!ENTITY deactivated.label "Inaktiverat">
+<!ENTITY incompatible.label "Oförenliga">
 <!ENTITY total.label "Totalt">
+<!ENTITY restartless.label "Ingen omstart">
 <!ENTITY name.label "Namn">
 <!ENTITY version.label "Version">
 <!ENTITY checkAllActivated.label "Markera endast aktiverade">

@@ -16,7 +16,8 @@
             allAddons: 0,
             activatedAddons: 0,
             deactivatedAddons: 0,
-            incompatibleAddons: 0
+            incompatibleAddons: 0,
+            restartlessAddons: 0
          },
 
          fillTreeView: function(extensionModel)
@@ -26,7 +27,7 @@
 
                getCellText: function(row, column)
                {
-                  return (column.id === "addonName") ? "  "+extensionModel[row].addonName : extensionModel[row].addonVersion;
+                  return (column.id === "addonName") ? "  "+extensionModel[row].addonName : "  "+extensionModel[row].addonVersion;
                },
 
                getCellValue: function(row, column)
@@ -47,9 +48,29 @@
 
                getImageSrc: function(row, column)
                {
-                  return (column.id === "addonName") ? ((extensionModel[row].addonIcon)
-                                                                                 ? extensionModel[row].addonIcon : "chrome://{appname}/skin/images/defaultIcon.png")
-                                                                             : '';
+                  var addonIcon = '';
+
+                  if(column.id === "addonName")
+                  {
+                     if(extensionModel[row].addonIcon)
+                     {
+                        addonIcon = extensionModel[row].addonIcon;
+                     }
+                     else
+                     {
+                        addonIcon = "chrome://{appname}/skin/images/defaultIcon.png";
+                     }
+                  }
+
+                  if(column.id === "addonVersion")
+                  {
+                     if(extensionModel[row].isRestartless)
+                     {
+                        addonIcon = "chrome://{appname}/skin/images/star.png";
+                     }
+                  }
+
+                  return addonIcon;
                },
 
                getRowProperties: function(row, props)
@@ -97,6 +118,28 @@
                setCellText: function(){}
             };
 
+            var setNewStyle = function(props, status)
+            {
+               var atomService = privates.Cc["@mozilla.org/atom-service;1"].getService(privates.Ci.nsIAtomService);
+               var style = null;
+
+               if(status === "deactivated")
+               {
+                  style = atomService.getAtom("isDeactivatedStyle");
+               }
+               else
+               {
+                  style = atomService.getAtom("isActivatedStyle");
+               }
+
+               if(status === "incompatible")
+               {
+                  style = atomService.getAtom("isIncompatibleStyle");
+               }
+
+               props.AppendElement(style);
+            };
+
             var setStyle = function(row, props)
             {
                if(extensionModel[row].isDeactivated)
@@ -114,28 +157,6 @@
                }
             };
 
-            var setNewStyle = function(props, status)
-            {
-               var atomService = privates.Cc["@mozilla.org/atom-service;1"].getService(privates.Ci.nsIAtomService);
-               var style = null;
-
-               if(status === "deactivated")
-               {
-                  style = atomService.getAtom("isDeactivatedStyle");
-               }
-               else
-               {
-                style = atomService.getAtom("isActivatedStyle");
-               }
-
-               if(status === "incompatible")
-               {
-                  style = atomService.getAtom("isIncompatibleStyle");
-               }
-
-               props.AppendElement(style);
-            };
-
             document.getElementById("addonTree").view = treeView;
             //privates.addonGrid.view = treeView; // TODO: use a private variable to set it with document.getElementById("addonTree");
          },
@@ -147,8 +168,8 @@
 
          sortFunc: function(firstObj, nextObj)
          {
-               var firstAddonName = firstObj.addonName.toLowerCase( ),
-                     nextAddonName = nextObj.addonName.toLowerCase( );
+               var firstAddonName = firstObj.addonName.toLowerCase(),
+                     nextAddonName = nextObj.addonName.toLowerCase();
 
                if(firstAddonName < nextAddonName)
                {
@@ -246,43 +267,6 @@
             {
                actionCounter(i);
             }
-         },
-
-         stdAddonAction2: function(activateAddon)
-         {
-            var addonTree = document.getElementById("addonTree"); // TODO: use a private variable to set it with document.getElementById("addonTree");
-            var rows = addonTree.view.rowCount;
-            var prefs = privates.Cc["@mozilla.org/preferences-service;1"].getService(privates.Ci.nsIPrefService)
-                                                                                                            .getBranch("extensions.multiple-addon-deactivator.ChrisLE@mozilla.org.");
-            var prefValue = prefs.getBoolPref("excludeMAD");
-
-            for(var i = 0; i < rows; i++)
-            {
-                  AddonManager.getAddonByID(privates.extensions[i].addonId, function(addon)
-                  {
-                     if(activateAddon === null)
-                     {
-                        if(privates.toBool((addonTree.view.getCellValue(i, addonTree.view.selection.tree.columns[0]))))
-                        {
-                           addon.userDisabled = !addon.userDisabled;
-                        }
-                     }
-                     else
-                     {
-                        if((!addon.userDisabled && activateAddon))
-                        {
-                           if(!prefValue || (prefValue && addon.id !== "ChrisLE@mozilla.org"))
-                           {
-                              addon.userDisabled = activateAddon;
-                           }
-                        }
-                        else if(addon.userDisabled && !activateAddon)
-                        {
-                           addon.userDisabled = activateAddon;
-                        }
-                     }
-                  });
-            }
          }
       };
 
@@ -306,10 +290,26 @@
                {
                   AddonManager.getAddonByID(addons.all[addon].id, function(addonObj)
                   {
+                     if(!addonObj.userDisabled)
+                     {
+                        privates.extensionVars.activatedAddons++;
+                     }
+                     else if(addonObj.appDisabled)
+                     {
+                        privates.extensionVars.incompatibleAddons++;
+                     }
+                     else
+                     {
+                        privates.extensionVars.deactivatedAddons++;
+                     }
+
+                     if(!addonObj.operationsRequiringRestart)
+                     {
+                        privates.extensionVars.restartlessAddons++;
+                     }
+
                      callback(addonObj, ++counter);
                   });
-
-                  addons.get(addons.all[addon].id).enabled ? ++privates.extensionVars.activatedAddons : ++privates.extensionVars.deactivatedAddons;
                }
             });
          },
@@ -318,8 +318,10 @@
          {
             //privates.addonGrid = controlObj.addonTree; // TODO: use a private variable to set it with document.getElementById("addonTree");
             controlObj.activatedAddons.value = privates.extensionVars.activatedAddons;
-            controlObj.deactivatedAddons.value =privates.extensionVars.deactivatedAddons;
+            controlObj.deactivatedAddons.value = privates.extensionVars.deactivatedAddons;
+            controlObj.incompatibleAddons.value = privates.extensionVars.incompatibleAddons;
             controlObj.totalAddons.value = privates.extensionVars.allAddons;
+            controlObj.restartlessAddons.value = privates.extensionVars.restartlessAddons;
 
             privates.extensions.push({
                addonId: addon.id,
@@ -328,11 +330,11 @@
                addonIcon: addon.iconURL,
                isSelected: false,
                isDeactivated: addon.userDisabled,
-               isIncompatible: addon.appDisabled
+               isIncompatible: addon.appDisabled,
+               isRestartless: !addon.operationsRequiringRestart
             });
 
             privates.extensions.sort(privates.sortFunc);
-
 
             if(counter == controlObj.totalAddons.value)
             {
@@ -464,7 +466,9 @@ window.onload = function()
    var controls = {
       activatedAddons: document.getElementById("activatedAddons"),
       deactivatedAddons: document.getElementById("deactivatedAddons"),
-      totalAddons: document.getElementById("totalAddons")
+      incompatibleAddons: document.getElementById("incompatibleAddons"),
+      totalAddons: document.getElementById("totalAddons"),
+      restartlessAddons: document.getElementById("restartlessAddons")
       //addonTree: document.getElementById("addonTree") // TODO: use a private variable to set it with document.getElementById("addonTree");
    };
 

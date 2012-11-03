@@ -6,3 +6,4 @@
 <!ENTITY activatedAddon.label " - aktiverat tillägg">
 <!ENTITY deactivatedAddon.label " - inaktiverat tillägg">
 <!ENTITY incompatibleAddon.label " - inkompatibelt med aktuell program-version">
+<!ENTITY restartlessAddon.label " - aktiverat tillägg (ingen omstart)">
