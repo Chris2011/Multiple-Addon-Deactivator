@@ -14,8 +14,10 @@
   <command id="activateAllCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.activateAll)" />
   <command id="executeActionCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.actionForMarkedEntry)" />
   <command id="restartCommand" oncommand="madExt.restartFirefox()" />
-  <command id="checkActivatedAddons" oncommand="madExt.checkAddons(true)" />
-  <command id="checkDeactivatedAddons" oncommand="madExt.checkAddons(false)" />
+  <command id="checkActivatedAddons" oncommand="madExt.checkAddons(madExt.addonStateEnum.activated)" />
+  <command id="checkDeactivatedAddons" oncommand="madExt.checkAddons(madExt.addonStateEnum.deactivated)" />
+  <command id="checkActivatedRestartlessAddons" oncommand="madExt.checkAddons(madExt.addonStateEnum.activatedRestartless)" />
+  <command id="checkDeactivatedRestartlessAddons" oncommand="madExt.checkAddons(madExt.addonStateEnum.deactivatedRestartless)" />
  </commandset>
 
  <grid>
@@ -81,6 +83,12 @@
     <description>&checkAllActivated.label;</description>
     <checkbox id="checkAllDeactivated" command="checkDeactivatedAddons" />
     <description>&checkAllDeactivated.label;</description>
+   </row>
+   <row>
+    <checkbox id="checkAllActivatedRestartless" command="checkActivatedRestartlessAddons" />
+    <description>&checkAllActivatedRestartless.label;</description>
+    <checkbox id="checkAllDeactivatedRestartless" command="checkDeactivatedRestartlessAddons" />
+    <description>&checkAllDeactivatedRestartless.label;</description>
    </row>
   </rows>
  </grid>

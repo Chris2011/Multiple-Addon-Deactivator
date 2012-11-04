@@ -12,7 +12,7 @@
          //addonGrid: null, // TODO: use a private variable to set it with document.getElementById("addonTree");
          order: 1,
 
-         extensionVars: {
+         extensionCounter: {
             allAddons: 0,
             activatedAddons: 0,
             deactivatedAddons: 0,
@@ -32,14 +32,16 @@
 
                getCellValue: function(row, column)
                {
-                  return (column.id === "checkboxes") ? extensionModel[row].isSelected : null;
+                  var returnValue = null;
+                  if(column.id === "checkboxes")
+                  {
+                     returnValue =  extensionModel[row].isSelected;
+                  }
+
+                  return returnValue;
                },
 
-               setTree: function(treebox)
-               {
-                  this.treebox = treebox;
-               },
-
+               setTree: function(){},
                isContainer: function(){},
                isSeparator: function(){},
                isSorted: function(){},
@@ -158,7 +160,6 @@
             };
 
             document.getElementById("addonTree").view = treeView;
-            //privates.addonGrid.view = treeView; // TODO: use a private variable to set it with document.getElementById("addonTree");
          },
 
          toBool: function(boolParam)
@@ -184,32 +185,46 @@
                return 0;
          },
 
-         checkAll: function(imageControl, boolValue, picture, column, checkAll, checkActivated)
+         checkAll: function(imageControl, boolValue, picture, column, checkAll, addonState)
          {
-            var addonTree = document.getElementById("addonTree");
-            var rows = addonTree.view.rowCount;
+            var addonTree = document.getElementById("addonTree"),
+                  checkAllActivated = document.getElementById("checkAllActivated"),
+                  checkAllDeactivated = document.getElementById("checkAllDeactivated"),
+                  checkAllActivatedRestartless = document.getElementById("checkAllActivatedRestartless"),
+                  checkAllDeactivatedRestartless = document.getElementById("checkAllDeactivatedRestartless"),
+                  rows = addonTree.view.rowCount;
 
             var actionCounter = function(counterVar)
             {
-               AddonManager.getAddonByID(privates.extensions[counterVar].addonId, function(addon)
-               {
-                  if(!addon.userDisabled && checkActivated)
+                  if(!privates.extensions[counterVar].isDeactivated && addonState == publics.addonStateEnum.activated)
                   {
                      addonTree.view.setCellValue(counterVar, column, boolValue);
                   }
-                  if(addon.userDisabled && !checkActivated)
+                  else if(privates.extensions[counterVar].isDeactivated && addonState == publics.addonStateEnum.deactivated)
                   {
                     addonTree.view.setCellValue(counterVar, column, boolValue);
                   }
-               });
+                  else if(!privates.extensions[counterVar].isDeactivated && privates.extensions[counterVar].isRestartless && addonState == publics.addonStateEnum.activatedRestartless)
+                  {
+                     addonTree.view.setCellValue(counterVar, column, boolValue);
+                  }
+                  else if(privates.extensions[counterVar].isDeactivated && privates.extensions[counterVar].isRestartless && addonState == publics.addonStateEnum.deactivatedRestartless)
+                  {
+                     addonTree.view.setCellValue(counterVar, column, boolValue);
+                  }
             }
 
             if(checkAll)
             {
-               document.getElementById("checkAllActivated").disabled = boolValue;
-               document.getElementById("checkAllDeactivated").disabled = boolValue;
-               document.getElementById("checkAllActivated").checked = false;
-               document.getElementById("checkAllDeactivated").checked = false;
+               checkAllActivated.disabled = boolValue;
+               checkAllDeactivated.disabled = boolValue;
+               checkAllActivatedRestartless.disabled = boolValue;
+               checkAllDeactivatedRestartless.disabled = boolValue;
+
+               checkAllActivated.checked = false;
+               checkAllDeactivated.checked = false;
+               checkAllActivatedRestartless.checked = false;
+               checkAllDeactivatedRestartless.checked = false;
 
                imageControl.src = picture;
             }
@@ -277,13 +292,20 @@
             actionForMarkedEntry: 2
          },
 
+         addonStateEnum: {
+            activated: 0,
+            deactivated: 1,
+            activatedRestartless: 2,
+            deactivatedRestartless: 3
+         },
+
          init: function(callback)
          {
             Components.utils.import("resource://gre/modules/AddonManager.jsm");
 
             Application.getExtensions(function(addons)
             {
-               privates.extensionVars.allAddons = addons.all.length;
+               privates.extensionCounter.allAddons = addons.all.length;
                var counter = 0;
 
                for(var addon in addons.all)
@@ -292,20 +314,20 @@
                   {
                      if(!addonObj.userDisabled)
                      {
-                        privates.extensionVars.activatedAddons++;
+                        privates.extensionCounter.activatedAddons++;
                      }
                      else if(addonObj.appDisabled)
                      {
-                        privates.extensionVars.incompatibleAddons++;
+                        privates.extensionCounter.incompatibleAddons++;
                      }
                      else
                      {
-                        privates.extensionVars.deactivatedAddons++;
+                        privates.extensionCounter.deactivatedAddons++;
                      }
 
                      if(!addonObj.operationsRequiringRestart)
                      {
-                        privates.extensionVars.restartlessAddons++;
+                        privates.extensionCounter.restartlessAddons++;
                      }
 
                      callback(addonObj, ++counter);
@@ -317,11 +339,11 @@
          fillExtensionArr: function(controlObj, addon, counter)
          {
             //privates.addonGrid = controlObj.addonTree; // TODO: use a private variable to set it with document.getElementById("addonTree");
-            controlObj.activatedAddons.value = privates.extensionVars.activatedAddons;
-            controlObj.deactivatedAddons.value = privates.extensionVars.deactivatedAddons;
-            controlObj.incompatibleAddons.value = privates.extensionVars.incompatibleAddons;
-            controlObj.totalAddons.value = privates.extensionVars.allAddons;
-            controlObj.restartlessAddons.value = privates.extensionVars.restartlessAddons;
+            controlObj.activatedAddons.value = privates.extensionCounter.activatedAddons;
+            controlObj.deactivatedAddons.value = privates.extensionCounter.deactivatedAddons;
+            controlObj.incompatibleAddons.value = privates.extensionCounter.incompatibleAddons;
+            controlObj.totalAddons.value = privates.extensionCounter.allAddons;
+            controlObj.restartlessAddons.value = privates.extensionCounter.restartlessAddons;
 
             privates.extensions.push({
                addonId: addon.id,
@@ -403,12 +425,30 @@
             }
          },
 
-         checkAddons: function(checkActivated)
+         checkAddons: function(addonState)
          {
             var imageControl = document.getElementById("checkAll");
 
-            privates.checkAll(imageControl, checkActivated ? (document.getElementById("checkAllActivated").checked) : (document.getElementById("checkAllDeactivated").checked), null,
-                     document.getElementById("addonTree").view.selection.tree.columns[0], false, checkActivated);
+            if(addonState === publics.addonStateEnum.activated)
+            {
+               privates.checkAll(imageControl, document.getElementById("checkAllActivated").checked, null,
+                                           document.getElementById("addonTree").view.selection.tree.columns[0], false, addonState);
+            }
+            else if(addonState === publics.addonStateEnum.deactivated)
+            {
+               privates.checkAll(imageControl, document.getElementById("checkAllDeactivated").checked, null,
+                                           document.getElementById("addonTree").view.selection.tree.columns[0], false, addonState);
+            }
+            else if(addonState === publics.addonStateEnum.activatedRestartless)
+            {
+               privates.checkAll(imageControl, document.getElementById("checkAllActivatedRestartless").checked, null,
+                                           document.getElementById("addonTree").view.selection.tree.columns[0], false, addonState);
+            }
+            else if(addonState === publics.addonStateEnum.deactivatedRestartless)
+            {
+               privates.checkAll(imageControl, document.getElementById("checkAllDeactivatedRestartless").checked, null,
+                                           document.getElementById("addonTree").view.selection.tree.columns[0], false, addonState);
+            }
          },
 
          restartFirefox: function()

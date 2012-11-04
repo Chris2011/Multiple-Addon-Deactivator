@@ -14,6 +14,8 @@
 <!ENTITY version.label "Version">
 <!ENTITY checkAllActivated.label "Aktivierte auswählen">
 <!ENTITY checkAllDeactivated.label "Deaktivierte auswählen">
+<!ENTITY checkAllActivatedRestartless.label "Aktivierte (Kein Neustart) auswählen">
+<!ENTITY checkAllDeactivatedRestartless.label "Deaktivierte (Kein Neustart) auswählen">
 <!ENTITY deactivatedButton.label "Alle deaktivieren">
 <!ENTITY activatedButton.label "Alle aktivieren">
 <!ENTITY actionButton.label "Markierte Add-ons de-/aktivieren">

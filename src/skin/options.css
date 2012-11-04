@@ -29,5 +29,6 @@ row > label
 
 #restartlessLabel
 {
+   border: 0;
    background: url("chrome://{appname}/skin/images/star.png") no-repeat top right;
 }
