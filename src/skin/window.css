@@ -56,14 +56,15 @@ listitem
    max-width: 2em;
 }
 
-#checkAllActivated, #checkAllDeactivated
+#checkAllActivated, #checkAllDeactivated,
+#checkAllActivatedRestartless, #checkAllDeactivatedRestartless
 {
    margin-right: -0.25em;
 }
 
-#checkAllDeactivated
+#checkAllDeactivated, #checkAllDeactivatedRestartless
 {
-   margin-left: 3em;
+   margin-left: 1em;
    margin-right: -0.55em;
 }
 
