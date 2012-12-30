@@ -9,7 +9,6 @@
          Ci: Components.interfaces,
          propertyStrings: document.getElementById("string-bundle"),
          extensions: [],
-         //addonGrid: null, // TODO: use a private variable to set it with document.getElementById("addonTree");
          order: 1,
 
          extensionCounter: {
@@ -338,7 +337,6 @@
 
          fillExtensionArr: function(controlObj, addon, counter)
          {
-            //privates.addonGrid = controlObj.addonTree; // TODO: use a private variable to set it with document.getElementById("addonTree");
             controlObj.activatedAddons.value = privates.extensionCounter.activatedAddons;
             controlObj.deactivatedAddons.value = privates.extensionCounter.deactivatedAddons;
             controlObj.incompatibleAddons.value = privates.extensionCounter.incompatibleAddons;
@@ -367,7 +365,7 @@
          sort: function(column)
          {
             var columnName;
-            var addonTree = document.getElementById("addonTree"); // TODO: use a private variable to set it with document.getElementById("addonTree");
+            var addonTree = document.getElementById("addonTree");
             privates.order = addonTree.getAttribute("sortDirection") === "ascending" ? 1 : -1;
 
             //if the column is passed and it's already sorted by that column, reverse sort
@@ -387,7 +385,7 @@
             addonTree.setAttribute("sortResource", columnName);
 
             // Set the appropriate attributes to show to indicator.
-            var cols = addonTree.getElementsByTagName("treecol");
+            var cols = document.getElementsByTagName("treecol");
             var colLength = cols.length;
 
             for(var i = 0; i < colLength; i++)
@@ -491,7 +489,7 @@
 
          uninit: function()
          {
-            document.getElementById("addonTree").view = null; // TODO: use a private variable to set it with document.getElementById("addonTree");
+            document.getElementById("addonTree").view = null;
          }
       };
 
@@ -509,7 +507,6 @@ window.onload = function()
       incompatibleAddons: document.getElementById("incompatibleAddons"),
       totalAddons: document.getElementById("totalAddons"),
       restartlessAddons: document.getElementById("restartlessAddons")
-      //addonTree: document.getElementById("addonTree") // TODO: use a private variable to set it with document.getElementById("addonTree");
    };
 
    madExt.init(function(addonObj, counterVar)
