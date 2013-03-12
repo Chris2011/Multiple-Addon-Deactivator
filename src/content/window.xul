@@ -2,110 +2,119 @@
 <?xml-stylesheet href="chrome://{appname}/skin/window.css" type="text/css"?>
 <!DOCTYPE window SYSTEM "chrome://{appname}/locale/window.dtd">
 
-<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" title="&title.label;" id="madWindow"
-              persist="width height screenX screenY sizemode" onunload="madExt.uninit()">
- <stringbundleset id="stringbundleset">
-  <stringbundle id="string-bundle" src="chrome://{appname}/locale/description.properties"/>
- </stringbundleset>
- <script src="scripts/window.js" />
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        title="&title.label;" id="madWindow" persist="width height screenX screenY sizemode" onunload="madExt.uninit()">
+   <stringbundleset id="stringbundleset">
+      <stringbundle id="string-bundle" src="chrome://{appname}/locale/description.properties"/>
+   </stringbundleset>
+   <script src="scripts/window.js" />
 
- <commandset>
-  <command id="deactivateAllCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.deactivateAll)" />
-  <command id="activateAllCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.activateAll)" />
-  <command id="executeActionCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.actionForMarkedEntry)" />
-  <command id="restartCommand" oncommand="madExt.restartFirefox()" />
-  <command id="checkActivatedAddons" oncommand="madExt.checkAddons(madExt.addonStateEnum.activated)" />
-  <command id="checkDeactivatedAddons" oncommand="madExt.checkAddons(madExt.addonStateEnum.deactivated)" />
-  <command id="checkActivatedRestartlessAddons" oncommand="madExt.checkAddons(madExt.addonStateEnum.activatedRestartless)" />
-  <command id="checkDeactivatedRestartlessAddons" oncommand="madExt.checkAddons(madExt.addonStateEnum.deactivatedRestartless)" />
- </commandset>
+   <commandset>
+      <command id="deactivateAllCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.deactivateAll)" />
+      <command id="activateAllCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.activateAll)" />
+      <command id="executeActionCommand" oncommand="madExt.setActionForAddons(madExt.addonActionEnum.actionForMarkedEntry)" />
+      <command id="restartCommand" oncommand="madExt.restartFirefox()" />
+      <command id="checkActivatedAddons" oncommand="madExt.checkAddons(madExt.addonStateEnum.activated)" />
+      <command id="checkDeactivatedAddons" oncommand="madExt.checkAddons(madExt.addonStateEnum.deactivated)" />
+      <command id="checkActivatedRestartlessAddons" oncommand="madExt.checkAddons(madExt.addonStateEnum.activatedRestartless)" />
+      <command id="checkDeactivatedRestartlessAddons" oncommand="madExt.checkAddons(madExt.addonStateEnum.deactivatedRestartless)" />
+   </commandset>
 
- <grid>
-  <columns>
-   <column />
-   <column flex="1" />
-  </columns>
-  <rows>
-   <row>
-    <description class="borderRight" value="&activated.label;" />
-    <description id="activatedAddons" />
-   </row>
-   <row>
-    <description class="borderRight" value="&deactivated.label;" />
-    <description id="deactivatedAddons" />
-   </row>
-      <row>
-    <description class="borderRight" value="&incompatible.label;" />
-    <description id="incompatibleAddons" />
-   </row>
-   <row>
-    <description class="borderRight" value="&total.label;" />
-    <description id="totalAddons" />
-   </row>
-   <row>
-    <description class="borderRight" value="&restartless.label;" />
-    <description id="restartlessAddons" />
-   </row>
-  </rows>
- </grid>
- <grid flex="1">
-  <columns>
-   <column flex="1" />
-  </columns>
-  <rows>
-   <row flex="1">
-    <tree id="addonTree" flex="1" rows="15" enableColumnDrag="true"
-          persist="sortDirection sortResource" sortResource="addonName"
-          sortDirection="ascending">
-     <treecols>
-      <treecol id="checkboxes" type="checkbox" flex="1" editable="true">
-       <image id="checkAll" src="../skin/images/unselected.png" />
-      </treecol>
+   <grid>
+      <columns>
+         <column />
+         <column flex="1" />
+      </columns>
+      <rows>
+         <row>
+            <description class="borderRight" value="&activated.label;" />
+            <description id="activatedAddons" />
+         </row>
+         <row>
+            <description class="borderRight" value="&deactivated.label;" />
+            <description id="deactivatedAddons" />
+         </row>
+         <row>
+            <description class="borderRight" value="&incompatible.label;" />
+            <description id="incompatibleAddons" />
+         </row>
+         <row>
+            <description class="borderRight" value="&total.label;" />
+            <description id="totalAddons" />
+         </row>
+         <row>
+            <description class="borderRight" value="&restartless.label;" />
+            <description id="restartlessAddons" />
+         </row>
+      </rows>
+   </grid>
+   <!--   <tabbox>
+<tabs>
+   <tab label="&allGroup.label;" />
+</tabs>
+<tabpanels>
+   <tabtabpanel>-->
+   <grid flex="1">
+      <columns>
+         <column flex="1" />
+      </columns>
+      <rows>
+         <row flex="1">
+            <tree id="addonTree" flex="1" rows="15" enableColumnDrag="true"
+                           persist="sortDirection sortResource" sortResource="addonName"
+                           sortDirection="ascending">
+               <treecols>
+                  <treecol id="checkboxes" type="checkbox" flex="1" editable="true">
+                     <image id="checkAll" src="../skin/images/unselected.png" />
+                  </treecol>
 
-      <splitter class="tree-splitter" disabled="true" />
-      <treecol id="addonName" label="&name.label;" flex="2"  class="sortDirectionIndicator" />
+                  <splitter class="tree-splitter" disabled="true" />
+                  <treecol id="addonName" label="&name.label;" flex="2"  class="sortDirectionIndicator" />
 
-      <splitter class="tree-splitter" />
-      <treecol id="addonVersion" label="&version.label;" flex="3" />
-     </treecols>
-     <treechildren id="treechildren" />
-    </tree>
-   </row>
-  </rows>
- </grid>
- <grid>
-  <columns>
-   <column />
-  </columns>
-  <rows>
-   <row>
-    <checkbox id="checkAllActivated" command="checkActivatedAddons" />
-    <description>&checkAllActivated.label;</description>
-    <checkbox id="checkAllDeactivated" command="checkDeactivatedAddons" />
-    <description>&checkAllDeactivated.label;</description>
-   </row>
-   <row>
-    <checkbox id="checkAllActivatedRestartless" command="checkActivatedRestartlessAddons" />
-    <description>&checkAllActivatedRestartless.label;</description>
-    <checkbox id="checkAllDeactivatedRestartless" command="checkDeactivatedRestartlessAddons" />
-    <description>&checkAllDeactivatedRestartless.label;</description>
-   </row>
-  </rows>
- </grid>
- <grid>
-  <columns>
-   <column flex="1" />
-   <column flex="1" />
-  </columns>
-  <rows>
-   <row>
-    <button label="&deactivatedButton.label;" command="deactivateAllCommand" />
-    <button label="&activatedButton.label;" command="activateAllCommand" />
-   </row>
-   <row>
-    <button label="&actionButton.label;" command="executeActionCommand" />
-    <button label="&restartButton.label;" command="restartCommand" />
-   </row>
-  </rows>
- </grid>
+                  <splitter class="tree-splitter" />
+                  <treecol id="addonVersion" label="&version.label;" flex="3" />
+               </treecols>
+               <treechildren id="treechildren" />
+            </tree>
+         </row>
+      </rows>
+   </grid>
+   <!--         </tabtabpanel>
+      </tabpanels>
+   </tabbox>-->
+   <grid>
+      <columns>
+         <column />
+      </columns>
+      <rows>
+         <row>
+            <checkbox id="checkAllActivated" command="checkActivatedAddons" />
+            <description>&checkAllActivated.label;</description>
+            <checkbox id="checkAllDeactivated" command="checkDeactivatedAddons" />
+            <description>&checkAllDeactivated.label;</description>
+         </row>
+         <row>
+            <checkbox id="checkAllActivatedRestartless" command="checkActivatedRestartlessAddons" />
+            <description>&checkAllActivatedRestartless.label;</description>
+            <checkbox id="checkAllDeactivatedRestartless" command="checkDeactivatedRestartlessAddons" />
+            <description>&checkAllDeactivatedRestartless.label;</description>
+         </row>
+      </rows>
+   </grid>
+   <grid>
+      <columns>
+         <column flex="1" />
+         <column flex="1" />
+      </columns>
+      <rows>
+         <row>
+            <button label="&deactivatedButton.label;" command="deactivateAllCommand" />
+            <button label="&activatedButton.label;" command="activateAllCommand" />
+         </row>
+         <row>
+            <button label="&actionButton.label;" command="executeActionCommand" />
+            <button label="&restartButton.label;" command="restartCommand" />
+         </row>
+      </rows>
+   </grid>
 </window>

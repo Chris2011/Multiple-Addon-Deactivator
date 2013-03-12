@@ -10,7 +10,6 @@
          propertyStrings: document.getElementById("string-bundle"),
          extensions: [],
          order: 1,
-
          extensionCounter: {
             allAddons: 0,
             activatedAddons: 0,
@@ -18,35 +17,37 @@
             incompatibleAddons: 0,
             restartlessAddons: 0
          },
-
          fillTreeView: function(extensionModel)
          {
             var treeView = {
                rowCount: extensionModel.length,
-
                getCellText: function(row, column)
                {
-                  return (column.id === "addonName") ? "  "+extensionModel[row].addonName : "  "+extensionModel[row].addonVersion;
+                  return (column.id === "addonName") ? "  " + extensionModel[row].addonName : "  "
+                  + extensionModel[row].addonVersion;
                },
-
                getCellValue: function(row, column)
                {
                   var returnValue = null;
                   if(column.id === "checkboxes")
                   {
-                     returnValue =  extensionModel[row].isSelected;
+                     returnValue = extensionModel[row].isSelected;
                   }
 
                   return returnValue;
                },
-
-               setTree: function(){},
-               isContainer: function(){},
-               isSeparator: function(){},
-               isSorted: function(){},
-               isEditable: function(){},
-               getLevel: function(){},
-
+               setTree: function(){
+               },
+               isContainer: function(){
+               },
+               isSeparator: function(){
+               },
+               isSorted: function(){
+               },
+               isEditable: function(){
+               },
+               getLevel: function(){
+               },
                getImageSrc: function(row, column)
                {
                   var addonIcon = '';
@@ -73,20 +74,18 @@
 
                   return addonIcon;
                },
-
                getRowProperties: function(row, props)
                {
                   setStyle(row, props);
                },
-
                getCellProperties: function(row, column, props)
                {
                   setStyle(row, props);
                },
-
-               getColumnProperties: function(){},
-               cycleCell: function(){},
-
+               getColumnProperties: function(){
+               },
+               cycleCell: function(){
+               },
                cycleHeader: function(column)
                {
                   if(column.id === "checkboxes")
@@ -94,35 +93,33 @@
                      var headerImage = document.getElementById("checkAll");
                      var imagePath = "../skin/images/";
 
-                     if (headerImage.src === imagePath+"unselected.png")
+                     if(headerImage.src === imagePath + "unselected.png")
                      {
-                        privates.checkAll(headerImage, true, imagePath+"selected.png", column, true, null);
+                        privates.checkAll(headerImage, true, imagePath + "selected.png", column, true, null);
                      }
                      else
                      {
-                        privates.checkAll(headerImage, false, imagePath+"unselected.png", column, true, null);
+                        privates.checkAll(headerImage, false, imagePath + "unselected.png", column, true, null);
                      }
                   }
                },
-
                setCellValue: function(row, column, cellValue)
                {
                   if(!extensionModel[row].isIncompatible)
                   {
                      if(column.id === "checkboxes")
                      {
-                        extensionModel[row].isSelected = cellValue
+                        extensionModel[row].isSelected = cellValue;
                      }
                   }
                },
-
-               setCellText: function(){}
-            };
-
-            var setNewStyle = function(props, status)
+               setCellText: function(){
+               }
+            },
+            setNewStyle = function(props, status)
             {
-               var atomService = privates.Cc["@mozilla.org/atom-service;1"].getService(privates.Ci.nsIAtomService);
-               var style = null;
+               var atomService = privates.Cc["@mozilla.org/atom-service;1"].getService(privates.Ci.nsIAtomService),
+               style = null;
 
                if(status === "deactivated")
                {
@@ -139,9 +136,8 @@
                }
 
                props.AppendElement(style);
-            };
-
-            var setStyle = function(row, props)
+            },
+            setStyle = function(row, props)
             {
                if(extensionModel[row].isDeactivated)
                {
@@ -160,58 +156,65 @@
 
             document.getElementById("addonTree").view = treeView;
          },
-
          toBool: function(boolParam)
          {
             return "true" === boolParam;
          },
-
          sortFunc: function(firstObj, nextObj)
          {
-               var firstAddonName = firstObj.addonName.toLowerCase(),
-                     nextAddonName = nextObj.addonName.toLowerCase();
+            var firstAddonName = firstObj.addonName.toLowerCase(),
+            nextAddonName = nextObj.addonName.toLowerCase();
 
-               if(firstAddonName < nextAddonName)
-               {
-                  return -1 * privates.order
-               }
+            if(firstAddonName < nextAddonName)
+            {
+               return -1 * privates.order;
+            }
 
-               if(firstAddonName > nextAddonName)
-               {
-                  return 1 * privates.order;
-               }
+            if(firstAddonName > nextAddonName)
+            {
+               return 1 * privates.order;
+            }
 
-               return 0;
+            return 0;
          },
-
          checkAll: function(imageControl, boolValue, picture, column, checkAll, addonState)
          {
             var addonTree = document.getElementById("addonTree"),
-                  checkAllActivated = document.getElementById("checkAllActivated"),
-                  checkAllDeactivated = document.getElementById("checkAllDeactivated"),
-                  checkAllActivatedRestartless = document.getElementById("checkAllActivatedRestartless"),
-                  checkAllDeactivatedRestartless = document.getElementById("checkAllDeactivatedRestartless"),
-                  rows = addonTree.view.rowCount;
-
-            var actionCounter = function(counterVar)
+            checkAllActivated = document.getElementById("checkAllActivated"),
+            checkAllDeactivated = document.getElementById("checkAllDeactivated"),
+            checkAllActivatedRestartless = document.getElementById("checkAllActivatedRestartless"),
+            checkAllDeactivatedRestartless = document.getElementById("checkAllDeactivatedRestartless"),
+            rows = addonTree.view.rowCount,
+            actionCounter = function(counterVar)
             {
-                  if(!privates.extensions[counterVar].isDeactivated && addonState == publics.addonStateEnum.activated)
-                  {
-                     addonTree.view.setCellValue(counterVar, column, boolValue);
-                  }
-                  else if(privates.extensions[counterVar].isDeactivated && addonState == publics.addonStateEnum.deactivated)
-                  {
-                    addonTree.view.setCellValue(counterVar, column, boolValue);
-                  }
-                  else if(!privates.extensions[counterVar].isDeactivated && privates.extensions[counterVar].isRestartless && addonState == publics.addonStateEnum.activatedRestartless)
-                  {
-                     addonTree.view.setCellValue(counterVar, column, boolValue);
-                  }
-                  else if(privates.extensions[counterVar].isDeactivated && privates.extensions[counterVar].isRestartless && addonState == publics.addonStateEnum.deactivatedRestartless)
-                  {
-                     addonTree.view.setCellValue(counterVar, column, boolValue);
-                  }
-            }
+               if(!privates.extensions[counterVar].isDeactivated && addonState === publics.addonStateEnum.activated)
+               // TODO: Prüfen.
+               // if(!privates.extensions[counterVar].isDeactivated && addonState == publics.addonStateEnum.activated)
+               {
+                  addonTree.view.setCellValue(counterVar, column, boolValue);
+               }
+               else if(privates.extensions[counterVar].isDeactivated && addonState
+               === publics.addonStateEnum.deactivated)
+               // TODO: Prüfen.
+               // else if(privates.extensions[counterVar].isDeactivated && addonState == publics.addonStateEnum.deactivated)
+               {
+                  addonTree.view.setCellValue(counterVar, column, boolValue);
+               }
+               else if(!privates.extensions[counterVar].isDeactivated && privates.extensions[counterVar].isRestartless
+               && addonState === publics.addonStateEnum.activatedRestartless)
+               // TODO: Prüfen.
+               //  else if(!privates.extensions[counterVar].isDeactivated && privates.extensions[counterVar].isRestartless && addonState == publics.addonStateEnum.activatedRestartless)
+               {
+                  addonTree.view.setCellValue(counterVar, column, boolValue);
+               }
+               else if(privates.extensions[counterVar].isDeactivated && privates.extensions[counterVar].isRestartless
+               && addonState === publics.addonStateEnum.deactivatedRestartless)
+               // TODO: Prüfen.
+               // else if(privates.extensions[counterVar].isDeactivated && privates.extensions[counterVar].isRestartless && addonState == publics.addonStateEnum.deactivatedRestartless)
+               {
+                  addonTree.view.setCellValue(counterVar, column, boolValue);
+               }
+            };
 
             if(checkAll)
             {
@@ -240,22 +243,21 @@
                }
             }
          },
-
          stdAddonAction: function(activateAddon)
          {
-            var addonTree = document.getElementById("addonTree");
-            var rows = addonTree.view.rowCount;
-            var prefs = privates.Cc["@mozilla.org/preferences-service;1"].getService(privates.Ci.nsIPrefService)
-                                           .getBranch("extensions.multiple-addon-deactivator.ChrisLE@mozilla.org.");
-            var prefValue = prefs.getBoolPref("excludeMAD");
-
-            var actionCounter = function(counterVar)
+            var addonTree = document.getElementById("addonTree"),
+            rows = addonTree.view.rowCount,
+            prefs = privates.Cc["@mozilla.org/preferences-service;1"].getService(privates.Ci.nsIPrefService)
+            .getBranch("extensions.multiple-addon-deactivator.ChrisLE@mozilla.org."),
+            prefValue = prefs.getBoolPref("excludeMAD"),
+            actionCounter = function(counterVar)
             {
                AddonManager.getAddonByID(privates.extensions[counterVar].addonId, function(addon)
                {
                   if(activateAddon === null)
                   {
-                     if(privates.toBool((addonTree.view.getCellValue(counterVar, addonTree.view.selection.tree.columns[0]))))
+                     if(privates.toBool((addonTree.view.getCellValue(counterVar,
+                     addonTree.view.selection.tree.columns[0]))))
                      {
                         addon.userDisabled = !addon.userDisabled;
                      }
@@ -275,7 +277,7 @@
                      }
                   }
                });
-            }
+            };
 
             for(var i = 0; i < rows; i++)
             {
@@ -290,14 +292,12 @@
             activateAll: 1,
             actionForMarkedEntry: 2
          },
-
          addonStateEnum: {
             activated: 0,
             deactivated: 1,
             activatedRestartless: 2,
             deactivatedRestartless: 3
          },
-
          init: function(callback)
          {
             Components.utils.import("resource://gre/modules/AddonManager.jsm");
@@ -305,9 +305,8 @@
             Application.getExtensions(function(addons)
             {
                privates.extensionCounter.allAddons = addons.all.length;
-               var counter = 0;
-
-               for(var addon in addons.all)
+               var counter = 0,
+               actionCounter = function(addon)
                {
                   AddonManager.getAddonByID(addons.all[addon].id, function(addonObj)
                   {
@@ -331,10 +330,14 @@
 
                      callback(addonObj, ++counter);
                   });
+               };
+
+               for(var addon in addons.all)
+               {
+                  actionCounter(addon);
                }
             });
          },
-
          fillExtensionArr: function(controlObj, addon, counter)
          {
             controlObj.activatedAddons.value = privates.extensionCounter.activatedAddons;
@@ -356,16 +359,18 @@
 
             privates.extensions.sort(privates.sortFunc);
 
-            if(counter == controlObj.totalAddons.value)
+            // TODO: Prüfen.
+            // if(counter == controlObj.totalAddons.value)
+
+            if(counter === +controlObj.totalAddons.value)
             {
                privates.fillTreeView(privates.extensions);
             }
          },
-
          sort: function(column)
          {
-            var columnName;
-            var addonTree = document.getElementById("addonTree");
+            var columnName,
+            addonTree = document.getElementById("addonTree");
             privates.order = addonTree.getAttribute("sortDirection") === "ascending" ? 1 : -1;
 
             //if the column is passed and it's already sorted by that column, reverse sort
@@ -393,17 +398,18 @@
                cols[i].removeAttribute("sortDirection");
             }
 
-            document.getElementById(columnName).setAttribute("sortDirection", privates.order === 1 ? "ascending" : "descending");
+            document.getElementById(columnName).setAttribute("sortDirection", privates.order === 1 ? "ascending"
+            : "descending");
          },
-
          onRowClick: function()
          {
-            var addonTree = document.getElementById("addonTree");
-            var cellVal = !privates.toBool((addonTree.view.getCellValue(addonTree.view.selection.currentIndex, addonTree.view.selection.tree.columns[0])));
+            var addonTree = document.getElementById("addonTree"),
+            cellVal = !privates.toBool((addonTree.view.getCellValue(addonTree.view.selection.currentIndex,
+            addonTree.view.selection.tree.columns[0])));
 
-            addonTree.view.setCellValue(addonTree.view.selection.currentIndex, addonTree.view.selection.tree.columns[0], cellVal);
+            addonTree.view.setCellValue(addonTree.view.selection.currentIndex,
+            addonTree.view.selection.tree.columns[0], cellVal);
          },
-
          setActionForAddons: function(addonAction)
          {
             if(addonAction === publics.addonActionEnum.deactivateAll)
@@ -422,7 +428,6 @@
                alert(privates.propertyStrings.getString("executeActionMessage"));
             }
          },
-
          checkAddons: function(addonState)
          {
             var imageControl = document.getElementById("checkAll");
@@ -430,34 +435,34 @@
             if(addonState === publics.addonStateEnum.activated)
             {
                privates.checkAll(imageControl, document.getElementById("checkAllActivated").checked, null,
-                                           document.getElementById("addonTree").view.selection.tree.columns[0], false, addonState);
+               document.getElementById("addonTree").view.selection.tree.columns[0], false, addonState);
             }
             else if(addonState === publics.addonStateEnum.deactivated)
             {
                privates.checkAll(imageControl, document.getElementById("checkAllDeactivated").checked, null,
-                                           document.getElementById("addonTree").view.selection.tree.columns[0], false, addonState);
+               document.getElementById("addonTree").view.selection.tree.columns[0], false, addonState);
             }
             else if(addonState === publics.addonStateEnum.activatedRestartless)
             {
                privates.checkAll(imageControl, document.getElementById("checkAllActivatedRestartless").checked, null,
-                                           document.getElementById("addonTree").view.selection.tree.columns[0], false, addonState);
+               document.getElementById("addonTree").view.selection.tree.columns[0], false, addonState);
             }
             else if(addonState === publics.addonStateEnum.deactivatedRestartless)
             {
                privates.checkAll(imageControl, document.getElementById("checkAllDeactivatedRestartless").checked, null,
-                                           document.getElementById("addonTree").view.selection.tree.columns[0], false, addonState);
+               document.getElementById("addonTree").view.selection.tree.columns[0], false, addonState);
             }
          },
-
          restartFirefox: function()
          {
             if(window.confirm(privates.propertyStrings.getString("restartFirefoxMessage")))
             {
-               const nsIAppStartup = privates.Ci.nsIAppStartup;
 
                // Notify all windows that an application quit has been requested.
-               var os = privates.Cc["@mozilla.org/observer-service;1"].getService(privates.Ci.nsIObserverService);
-               var cancelQuit = privates.Cc["@mozilla.org/supports-PRBool;1"].createInstance(privates.Ci.nsISupportsPRBool);
+               var nsIAppStartup = privates.Ci.nsIAppStartup,
+               os = privates.Cc["@mozilla.org/observer-service;1"].getService(privates.Ci.nsIObserverService),
+               cancelQuit = privates.Cc["@mozilla.org/supports-PRBool;1"].createInstance(
+               privates.Ci.nsISupportsPRBool);
 
                os.notifyObservers(cancelQuit, "quit-application-requested", null);
 
@@ -471,9 +476,9 @@
                os.notifyObservers(null, "quit-application-granted", null);
 
                // Enumerate all windows and call shutdown handlers.
-               var wm = privates.Cc["@mozilla.org/appshell/window-mediator;1"]
-                          .getService(privates.Ci.nsIWindowMediator);
-               var windows = wm.getEnumerator(null);
+               var wm = privates.Cc["@mozilla.org/appshell/window-mediator;1"].getService(
+               privates.Ci.nsIWindowMediator),
+               windows = wm.getEnumerator(null);
                while(windows.hasMoreElements())
                {
                   var win = windows.getNext();
@@ -483,10 +488,10 @@
                   }
                }
 
-               privates.Cc["@mozilla.org/toolkit/app-startup;1"].getService(nsIAppStartup).quit(nsIAppStartup.eRestart | nsIAppStartup.eAttemptQuit);
+               privates.Cc["@mozilla.org/toolkit/app-startup;1"].getService(nsIAppStartup).quit(nsIAppStartup.eRestart
+               | nsIAppStartup.eAttemptQuit);
             }
          },
-
          uninit: function()
          {
             document.getElementById("addonTree").view = null;
