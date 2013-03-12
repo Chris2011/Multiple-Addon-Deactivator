@@ -48,12 +48,6 @@
          </row>
       </rows>
    </grid>
-   <!--   <tabbox>
-<tabs>
-   <tab label="&allGroup.label;" />
-</tabs>
-<tabpanels>
-   <tabtabpanel>-->
    <grid flex="1">
       <columns>
          <column flex="1" />
@@ -61,8 +55,8 @@
       <rows>
          <row flex="1">
             <tree id="addonTree" flex="1" rows="15" enableColumnDrag="true"
-                           persist="sortDirection sortResource" sortResource="addonName"
-                           sortDirection="ascending">
+                  persist="sortDirection sortResource" sortResource="addonName"
+                  sortDirection="ascending">
                <treecols>
                   <treecol id="checkboxes" type="checkbox" flex="1" editable="true">
                      <image id="checkAll" src="../skin/images/unselected.png" />
@@ -79,9 +73,6 @@
          </row>
       </rows>
    </grid>
-   <!--         </tabtabpanel>
-      </tabpanels>
-   </tabbox>-->
    <grid>
       <columns>
          <column />

@@ -10,12 +10,15 @@
 <!ENTITY incompatible.label "Incompatible">
 <!ENTITY total.label "Total">
 <!ENTITY restartless.label "Restartless">
+
 <!ENTITY name.label "Name">
 <!ENTITY version.label "Version">
+
 <!ENTITY checkAllActivated.label "Select only activated">
 <!ENTITY checkAllDeactivated.label "Select only deactivated">
 <!ENTITY checkAllActivatedRestartless.label "Select only activated (restartless)">
 <!ENTITY checkAllDeactivatedRestartless.label "Select only deactivated (restartless)">
+
 <!ENTITY deactivatedButton.label "Deactivate all">
 <!ENTITY activatedButton.label "Activate all">
 <!ENTITY actionButton.label "De-/Activate checked add-ons">

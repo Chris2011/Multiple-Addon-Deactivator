@@ -10,12 +10,15 @@
 <!ENTITY incompatible.label "Oförenliga">
 <!ENTITY total.label "Totalt">
 <!ENTITY restartless.label "Ingen omstart">
+
 <!ENTITY name.label "Namn">
 <!ENTITY version.label "Version">
+
 <!ENTITY checkAllActivated.label "Markera endast aktiverade">
 <!ENTITY checkAllDeactivated.label "Markera endast inaktiverade">
 <!ENTITY checkAllActivatedRestartless.label "Markera endast aktiverade (ingen omstart)">
 <!ENTITY checkAllDeactivatedRestartless.label "Markera endast inaktiverade (ingen omstart)">
+
 <!ENTITY deactivatedButton.label "Inaktivera alla">
 <!ENTITY activatedButton.label "Aktivera alla">
 <!ENTITY actionButton.label "Utför åtgärden för markerade tillägg">
