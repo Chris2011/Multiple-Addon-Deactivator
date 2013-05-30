@@ -193,15 +193,16 @@
                {
                   addonTree.view.setCellValue(counterVar, column, boolValue);
                }
-               else if(privates.extensions[counterVar].isDeactivated && addonState
-               === publics.addonStateEnum.deactivated)
+               else if(privates.extensions[counterVar].isDeactivated &&
+               addonState === publics.addonStateEnum.deactivated)
                // TODO: Prüfen.
                // else if(privates.extensions[counterVar].isDeactivated && addonState == publics.addonStateEnum.deactivated)
                {
                   addonTree.view.setCellValue(counterVar, column, boolValue);
                }
-               else if(!privates.extensions[counterVar].isDeactivated && privates.extensions[counterVar].isRestartless
-               && addonState === publics.addonStateEnum.activatedRestartless)
+               else if(!privates.extensions[counterVar].isDeactivated &&
+               privates.extensions[counterVar].isRestartless &&
+               addonState === publics.addonStateEnum.activatedRestartless)
                // TODO: Prüfen.
                //  else if(!privates.extensions[counterVar].isDeactivated && privates.extensions[counterVar].isRestartless && addonState == publics.addonStateEnum.activatedRestartless)
                {
@@ -298,23 +299,31 @@
             activatedRestartless: 2,
             deactivatedRestartless: 3
          },
-         init: function(callback)
+         init: function()
          {
             Components.utils.import("resource://gre/modules/AddonManager.jsm");
-
-            Application.getExtensions(function(addons)
+            AddonManager.getAllAddons(function(addonArr)
             {
-               privates.extensionCounter.allAddons = addons.all.length;
-               var counter = 0,
-               actionCounter = function(addon)
+               var addonLength = addonArr.length,
+               counter = 0,
+               controls = {
+                  activatedAddons: document.getElementById("activatedAddons"),
+                  deactivatedAddons: document.getElementById("deactivatedAddons"),
+                  incompatibleAddons: document.getElementById("incompatibleAddons"),
+                  totalAddons: document.getElementById("totalAddons"),
+                  restartlessAddons: document.getElementById("restartlessAddons")
+               };
+
+               for(var i = 0; i < addonLength; i++)
                {
-                  AddonManager.getAddonByID(addons.all[addon].id, function(addonObj)
+                  // TODO: Theme and plugin support maybe later.
+                  if(addonArr[i].type === "extension") // i = 3
                   {
-                     if(!addonObj.userDisabled)
+                     if(addonArr[i].isActive)
                      {
                         privates.extensionCounter.activatedAddons++;
                      }
-                     else if(addonObj.appDisabled)
+                     else if(addonArr[i].appDisabled)
                      {
                         privates.extensionCounter.incompatibleAddons++;
                      }
@@ -323,49 +332,35 @@
                         privates.extensionCounter.deactivatedAddons++;
                      }
 
-                     if(!addonObj.operationsRequiringRestart)
+                     if(!addonArr[i].operationsRequiringRestart)
                      {
                         privates.extensionCounter.restartlessAddons++;
                      }
 
-                     callback(addonObj, ++counter);
-                  });
-               };
+                     privates.extensions.push({
+                        addonId: addonArr[i].id,
+                        addonName: addonArr[i].name,
+                        addonVersion: addonArr[i].version,
+                        addonIcon: addonArr[i].iconURL,
+                        isSelected: false,
+                        isDeactivated: !addonArr[i].isActive,
+                        isIncompatible: addonArr[i].appDisabled,
+                        isRestartless: !addonArr[i].operationsRequiringRestart
+                     });
 
-               for(var addon in addons.all)
-               {
-                  actionCounter(addon);
+                     ++counter;
+                  }
                }
-            });
-         },
-         fillExtensionArr: function(controlObj, addon, counter)
-         {
-            controlObj.activatedAddons.value = privates.extensionCounter.activatedAddons;
-            controlObj.deactivatedAddons.value = privates.extensionCounter.deactivatedAddons;
-            controlObj.incompatibleAddons.value = privates.extensionCounter.incompatibleAddons;
-            controlObj.totalAddons.value = privates.extensionCounter.allAddons;
-            controlObj.restartlessAddons.value = privates.extensionCounter.restartlessAddons;
 
-            privates.extensions.push({
-               addonId: addon.id,
-               addonName: addon.name,
-               addonVersion: addon.version,
-               addonIcon: addon.iconURL,
-               isSelected: false,
-               isDeactivated: addon.userDisabled,
-               isIncompatible: addon.appDisabled,
-               isRestartless: !addon.operationsRequiringRestart
-            });
+               controls.activatedAddons.value = privates.extensionCounter.activatedAddons;
+               controls.deactivatedAddons.value = privates.extensionCounter.deactivatedAddons;
+               controls.incompatibleAddons.value = privates.extensionCounter.incompatibleAddons;
+               controls.totalAddons.value = counter;
+               controls.restartlessAddons.value = privates.extensionCounter.restartlessAddons;
 
-            privates.extensions.sort(privates.sortFunc);
-
-            // TODO: Prüfen.
-            // if(counter == controlObj.totalAddons.value)
-
-            if(counter === +controlObj.totalAddons.value)
-            {
+               privates.extensions.sort(privates.sortFunc);
                privates.fillTreeView(privates.extensions);
-            }
+            });
          },
          sort: function(column)
          {
@@ -506,18 +501,7 @@
 
 window.onload = function()
 {
-   var controls = {
-      activatedAddons: document.getElementById("activatedAddons"),
-      deactivatedAddons: document.getElementById("deactivatedAddons"),
-      incompatibleAddons: document.getElementById("incompatibleAddons"),
-      totalAddons: document.getElementById("totalAddons"),
-      restartlessAddons: document.getElementById("restartlessAddons")
-   };
-
-   madExt.init(function(addonObj, counterVar)
-   {
-      madExt.fillExtensionArr(controls, addonObj, counterVar);
-   });
+   madExt.init();
 
    document.getElementById("addonName").onclick = function()
    {
