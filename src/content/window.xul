@@ -7,6 +7,7 @@
    <stringbundleset id="stringbundleset">
       <stringbundle id="string-bundle" src="chrome://{appname}/locale/description.properties"/>
    </stringbundleset>
+   <script src="scripts/madManagement.js" />
    <script src="scripts/window.js" />
 
    <commandset>

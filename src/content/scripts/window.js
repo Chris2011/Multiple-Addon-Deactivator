@@ -8,174 +8,37 @@
          Cc: Components.classes,
          Ci: Components.interfaces,
          propertyStrings: document.getElementById("string-bundle"),
-         extensions: [],
-         order: 1,
-         extensionCounter: {
-            allAddons: 0,
-            activatedAddons: 0,
-            deactivatedAddons: 0,
-            incompatibleAddons: 0,
-            restartlessAddons: 0
-         },
-         fillTreeView: function(extensionModel)
-         {
-            var treeView = {
-               rowCount: extensionModel.length,
-               getCellText: function(row, column)
-               {
-                  return (column.id === "addonName") ? "  " + extensionModel[row].addonName : "  "
-                  + extensionModel[row].addonVersion;
-               },
-               getCellValue: function(row, column)
-               {
-                  var returnValue = null;
-                  if(column.id === "checkboxes")
-                  {
-                     returnValue = extensionModel[row].isSelected;
-                  }
-
-                  return returnValue;
-               },
-               setTree: function(){
-               },
-               isContainer: function(){
-               },
-               isSeparator: function(){
-               },
-               isSorted: function(){
-               },
-               isEditable: function(){
-               },
-               getLevel: function(){
-               },
-               getImageSrc: function(row, column)
-               {
-                  var addonIcon = '';
-
-                  if(column.id === "addonName")
-                  {
-                     if(extensionModel[row].addonIcon)
-                     {
-                        addonIcon = extensionModel[row].addonIcon;
-                     }
-                     else
-                     {
-                        addonIcon = "chrome://{appname}/skin/images/defaultIcon.png";
-                     }
-                  }
-
-                  if(column.id === "addonVersion")
-                  {
-                     if(extensionModel[row].isRestartless)
-                     {
-                        addonIcon = "chrome://{appname}/skin/images/star.png";
-                     }
-                  }
-
-                  return addonIcon;
-               },
-               getRowProperties: function(row, props)
-               {
-                  setStyle(row, props);
-               },
-               getCellProperties: function(row, column, props)
-               {
-                  setStyle(row, props);
-               },
-               getColumnProperties: function(){
-               },
-               cycleCell: function(){
-               },
-               cycleHeader: function(column)
-               {
-                  if(column.id === "checkboxes")
-                  {
-                     var headerImage = document.getElementById("checkAll");
-                     var imagePath = "../skin/images/";
-
-                     if(headerImage.src === imagePath + "unselected.png")
-                     {
-                        privates.checkAll(headerImage, true, imagePath + "selected.png", column, true, null);
-                     }
-                     else
-                     {
-                        privates.checkAll(headerImage, false, imagePath + "unselected.png", column, true, null);
-                     }
-                  }
-               },
-               setCellValue: function(row, column, cellValue)
-               {
-                  if(!extensionModel[row].isIncompatible)
-                  {
-                     if(column.id === "checkboxes")
-                     {
-                        extensionModel[row].isSelected = cellValue;
-                     }
-                  }
-               },
-               setCellText: function(){
-               }
-            },
-            setNewStyle = function(props, status)
-            {
-               var atomService = privates.Cc["@mozilla.org/atom-service;1"].getService(privates.Ci.nsIAtomService),
-               style = null;
-
-               if(status === "deactivated")
-               {
-                  style = atomService.getAtom("isDeactivatedStyle");
-               }
-               else
-               {
-                  style = atomService.getAtom("isActivatedStyle");
-               }
-
-               if(status === "incompatible")
-               {
-                  style = atomService.getAtom("isIncompatibleStyle");
-               }
-
-               props.AppendElement(style);
-            },
-            setStyle = function(row, props)
-            {
-               if(extensionModel[row].isDeactivated)
-               {
-                  setNewStyle(props, "deactivated");
-               }
-               else
-               {
-                  setNewStyle(props, "activated");
-               }
-
-               if(extensionModel[row].isIncompatible)
-               {
-                  setNewStyle(props, "incompatible");
-               }
-            };
-
-            document.getElementById("addonTree").view = treeView;
+         ext: {
+            groups: [
+               ["Web", true, false],
+               ["Security", true, false],
+               ["Video", true, false]
+            ],
+            childData: [{
+                  groupName: "Web",
+                  addonId: "&4Xc5fv67bn(",
+                  addonName: "Firebug",
+                  addonVersion: "12",
+                  addonIcon: "icon.png",
+                  isSelected: false,
+                  isDeactivated: false,
+                  isIncompatible: false,
+                  isRestartless: false
+               }, {
+                  groupName: "Security",
+                  addonId: "etzuj45feg",
+                  addonName: "Acunetix",
+                  addonVersion: "2",
+                  addonIcon: "icon.png",
+                  isSelected: false,
+                  isDeactivated: false,
+                  isIncompatible: false,
+                  isRestartless: false
+               }]
          },
          toBool: function(boolParam)
          {
             return "true" === boolParam;
-         },
-         sortFunc: function(firstObj, nextObj)
-         {
-            var firstAddonName = firstObj.addonName.toLowerCase(),
-            nextAddonName = nextObj.addonName.toLowerCase();
-
-            if(firstAddonName < nextAddonName)
-            {
-               return -1 * privates.order;
-            }
-
-            if(firstAddonName > nextAddonName)
-            {
-               return 1 * privates.order;
-            }
-
-            return 0;
          },
          checkAll: function(imageControl, boolValue, picture, column, checkAll, addonState)
          {
@@ -299,103 +162,6 @@
             activatedRestartless: 2,
             deactivatedRestartless: 3
          },
-         init: function()
-         {
-            Components.utils.import("resource://gre/modules/AddonManager.jsm");
-            AddonManager.getAllAddons(function(addonArr)
-            {
-               var addonLength = addonArr.length,
-               counter = 0,
-               controls = {
-                  activatedAddons: document.getElementById("activatedAddons"),
-                  deactivatedAddons: document.getElementById("deactivatedAddons"),
-                  incompatibleAddons: document.getElementById("incompatibleAddons"),
-                  totalAddons: document.getElementById("totalAddons"),
-                  restartlessAddons: document.getElementById("restartlessAddons")
-               };
-
-               for(var i = 0; i < addonLength; i++)
-               {
-                  // TODO: Theme and plugin support maybe later.
-                  if(addonArr[i].type === "extension") // i = 3
-                  {
-                     if(addonArr[i].isActive)
-                     {
-                        privates.extensionCounter.activatedAddons++;
-                     }
-                     else if(addonArr[i].appDisabled)
-                     {
-                        privates.extensionCounter.incompatibleAddons++;
-                     }
-                     else
-                     {
-                        privates.extensionCounter.deactivatedAddons++;
-                     }
-
-                     if(!addonArr[i].operationsRequiringRestart)
-                     {
-                        privates.extensionCounter.restartlessAddons++;
-                     }
-
-                     privates.extensions.push({
-                        addonId: addonArr[i].id,
-                        addonName: addonArr[i].name,
-                        addonVersion: addonArr[i].version,
-                        addonIcon: addonArr[i].iconURL,
-                        isSelected: false,
-                        isDeactivated: !addonArr[i].isActive,
-                        isIncompatible: addonArr[i].appDisabled,
-                        isRestartless: !addonArr[i].operationsRequiringRestart
-                     });
-
-                     ++counter;
-                  }
-               }
-
-               controls.activatedAddons.value = privates.extensionCounter.activatedAddons;
-               controls.deactivatedAddons.value = privates.extensionCounter.deactivatedAddons;
-               controls.incompatibleAddons.value = privates.extensionCounter.incompatibleAddons;
-               controls.totalAddons.value = counter;
-               controls.restartlessAddons.value = privates.extensionCounter.restartlessAddons;
-
-               privates.extensions.sort(privates.sortFunc);
-               privates.fillTreeView(privates.extensions);
-            });
-         },
-         sort: function(column)
-         {
-            var columnName,
-            addonTree = document.getElementById("addonTree");
-            privates.order = addonTree.getAttribute("sortDirection") === "ascending" ? 1 : -1;
-
-            //if the column is passed and it's already sorted by that column, reverse sort
-            if(column)
-            {
-               columnName = column.id;
-               privates.order *= (addonTree.getAttribute("sortResource") === columnName) ? -1 : null;
-            }
-            else
-            {
-               columnName = addonTree.getAttribute("sortResource");
-            }
-
-            privates.extensions.sort(privates.sortFunc);
-            // Setting these will make the sort option persist.
-            addonTree.setAttribute("sortDirection", privates.order === 1 ? "ascending" : "descending");
-            addonTree.setAttribute("sortResource", columnName);
-
-            // Set the appropriate attributes to show to indicator.
-            var cols = document.getElementsByTagName("treecol");
-            var colLength = cols.length;
-
-            for(var i = 0; i < colLength; i++)
-            {
-               cols[i].removeAttribute("sortDirection");
-            }
-
-            document.getElementById(columnName).setAttribute("sortDirection", privates.order === 1 ? "ascending"
-            : "descending");
-         },
          onRowClick: function()
          {
             var addonTree = document.getElementById("addonTree"),
@@ -501,11 +267,11 @@
 
 window.onload = function()
 {
-   madExt.init();
+   madManagement.init(true);
 
    document.getElementById("addonName").onclick = function()
    {
-      madExt.sort(this);
+      madManagement.sort(this);
    };
 
    document.getElementById("treechildren").onclick = madExt.onRowClick;

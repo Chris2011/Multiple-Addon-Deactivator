@@ -5,10 +5,8 @@ var {appname} = {
    {
       // Initialization code.
       this.initialized = true;
-      this.gfiltersimportexportBundle = Cc["@mozilla.org/intl/stringbundle;1"]
-                                          .getService(Ci.nsIStringBundleService);
-      this.mystrings = this.gfiltersimportexportBundle
-                           .createBundle("chrome://{appname}/locale/overlay.properties");
+      this.gfiltersimportexportBundle = Cc["@mozilla.org/intl/stringbundle;1"].getService(Ci.nsIStringBundleService);
+      this.mystrings = this.gfiltersimportexportBundle.createBundle("chrome://{appname}/locale/overlay.properties");
    },
 
    onToolbarButtonCommand: function(event)
@@ -26,5 +24,6 @@ var {appname} = {
 
 window.addEventListener("load", function(e)
 {
+   madManagement.init(false);
    {appname}.onLoad(e);
 }, false);
